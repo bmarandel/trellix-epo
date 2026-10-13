@@ -12,7 +12,7 @@ try:
 except PackageNotFoundError:
     __version__ = "0.0.0"
 
-__all__ = ["constants", "policies", "ma", "es", "sc", "sir"]
+__all__ = ["constants", "policies", "validators", "ma", "es", "sc", "sir", "edrf"]
 
 from .constants import State, Priority, Gti, OASState, Severity, Language, SCException, SCReputation
 from .policies import Policies, Policy
@@ -35,13 +35,17 @@ from .es.fw.rules import (ESFWPolicyRules, FWRule, FWGroup, FWNetwork, FWApplica
                           FWExecutable, FWLocation, FWAddress)
 from .es.fw.options import ESFWPolicyOptions
 from .es.sp import ESSPPolicies, ESSPPolicy, ESSPPolicyICAP, ESSPPolicyNetApp, SPExclusion
-from .es.common import ESCommonPolicies, ESCommonPolicyOptions, AACExclusion
+from .es.cm import ESCommonPolicies, ESCommonPolicyOptions, AACExclusion
 from .es.atp import ESATPPolicies, ESATPPolicyOptions, ESATPPolicyDAC, DACExclusion
 from .es.wc import (ESWCPolicies, ESWCPolicy, RatingActions, ESWCPolicyOptions, ESWCPolicyMessaging,
                     ESWCPolicyBlockAllowList, WCSite, ESWCPolicyContentActions,
                     ESWCPolicyBrowserControl)
 from .sc.scpolicies import SCPolicies, SCPolicy
 from .sir import SIRPolicies, SIRPolicyCollectData, SIRPolicySetRegistry, SIRRegistryValue
+from .edrf import (EDRFPolicies, EDRFPolicy, EDRFPolicyGeneral, EDRFPolicyStreaming,
+                   EDRFEventLog, EDRFFileEvent, EDRFEventFilter, EDRFFilterCondition,
+                   EDRFSyslogServer, EDRFPolicyDetection, EDRFRegistryExclusion,
+                   EDRFPolicyInvestigation, EDRFPolicyRemediation, EDRFAllowedIP)
 from .sc.rules import SCRules, SCExclusionRules, SCUpdaterRules
 from .sc.gen import SCGENPolicyConfiguration, SCGENPolicyExceptionRules
 from .sc.awl import SCAWLPolicyOptions, SCAWLPolicyRules

@@ -61,3 +61,43 @@ def test_markdown(options_policy):
     assert '| 1 | claudetest.exe | Claude test PUP |' in text
     assert '| Check AMCore Content before installation: AMCore Content Reputation ' \
         '(Windows only) | Yes |' in text
+
+
+# ------------------------------ Values accepted by the console ------------------------------
+# validateQuarantineFilePath of the Options page (Threat Prevention 26.8.0.16045) run on the
+# lab, without prefix and with the <SYSTEM_DRIVE> prefix.
+from mcafee_epo_policies.es.tp.options import check_quarantine_folder
+
+QUARANTINE_FOLDERS = [('C:\\Quarantine', True), ('C:\\Q\\sub', True), ('**\\Q', True),
+                      ('C:\\Q\\\\x', False), ('C:Q', False), ('Q', False), ('C:\\Q?', False),
+                      ('C:\\a:b', False), ('/var/quarantine', True), ('?:\\Q', True), ('C:\\', True),
+                      ('C:\\Q\\', True), ('<SYSTEM_DRIVE>\\Quarantine', True),
+                      ('<SYSTEM_DRIVE>\\Q\\sub', True), ('<SYSTEM_DRIVE>\\Q:x', False),
+                      ('<SYSTEM_DRIVE>\\Q*', False), ('<SYSTEM_DRIVE>\\', False),
+                      ('<SYSTEM_DRIVE>\\  ', False), ('<SYSTEM_DRIVE>\\Q.d', True),
+                      ('<SYSTEM_DRIVE>\\Q-1', True)]
+
+
+def test_console_values(options_policy):
+    for folder, valid in QUARANTINE_FOLDERS:
+        if valid:
+            check_quarantine_folder(folder)
+        else:
+            with pytest.raises(ValueError):
+                check_quarantine_folder(folder)
+    options_policy.set_quarantine_folder('<TEMP_DIR>\\' + 'Q' * 190)
+    with pytest.raises(ValueError):
+        options_policy.set_quarantine_folder('<TEMP_DIR>\\' + 'Q' * 191)
+    for days in (0, 1, 999):
+        options_policy.set_quarantine_age(days)
+    for days in (-1, 1000, 'x'):
+        with pytest.raises(ValueError):
+            options_policy.set_quarantine_age(days)
+    options_policy.set_detection_exclusions([['N' * 259, 'D' * 256]])
+    for table in ([['', '']], [['N' * 260, '']], [['n', 'D' * 257]], [['x', ''], [' x ', '']]):
+        with pytest.raises(ValueError):
+            options_policy.set_detection_exclusions(table)
+    options_policy.set_pup_detections([['remoteadmin.exe', 'Remote admin tool: blocked']])
+    for table in ([['a/b.exe', '']], [['a:b.exe', '']], [['P' * 260, '']], [['p.exe', 'D' * 257]]):
+        with pytest.raises(ValueError):
+            options_policy.set_pup_detections(table)

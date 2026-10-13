@@ -8,6 +8,41 @@ This module defines the class ESTPPolicyOptions.
 """
 
 from ...policies import Policy
+from ...validators import check_int, check_length
+
+# Prefixes of the Quarantine folder (prefixSelect of the Options page).
+QUARANTINE_PREFIXES = ['<SYSTEM_DRIVE>', '<SYSTEM_ROOT>', '<SYSTEM_DIR>', '<TEMP_DIR>',
+                       '<PROGRAM_FILES_DIR>', '<PROGRAM_FILES_COMMON_DIR>',
+                       '<SOFTWARE_INSTALLED_DIR>']
+
+
+def check_quarantine_folder(folder):
+    """
+    Raise ValueError if the console refuses a Quarantine folder
+    (validateQuarantineFilePath of the Options page): a Linux path starting
+    with /; a prefix of QUARANTINE_PREFIXES, a backslash and a folder of 190
+    characters without : / * " < > | ?; or a path of 190 characters
+    starting with a drive (C:, ?:, *:) or **, then a backslash, without
+    / " < > ? : | after it nor double backslash.
+    """
+    if not isinstance(folder, str) or not folder.strip():
+        raise ValueError('The quarantine folder is required.')
+    if folder.startswith('/'):
+        return folder
+    prefix, _, rest = folder.partition('\\')
+    if prefix in QUARANTINE_PREFIXES:
+        check_length('Quarantine folder', rest, 190, required=True)
+        valid = not any(char in rest for char in ':/*"<>|?')
+    else:
+        check_length('Quarantine folder', folder, 190)
+        start = 3 if folder[:2] == '**' or (len(folder) > 1 and folder[1] == ':' and
+                                             (folder[0].isascii() and folder[0].isalpha() or
+                                              folder[0] in '*?')) else 0
+        valid = start == 3 and folder[2:3] == '\\' and '\\\\' not in folder[2:] and \
+            not any(char in folder[3:] for char in '/"<>?:|')
+    if not valid:
+        raise ValueError('Invalid quarantine folder: {!r}'.format(folder))
+    return folder
 
 class ESTPPolicyOptions(Policy):
     """
@@ -38,8 +73,10 @@ class ESTPPolicyOptions(Policy):
 
     def set_quarantine_folder(self, folder):
         """
-        Set the Quarantine folder, e.g. "<SYSTEM_DRIVE>\\Quarantine"
+        Set the Quarantine folder, e.g. "<SYSTEM_DRIVE>\\Quarantine" (see
+        check_quarantine_folder)
         """
+        check_quarantine_folder(folder)
         return self.set_setting_value('QuarantineManager', 'szQuarantineDirectory', folder)
 
     quarantine_folder = property(get_quarantine_folder, set_quarantine_folder)
@@ -54,8 +91,11 @@ class ESTPPolicyOptions(Policy):
 
     def set_quarantine_age(self, int_days):
         """
-        Set the maximum number of days to keep quarantine data
+        Set the maximum number of days to keep quarantine data: 1-999, or 0
+        to keep it (the console stores 0 when the option is unchecked)
         """
+        if str(int_days).strip() != '0':
+            int_days = check_int('Maximum number of days to keep quarantine data', int_days, 1, 999)
         return self.set_setting_value('QuarantineManager', 'dwQuarantineAge', str(int_days))
 
     quarantine_age = property(get_quarantine_age, set_quarantine_age)
@@ -79,6 +119,13 @@ class ESTPPolicyOptions(Policy):
         Set the Detection Exclusion list from a list of [detection name or
         hash, description].
         """
+        names = set()
+        for name, description in table:
+            check_length('Detection name or hash', name, 259, required=True)
+            check_length('Description', description, 256)
+            if name.strip() in names:
+                raise ValueError('Duplicate detection exclusion: {!r}'.format(name))
+            names.add(name.strip())
         rows = [{'SpywareItem': name, 'DescriptionSpywareItem': description}
                 for name, description in table]
         return self.set_indexed_table('SpyExclItems', 'dwSpywareExclCount',
@@ -119,6 +166,12 @@ class ESTPPolicyOptions(Policy):
         """
         Set the user-defined unwanted programs from a list of [file name, description].
         """
+        for name, description in table:
+            check_length('File name', name.strip(), 259, required=True)
+            if any(char in name for char in '/\\*?"|<>:'):
+                raise ValueError('Invalid unwanted program file name (none of / \\ * ? " | < > :): '
+                                 '{!r}'.format(name))
+            check_length('Description', description, 256)
         values = ['{}:{}'.format(name, description) for name, description in table]
         return self.set_indexed_list('DetectionItems', 'dwDetectionItemCount',
                                      'UserDefinedDetection_{}', values)

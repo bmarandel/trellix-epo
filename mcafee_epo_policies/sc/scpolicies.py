@@ -13,7 +13,9 @@ API (policy.export productId=SOLIDCORE_META).
 SCPolicy is the base Class object for every Solidcore policy. Unlike the other
 products of this package, Solidcore doesn't store its settings under named
 Sections: every setting is a "rule", stored in a Section named
-"General_Rule_<n>" whose number is meaningless (numbering can have gaps). A
+"General_Rule_<n>" (or "General_<n>", kept by the Solidcore 8.4 console for
+the trusted directories of some policies) whose number is meaningless
+(numbering can have gaps). A
 rule is identified by its content instead - its "type" Setting plus, for most
 types, a "name" or "pattern" Setting. SCPolicy therefore exposes rules as
 plain dicts ({setting name: value}) and finds them by content.
@@ -339,7 +341,10 @@ class SCPolicy(SCRules, Policy):
 
     @staticmethod
     def __is_rule_section(section_obj):
-        return section_obj.get('name').startswith('General_Rule_')
+        # The rules are "General_Rule_<n>" sections; the Solidcore 8.4 console
+        # also keeps (and adds the trusted directories of) "General_<n>"
+        # sections when a policy already has some (seen on the lab).
+        return re.match(r'^General_(Rule_)?\d+$', section_obj.get('name')) is not None
 
     def is_unix(self):
         """

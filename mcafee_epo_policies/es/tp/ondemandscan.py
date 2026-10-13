@@ -9,7 +9,32 @@ This module defines the class ESTPPolicyOnDemandScan.
 
 import xml.etree.ElementTree as et
 from ...policies import Policy
-from .exclusions import ExclusionList
+from ...validators import check_int, check_length
+from .exclusions import ExclusionList, check_file_type_list, check_exclusion_rows
+
+# Default user defer message of the console (55 characters: longer than the 50
+# characters the Quick Scan field lets type, set by the console itself).
+DEFAULT_DEFER_MESSAGE = 'Trellix Endpoint Security is about to scan your system.'
+
+# Scan locations of the console (FSselect_location values, "FileOrFolder" = a path).
+SCAN_LOCATIONS = ['SpecialScanForRootkits', 'SpecialMemory', 'SpecialCritical', 'My Computer',
+                  'LocalDrives', 'All fixed disks', 'All removable media', 'All Network drives',
+                  'HomeDir', 'ProfileDir', 'WinDir', 'ProgramFilesDir', 'TempDir',
+                  'SpecialRecycleName', 'SpecialRegistry']
+
+
+def check_scan_location(location):
+    """
+    Raise ValueError if the console refuses a scan location: a location of
+    SCAN_LOCATIONS, or a file or folder path (256 characters, a Linux or
+    Mac path starting with /, else none of / " | ; * ? < > - IsValidODSFile).
+    """
+    if location in SCAN_LOCATIONS:
+        return location
+    check_length('Scan location path', location, 256, required=True)
+    if not location.startswith('/') and any(char in location for char in '/"|;*?<>'):
+        raise ValueError('Invalid scan location path: {!r}'.format(location))
+    return location
 
 class ESTPPolicyOnDemandScan(Policy):
     """
@@ -362,6 +387,8 @@ class ESTPPolicyOnDemandScan(Policy):
         'SpecialRegistry':          'Registry'
         Note for 'File or folder' simply use the full path directly.
         """
+        for location in table:
+            check_scan_location(location)
         return self.set_indexed_list(__section + '_ScanOptions', 'dwScanItemCount',
                                      'szScanItem{}', table)
 
@@ -400,6 +427,7 @@ class ESTPPolicyOnDemandScan(Policy):
             raise ValueError('Level must be within ["1", "2", "3", "4"].')
         if level == '4' and len(extensions) < 3:
             raise ValueError('Extensions list, comma separated, must be defined for this level.')
+        check_file_type_list(extensions)
         self.set_setting_value(__section + '_ScanOptions', 'ExtensionMode', level)
         self.set_setting_value(__section + '_ScanOptions', 'szProgExts', extensions)
         return True
@@ -449,7 +477,7 @@ class ESTPPolicyOnDemandScan(Policy):
         Set exclusions list for Full Scan
         Use a list or a ProcessList object as input
         """
-        values = ['|'.join(row) for row in table]
+        values = ['|'.join(row) for row in check_exclusion_rows(table, notes_max=256)]
         return self.set_indexed_list(__section + '_Exclusions', 'dwExclusionCount',
                                      'ExcludedItem_{}', values)
 
@@ -621,6 +649,15 @@ class ESTPPolicyOnDemandScan(Policy):
         """
         return self.get_setting_value(__section + '_Performance', 'bPermitUserDefer')
 
+    def __check_defer(self, section):
+        """
+        The console resets the defer settings to their defaults when "User
+        can defer scans" is unchecked (checked on the lab).
+        """
+        if self.get_setting_value(section + '_Performance', 'bPermitUserDefer') != '1':
+            raise ValueError('Enable "User can defer scans" first (set_{}_user_defer): the console '
+                             'resets the defer settings otherwise.'.format(section.lower()))
+
     def set_fs_user_defer(self, mode, __section='FS'):
         """
         Set User can defer scan for Full Scan
@@ -640,7 +677,10 @@ class ESTPPolicyOnDemandScan(Policy):
     def set_fs_user_defer_max(self, int_max, __section='FS'):
         """
         Set Maximum number of times user can defer for one hour for Full Scan
+        (1-23)
         """
+        self.__check_defer(__section)
+        int_max = check_int('Maximum number of times user can defer', int_max, 1, 23)
         return self.set_setting_value(__section + '_Performance', 'uDeferTime', str(int_max))
 
     fs_user_defer_max = property(get_fs_user_defer_max, set_fs_user_defer_max)
@@ -656,8 +696,11 @@ class ESTPPolicyOnDemandScan(Policy):
     def set_fs_user_defer_msg(self, message='McAfee Endpoint Security is about to scan your system.',
                               __section='FS'):
         """
-        Set User defer message for Full Scan
+        Set User defer message for Full Scan (60 characters, Quick Scan 50)
         """
+        self.__check_defer(__section)
+        if message != DEFAULT_DEFER_MESSAGE:
+            check_length('User message', message, 60 if __section == 'FS' else 50)
         return self.set_setting_value(__section + '_Performance', 'szDeferMessage', message)
 
     fs_user_defer_msg = property(get_fs_user_defer_msg, set_fs_user_defer_msg)
@@ -672,8 +715,10 @@ class ESTPPolicyOnDemandScan(Policy):
 
     def set_fs_user_defer_msg_duration(self, int_seconds, __section='FS'):
         """
-        Set User defer message duration (seconds) for Full Scan
+        Set User defer message duration (seconds) for Full Scan (30-300)
         """
+        self.__check_defer(__section)
+        int_seconds = check_int('Message duration (seconds)', int_seconds, 30, 300)
         return self.set_setting_value(__section + '_Performance', 'uMessageDuration', str(int_seconds))
 
     fs_user_defer_msg_duration = property(get_fs_user_defer_msg_duration,
@@ -799,8 +844,7 @@ class ESTPPolicyOnDemandScan(Policy):
         This setting is available only when Scan anytime level is selected.
         The percentage is a value between 25 and 99.
         """
-        if int_percentage not in range(25, 100):
-            raise ValueError('The percentage must be within 25-99.')
+        int_percentage = check_int('Limit maximum CPU usage (%)', int_percentage, 25, 99)
         return self.set_setting_value(__section + '_Performance', 'CPUPercentage', str(int_percentage))
 
     fs_perf_max_cpu = property(get_fs_perf_max_cpu, set_fs_perf_max_cpu)
@@ -816,8 +860,12 @@ class ESTPPolicyOnDemandScan(Policy):
 
     def set_fs_user_name(self, user_name, __section='FS'):
         """
-        Set User name for scanning networks devices during Full Scan
+        Set User name for scanning networks devices during Full Scan (100 characters)
         """
+        check_length('User name', user_name, 100)
+        if user_name and not self.get_setting_value(__section + '_Account', 'szPassword'):
+            raise ValueError('User name: the console then requires a password, which can only be '
+                             'defined in the ePO console.')
         return self.set_setting_value(__section + '_Account', 'szUserName', user_name)
 
     fs_user_name = property(get_fs_user_name, set_fs_user_name)
@@ -852,8 +900,9 @@ class ESTPPolicyOnDemandScan(Policy):
 
     def set_fs_domain_name(self, domain_name, __section='FS'):
         """
-        Set Domain name for scanning networks devices during Full Scan
+        Set Domain name for scanning networks devices during Full Scan (100 characters)
         """
+        check_length('Domain', domain_name, 100)
         return self.set_setting_value(__section + '_Account', 'szDomainName', domain_name)
 
     fs_domain_name = property(get_fs_domain_name, set_fs_domain_name)

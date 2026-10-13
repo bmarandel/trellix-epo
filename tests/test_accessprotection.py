@@ -180,6 +180,9 @@ def test_add_update_remove(ap_policy):
 
 
 def test_new_policy_round_trip(rules_policy, tmp_path):
+    # The fixture holds the console-saved rule: the console refuses a second rule
+    # with the same name, so the copy is added after removing it.
+    rules_policy.remove_rule(rules_policy.get_rule('Claude AP Test Rule').id)
     rules_policy.add_rule(console_rule())
     linux = APRule('Linux', report=True, linux=True)
     linux.add_executable(APExecutable('Linux exe', path='/usr/bin/tool'))
@@ -189,7 +192,9 @@ def test_new_policy_round_trip(rules_policy, tmp_path):
     rules_policy.save_to_file(str(tmp_path / 'ap.xml'))
     reloaded = ESTPPolicyAccessProtection()
     reloaded.load_from_file(str(tmp_path / 'ap.xml'))
-    assert len([rule for rule in reloaded.get_rules() if rule.name == 'Claude AP Test Rule']) == 2
+    assert len([rule for rule in reloaded.get_rules() if rule.name == 'Claude AP Test Rule']) == 1
+    with pytest.raises(ValueError):
+        reloaded.add_rule(console_rule())                     # same name, refused as in the console
     stored = reloaded.get_rule('Linux')
     # Linux executables only have a file name or path.
     values = stored.to_values()
@@ -310,3 +315,78 @@ def test_markdown_console_rule(rules_policy):
     assert '| 2 | Include | Destination file | \\*.claudelocked |' in text
     assert '| 2 | Exclude | Service display name | Claude Test Service |' in text
     assert '| Operations | Change owner, Hard Link, Write |' in text
+
+
+# ------------------------------ Values accepted by the console ------------------------------
+# Cases run on the lab (Threat Prevention 26.8.0.16045): the signer check of the ePO server
+# (ExecutableValidateSignerName.do) and the dialog scripts (VSECommon_CustomForAP.js,
+# EditSubruleParameter.jsp, EditUserName.jsp).
+from mcafee_epo_policies.validators import (is_x500_name, is_ens_executable_path,
+                                            is_ens_parameter_path, ENS_USER_NAME)
+
+SIGNERS = [('CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US', True),
+           ('CN=Microsoft Corporation', True), ('Microsoft Corporation', False), ('CN=', True),
+           ('CN=a, X=b', False), ('CN="Quoted, Inc", O=Q', True), ('cn=lower', True),
+           ('CN=a; O=b', True), ('CN=a, O=b\\, c', True), ('CN=a,', False), ('2.5.4.3=x', True),
+           ('CN=a+OU=b', True), ('OID.2.5.4.3=x', True), ('CN=a,,O=b', False), ('CN=a=b', True)]
+EXECUTABLE_PATHS = [('C:\\Tools\\app.exe', True), ('app.exe', True), ('*\\app.exe', False),
+                    ('**\\Tools\\app.exe', True), ('\\\\server\\share\\a.exe', True),
+                    ('?:\\x\\*.exe', True), ('C:\\\\Tools\\a.exe', False), ('C:/Tools/a.exe', False),
+                    ('Tools\\app.exe', False), ('a<b.exe', False), ('C:', True)]
+PARAMETER_PATHS = [('C:\\Data\\*', True), ('**\\secret.txt', True), ('*\\x.txt', False),
+                   ('%windir%\\x', True), ('a?.txt', True), ('C:/x', False), ('x|y', False),
+                   ('\\\\srv\\share\\', True)]
+USER_NAMES = [('LAB\\jdoe', True), ('Local\\System', True), ('lab.example.com\\svc', True),
+              ('jdoe', False), ('LAB\\j:doe', False), ('-LAB\\x', False), ('LAB\\', False),
+              ('LAB x\\y', True)]
+
+
+def test_console_validators():
+    for function, cases in [(is_x500_name, SIGNERS), (is_ens_executable_path, EXECUTABLE_PATHS),
+                            (is_ens_parameter_path, PARAMETER_PATHS),
+                            (lambda value: ENS_USER_NAME.match(value), USER_NAMES)]:
+        for value, valid in cases:
+            assert bool(function(value)) is valid, value
+
+
+def test_console_values(ap_policy):
+    rule = APRule('R' * 128, report=True, notes='N' * 256)
+    rule.add_executable(APExecutable('E' * 256, path='**\\Tools\\app.exe',
+                                     md5='44D88612FEA8A8F36DE82E1278ABB02F',
+                                     signer='CN=Example, O=Example, C=US', notes='n' * 256))
+    rule.add_user_name(APUserName('LAB\\svc_backup'))
+    rule.add_subrule(APSubRule('S' * 100, APSubRule.FILES, ['read'],
+                               targets=[APTarget('C:\\' + 'd' * 253),
+                                        APTarget(APTarget.DRIVE_NETWORK, APTarget.DRIVE_TYPE)]))
+    rule.add_subrule(APSubRule('Key', APSubRule.REGISTRY_KEY, ['write'],
+                               targets=[APTarget('HKLM\\' + 'k' * 250)]))
+    ap_policy.add_rule(rule)
+
+    def files(saved):
+        return [subrule for subrule in saved.subrules if subrule.type == APSubRule.FILES][0]
+
+    def key(saved):
+        return [subrule for subrule in saved.subrules if subrule.type == APSubRule.REGISTRY_KEY][0]
+    bad = [lambda r: setattr(r, 'name', 'R' * 129), lambda r: setattr(r, 'notes', 'N' * 257),
+           lambda r: r.executables.append(APExecutable('e' * 256, path='x.exe')),   # duplicate
+           lambda r: setattr(r.executables[0], 'md5', 'XYZ'),
+           lambda r: setattr(r.executables[0], 'signer', 'Example Corp'),
+           lambda r: setattr(r.executables[0], 'path', 'Tools\\app.exe'),
+           lambda r: r.user_names.append(APUserName('svc_backup')),
+           lambda r: setattr(files(r), 'name', 'S' * 101),
+           lambda r: files(r).targets.append(APTarget('C:\\' + 'd' * 254)),
+           lambda r: files(r).targets.append(APTarget('*\\x.txt')),
+           lambda r: key(r).targets.append(APTarget('HKLM\\' + 'k' * 251))]
+    # The subrules are read back sorted (registry first): pick them by type.
+    for change in bad:
+        saved = ap_policy.get_rule(rule.id)
+        change(saved)
+        with pytest.raises(ValueError):
+            ap_policy.update_rule(saved)
+    copy = APRule(' r' * 64, report=True)            # same name, case and spaces ignored
+    copy.name = ('R' * 128).lower() + ' '
+    copy.add_subrule(APSubRule('S', APSubRule.FILES, ['read'], targets=[APTarget('a.txt')]))
+    with pytest.raises(ValueError):
+        ap_policy.add_rule(copy)
+    with pytest.raises(ValueError):
+        ap_policy.set_exclusions([APExecutable('X', path='a.exe'), APExecutable(' x ', path='b.exe')])

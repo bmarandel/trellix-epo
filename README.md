@@ -51,6 +51,12 @@ below) to keep a documentation of the enforced security policies.
 | Solidcore - Change Control | Change Control Rules (Windows/Unix) | Full read/write (all tabs); Rule Groups added/removed | Yes |
 | Solidcore - Integrity Monitor | Integrity Monitoring Rules (Windows/Unix) | Full read/write (all tabs); Rule Groups added/removed | Yes |
 | Solidcore | Rule Groups (Application Control, Change Control, Integrity Monitor) | Full read/write of the `scor.rulegroup.export` / `import` files | Not yet |
+| Trellix EDR with Forensics | General | Full read/write, "Show Advanced" settings included (passwords, Forensics(HX) server: see below) | Yes |
+| Trellix EDR with Forensics | Streaming | Full read/write: Trace, exclusions, Event streamer (event logs, file events, filters, OS events, DXL, Helix, syslog servers), Alerts, Process Tracker, Logon Tracker (S3 keys: see below) | Yes |
+| Trellix EDR with Forensics | Detection | Full read/write: events, exclusions, registry key exclusions | Yes |
+| Trellix EDR with Forensics | Investigation | Full read/write: Real-Time Search, Network Flow, File Hashing, exclusions | Yes |
+| Trellix EDR with Forensics | Remediation | Full read/write: Host Remediation, containment page (by hand with title and logo, or from URL), messages and exclusions, allowed IP addresses (password: see below) | Yes |
+| Trellix EDR with Forensics | Protection | Not supported (removed by the extension 50.3) | No |
 
 The "Markdown report" column tells which policy types support the Markdown
 export (`to_markdown()` / `save_markdown()`); for the other policy classes
@@ -65,13 +71,17 @@ of the ePO Policy Catalog are implemented: Common (Options), Threat Prevention
 Options), Firewall (Rules, Options), Adaptive Threat Protection (Options,
 Dynamic Application Containment) and Web Control (Options, Enforcement
 Messaging, Block and Allow List, Content Actions, Browser Control), in the
-`es` subpackage (`es.common`, `es.tp`, `es.fw`, `es.atp`, `es.wc`). ENS
+`es` subpackage (`es.cm`, `es.tp`, `es.fw`, `es.atp`, `es.wc`). ENS
 Storage Protection, a separate product, is supported too (`es.sp`).
 
 Solidcore (Trellix Application and Change Control) policy coverage is complete -
 all 13 Solidcore policy types of the ePO Policy Catalog are implemented, in the
 `sc` subpackage (`sc.gen`, `sc.awl`, `sc.cc`, `sc.fim`, named after the ePO
 feature IDs SCOR_GEN, SCOR_AWL, SCOR_CC and SCOR_FIM).
+
+Trellix EDR with Forensics (ePO product XCLIENT_META, extension 50.3; the
+policies of the extension 2.1.2 are read too) is supported in the `edrf`
+subpackage: all policy types except Protection.
 
 ## Installation
 
@@ -102,6 +112,23 @@ policy.asci = 15
 # Save the edited policy, ready to re-import into ePO
 policy.save_to_file('My Custom Policy - edited.xml')
 ```
+
+The setters refuse what the ePO console refuses: number ranges and text
+lengths of the console fields (e.g. `policy.asci = 3000` raises `ValueError`,
+the console accepts 5 to 2880 minutes), and the console rules for paths and
+addresses. They are checked against the lab console, product by product
+(Trellix Agent: extension 5.8.6 - repository paths with their macros, relay
+servers, IP reporting mode; ENS Common: Endpoint Security Platform 26.8 -
+log files location, proxy address, Self Protection exclusions; ENS Threat
+Prevention 26.8 - scan, exclusion and quarantine paths, file types, Access
+Protection rules and executables, Exploit Prevention exclusions with their
+IP lists, Application Protection Rules and Expert Rules; ENS Firewall 26.8 -
+rule network addresses, ports, executables, locations, Options Defined
+Networks, DNS Blocking and Trusted Executables). Whatever the
+product, a setting value longer than 3072 characters is refused: the ePO
+server keeps 3072 characters per setting and truncates the rest, even on
+import (a long Exploit Prevention Expert Rule is split over several
+settings, as the console does).
 
 ### Policy documentation (Markdown)
 
@@ -371,13 +398,133 @@ Note: ePO stores some Solidcore policies under an internal type name, used as
 (Windows)` for Exception Rules (Windows), `Mon Rules (Unix)` for Integrity
 Monitoring Rules (Unix)); `SCPolicies.list()` shows them.
 
+### Trellix EDR with Forensics
+
+```python
+from mcafee_epo_policies import (EDRFPolicies, EDRFPolicyGeneral, EDRFPolicyStreaming,
+                                 EDRFEventLog, EDRFSyslogServer, EDRFPolicyDetection,
+                                 EDRFRegistryExclusion, EDRFPolicyInvestigation,
+                                 EDRFPolicyRemediation, EDRFAllowedIP)
+
+policies = EDRFPolicies(xml_export)               # policy.export productId=XCLIENT_META
+general = EDRFPolicyGeneral(policies.get_policy(EDRFPolicies.GENERAL, 'My Default'))
+general.set_option('self_protection', '1')        # see EDRFPolicyGeneral.options()
+general.set_option('health_interval', 15)         # "Show Advanced" settings too (minutes)
+general.set_option('storage_mode', 'mmapio')      # also sets the SQLite settings
+general.set_log_storage('days', 30)
+general.set_proxy('manual', host='proxy.example.com', port=8080, exclude_hosts=['*.example.com'])
+
+streaming = EDRFPolicyStreaming(policies.get_policy(EDRFPolicies.STREAMING, 'My Default'))
+streaming.add_to_list('windows_process_exclusions', ['FOLDERID_ProgramFiles\\Example\\agent.exe'])
+streaming.set_option('logon_tracker', '1')
+streaming.set_option('event_streamer', '1')       # Event streamer (extension 50.3)
+streaming.add_to_table('event_logs', EDRFEventLog('Sysmon', 'Microsoft-Windows-Sysmon/Operational',
+                                                  '1, 3, 11'))
+streaming.set_option('events_to_syslog', '1')
+streaming.set_table('syslog_servers', [EDRFSyslogServer('SIEM', 'siem.example.com', 6514,
+                                                        tls=True)])
+
+detection = EDRFPolicyDetection(policies.get_policy(EDRFPolicies.DETECTION, 'My Default'))
+detection.add_registry_exclusion(EDRFRegistryExclusion('LocalMachine', 'SOFTWARE\\Example',
+                                                       ['Version']))
+investigation = EDRFPolicyInvestigation(policies.get_policy(EDRFPolicies.INVESTIGATION,
+                                                            'My Default'))
+investigation.set_option('hash_strategy', 'low')
+investigation.add_to_list('windows_hashing_extensions', ['.iso', '.vhdx'])
+
+remediation = EDRFPolicyRemediation(policies.get_policy(EDRFPolicies.REMEDIATION, 'My Default'))
+remediation.set_option('containment_title', 'Security alert')      # containment page "by hand"
+remediation.set_option('containment_message', 'Contained by the SOC.\nCall the help desk.')
+remediation.set_containment_image('logo.png', open('logo.png', 'rb').read())
+remediation.add_allowed_ip(EDRFAllowedIP('vpn.example.com', 'VPN gateway'))
+```
+
+Each class lists its settings in `options()` (name -> console label, all of
+them or one kind: `CHECK`, `NUMBER`, `SELECT`, `TEXT`, `LIST`); `get_option()` /
+`set_option()` read and write them with the console checks (number ranges,
+drop-down values), checkboxes as `'1'` / `'0'`, numbers in the console unit
+(minutes where the console shows minutes, even when ePO stores seconds), lists
+as Python lists (`get_list()`, `set_list()`, `add_to_list()`,
+`remove_from_list()`); the Event streamer tables are lists of objects
+(`get_table()`, `set_table()`, `add_to_table()`, `remove_from_table()`). The
+classes encode the text values as the console does (semicolon separated lists,
+doubled backslashes and escaped double quotes where the console stores them
+so), checked against the ePO 5.10 lab with the extensions XCLIENT_META 2.1.2
+and 50.3. Notes:
+
+- **Field lengths**: the classes refuse what the console fields refuse
+  (maxlength read on the console pages: 100 characters for most text fields,
+  e.g. proxy name, containment title and URL, allowed IP address and
+  description; 128 for the Helix settings; 260 for the registry key paths and
+  value names; 256 for the Event streamer dialog fields; 200000 for the
+  exclusion lists, 3072 for the General proxy exclusions). The ePO server
+  keeps 3072 characters per setting: since the extension 50.3 it splits the
+  exclusion lists and the containment page settings in parts (`name`,
+  `name_1`, `name_2`...), as the library does, and the library refuses any
+  other value longer than that once stored. The console only shows an Event
+  streamer table whose JSON is shorter than 2820 characters (it drops the
+  last rows of a longer one): the library refuses it.
+- **Double quotes (extension 50.3)**: the server no longer escapes them in
+  the split settings, and the Investigation and Remediation pages cannot
+  open a policy with such a `"` (a bug of the extension, seen on the lab after
+  typing one in a containment message): the library refuses `"` in their
+  lists and messages. In the Streaming text fields (Helix, S3) the console
+  shows a `"` as `\"` and adds a backslash at each save: refused too.
+
+- **Passwords and keys are not set by the library**: the uninstall and
+  uncontainment passwords are hashed with a random salt and the S3 bucket keys
+  are encrypted by the ePO server. Enabling "Enable password to uninstall",
+  "Enable password to uncontain the endpoint" or "Send traces to S3 bucket"
+  is refused until they are defined in the console; unchecking "Send traces to
+  S3 bucket" clears the S3 settings, as the console does.
+- **Forensics(HX) server**: selecting a server in the console copies its
+  configuration (certificates, private key, server names) from the ePO server
+  settings into the policy. Use `copy_hx_server(policy)` to copy it from a
+  policy where the server was selected in the console, or `clear_hx_server()`
+  for "No HX server".
+- The console cannot open a General policy with `\`, `"`, `` ` `` or `${` in a
+  text setting (proxy user name...) nor a Remediation policy with `"` or `\`
+  in an allowed IP description: the library refuses them.
+- **Containment page** (extension 50.3): "Enter by hand" stores the title,
+  message, logo (JPG, PNG or GIF, 1000 KB max) and the HTML page built from
+  them, as the console does (`get_containment_page()`); "From URL"
+  (`set_option('message_source', 'url')`) resets the title and message and
+  clears the logo and page. The console also stores its favicon: the library
+  keeps the one of the policy.
+- The console saves the hidden setting `mxa/EventStreamer/dxl/compression` as
+  `dxl/compressioned` (a bug of the extension 50.3): the library leaves both
+  untouched.
+- The Protection policy is not supported (the extension 50.3 removed it).
+- Policies are saved with the characters out of ASCII as XML character
+  references (`&#233;`): the policy import of the ePO Web API
+  (`policy.importPolicy`) reads a UTF-8 file as ISO-8859-1 whatever the
+  charset sent (`é` imported as `Ã©`); the Policy Catalog import of the
+  console reads both forms right.
+
+### Address checks
+
+`mcafee_epo_policies.validators` holds address checks shared by the policy
+classes, written as the regular expressions of the ePO console extensions so
+that a class refuses exactly what its console refuses: `is_ipv4()`,
+`is_ipv6()` (every short form, link-local zone, IPv4 mapped), `is_hostname()`
+(a DNS name with a domain) and `is_ip_or_hostname()`.
+
+```python
+from mcafee_epo_policies.validators import is_ip_or_hostname
+
+is_ip_or_hostname('fd00::10')       # True
+is_ip_or_hostname('localhost')      # False: the console wants a domain
+```
+
 ## Examples
 
 The [`examples/`](examples/) directory has short, runnable scripts covering
 McAfee Agent (General/Repository), ENS Threat Prevention (On-Access Scan,
 On-Demand Scan, process exclusions), ENS Firewall (Rules reporting and editing), and
 Solidcore (Application Control, Integrity Monitor and Change Control policies,
-Rule Groups - some of them working directly against an ePO server).
+Rule Groups - some of them working directly against an ePO server) and Trellix
+EDR with Forensics (best practices and example exclusions applied to copies of
+the policies).
 
 ## Documentation
 

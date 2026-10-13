@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+<EPOPolicySchema><EPOPolicyVerInfo vermjr="5" vermin="10" verrel="0" verbld="0" />
+<EPOPolicySettings name="Claude - SIR Collect Test::Settings (101EAC4F-F571-4B45-AAE8-BC900B0CC20B)" featureid="SIR_____1000_COLLECT_DATA" categoryid="General" typeid="General" param_int="0" param_str="">
+<Section name="Custom">
+<Setting name="PolicyChangeVersionGetProps" value="c825329b-66db-46a8-936d-a76eb66279ee" />
+<Setting name="dwDebugLog" value="0" />
+<Setting name="dwHourlyInterval" value="999" />
+</Section>
+<Section name="FindFile">
+<Setting name="FileCount" value="2" />
+<Setting name="FolderCount" value="2" />
+<Setting name="FolderPattern0" value="{C}\dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd" />
+<Setting name="FolderPattern1" value="{D}\Data\" />
+<Setting name="SearchPattern0" value="[COMMONPROGRAMFILES]\App\fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff.x" />
+<Setting name="SearchPattern1" value="{Z}\tool.exe" />
+<Setting name="dwSearchDepth" value="9" />
+</Section>
+<Section name="General">
+<Setting name="CollectionFlags" value="0" />
+</Section>
+<Section name="List">
+<Setting name="Branch0" value="[HKLM]\KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK\VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV\WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+<Setting name="Branch1" value="[HKCU]\Software\App\Name" />
+<Setting name="dwItemCount" value="2" />
+</Section>
+<Section name="SpecialEnvironment">
+<Setting name="CustomEnvVar" value="EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - SIR Registry Test::Settings (6C8287C5-EF81-489C-B3CE-FC534F7BAD63)" featureid="SIR_____1000_SET_REGISTRY" categoryid="RegistryGeneral" typeid="General" param_int="0" param_str="">
+<Section name="SetRegistry">
+<Setting name="PolicyChangeVersion" value="ef81c7cb-f8bf-44d4-a09b-dc4fd9c2077d" />
+<Setting name="RegKey_1" value="[HKLM]\SOFTWARE\ClaudeTest\NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" />
+<Setting name="RegKey_2" value="[HKCU]\Software\ClaudeTest\Dw" />
+<Setting name="RegKey_3" value="[HKCU]\Software\ClaudeTest\Bin" />
+<Setting name="RegKey_4" value="[HKLM]\SOFTWARE\ClaudeTest\NewKey\" />
+<Setting name="RegKey_5" value="[HKLM]\SOFTWARE\ClaudeTest\Old" />
+<Setting name="RegName_1" value="NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" />
+<Setting name="RegName_2" value="Dw" />
+<Setting name="RegName_3" value="Bin" />
+<Setting name="RegName_4" value="" />
+<Setting name="RegName_5" value="Old" />
+<Setting name="RegRestoreFile" value="" />
+<Setting name="RegType_1" value="REG_SZ" />
+<Setting name="RegType_2" value="REG_DWORD" />
+<Setting name="RegType_3" value="REG_BINARY" />
+<Setting name="RegType_4" value="REG_SZ" />
+<Setting name="RegType_5" value="REG_SZ" />
+<Setting name="RegValue_1" value="dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd" />
+<Setting name="RegValue_2" value="4294967295" />
+<Setting name="RegValue_3" value="0a10" />
+<Setting name="RegValue_4" value="" />
+<Setting name="RegValue_5" value="" />
+<Setting name="RegistryBackupFile" value="Claude limits_1.bak" />
+<Setting name="RegistryBackupFileDateList" value=";13 Oct 2026, 12:24 AM" />
+<Setting name="RegistryBackupFileList" value=";Claude limits_1.bak" />
+<Setting name="action_name_1" value="0" />
+<Setting name="action_name_2" value="0" />
+<Setting name="action_name_3" value="0" />
+<Setting name="action_name_4" value="0" />
+<Setting name="action_name_5" value="1" />
+<Setting name="dwSetRegistryCount" value="5" />
+<Setting name="flag_1" value="1" />
+<Setting name="flag_2" value="0" />
+<Setting name="flag_3" value="0" />
+<Setting name="flag_4" value="0" />
+<Setting name="flag_5" value="6" />
+<Setting name="szBackupKeyList" value=";[HKLM]\\SOFTWARE\\ClaudeTest\\, [HKCU]\\Software\\ClaudeTest\\, [HKLM]\\SOFTWARE\\ClaudeTest\\NewKey\\, " />
+</Section>
+</EPOPolicySettings>
+
+<EPOPolicyObject name="Claude - SIR Collect Test" featureid="SIR_____1000_COLLECT_DATA" categoryid="General" serverid="W2022EPO510" editflag="0" typeid="General">
+<description /><PolicySettings>Claude - SIR Collect Test::Settings (101EAC4F-F571-4B45-AAE8-BC900B0CC20B)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - SIR Registry Test" featureid="SIR_____1000_SET_REGISTRY" categoryid="RegistryGeneral" serverid="W2022EPO510" editflag="0" typeid="General">
+<description /><PolicySettings>Claude - SIR Registry Test::Settings (6C8287C5-EF81-489C-B3CE-FC534F7BAD63)</PolicySettings>
+</EPOPolicyObject>
+</EPOPolicySchema>

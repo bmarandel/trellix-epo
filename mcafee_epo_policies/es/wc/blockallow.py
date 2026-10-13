@@ -17,6 +17,7 @@ downloads from allowed sites (see RatingActions).
 import re
 
 from .common import ESWCPolicy
+from ...validators import check_length, is_wc_site_pattern
 
 
 class WCSite():
@@ -24,17 +25,19 @@ class WCSite():
     A site of the Block and Allow List.
 
     :param: pattern: Site pattern (at least 3 characters, no *, \\, <, >,
-                     space or comma), e.g. 'example.com' or 'www.example.com/path'.
+                     space or comma, see is_wc_site_pattern), e.g.
+                     'example.com' or 'www.example.com/path'. Surrounding
+                     white spaces are removed, as the server does.
     :param: action: WCSite.ALLOW ('0') or WCSite.BLOCK ('1').
-    :param: note: Notes (50 characters max).
+    :param: note: Notes (50 characters max, trimmed as by the server).
     """
     ALLOW, BLOCK = '0', '1'
     ACTIONS = {ALLOW: 'Allow', BLOCK: 'Block'}
 
     def __init__(self, pattern, action=ALLOW, note=''):
-        self.pattern = pattern
+        self.pattern = str(pattern).strip()
         self.action = str(action)
-        self.note = note or ''
+        self.note = str(note or '').strip()
 
     def __repr__(self):
         return 'WCSite({!r}, {!r}, {!r})'.format(self.pattern, self.action, self.note)
@@ -45,18 +48,18 @@ class WCSite():
 
     def check(self):
         """
-        Raise ValueError if the console would refuse the site.
+        Raise ValueError if the console would refuse the site (validatePattern
+        of the dialogs, checked on the lab).
         """
         if len(self.pattern) < 3:
             raise ValueError('Site patterns must be at least 3 characters: {!r}'.format(
                 self.pattern))
-        if re.search(r'[*\\<>\s,]', self.pattern):
+        if not is_wc_site_pattern(self.pattern):
             raise ValueError('Site pattern cannot contain the characters: *, \\, <, >, comma '
                              'or space: {!r}'.format(self.pattern))
         if self.action not in self.ACTIONS:
             raise ValueError('The action must be "0" (Allow) or "1" (Block).')
-        if len(self.note) > 50:
-            raise ValueError('Notes are limited to 50 characters.')
+        check_length('Notes', self.note, 50)
 
 
 class ESWCPolicyBlockAllowList(ESWCPolicy):
@@ -84,8 +87,13 @@ class ESWCPolicyBlockAllowList(ESWCPolicy):
         """
         Set the sites (list of WCSite).
         """
+        patterns = set()
         for site in sites:
             site.check()
+            if site.pattern.lower() in patterns:
+                raise ValueError('The site pattern {!r} is already in the list.'.format(
+                    site.pattern))
+            patterns.add(site.pattern.lower())
         section = self._section(self.SECTION)
         pattern = re.compile(r'^(szSite|szUnicodeSite|Action|szNote)\d+$')
         for setting_obj in section.findall('Setting'):
@@ -102,10 +110,12 @@ class ESWCPolicyBlockAllowList(ESWCPolicy):
 
     def add_site(self, site):
         """
-        Add a site (WCSite). A pattern already in the list is replaced.
+        Add a site (WCSite). A pattern already in the list (case ignored, as
+        the server does) is replaced.
         """
         site.check()
-        sites = [known for known in self.get_sites() if known.pattern != site.pattern]
+        sites = [known for known in self.get_sites()
+                 if known.pattern.lower() != site.pattern.lower()]
         return self.set_sites(sites + [site])
 
     def remove_site(self, pattern):

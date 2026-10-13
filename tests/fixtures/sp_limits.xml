@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='utf-8'?>
+<EPOPolicySchema><EPOPolicyVerInfo vermjr="5" vermin="10" verrel="0" verbld="0" />
+<EPOPolicySettings name="Claude - ENSSP ICAP Test::Settings (C85FD4D1-5CF1-4A5A-9927-CBE3EAA3F4A2)" featureid="VSESTOMD1300" categoryid="VSES1000_Icap_Policies" typeid="VSES1000_Icap_Policies" param_int="0" param_str="">
+<Section name="ICAPAction">
+<Setting name="uAction" value="5" />
+<Setting name="uSecAction" value="1" />
+</Section>
+<Section name="ICAPAdvanced">
+<Setting name="ScanArchives" value="0" />
+<Setting name="ScanMime" value="0" />
+<Setting name="dwMacroHeuristicsLevel" value="1" />
+<Setting name="dwProgramHeuristicsLevel" value="1" />
+</Section>
+<Section name="ICAPDetection">
+<Setting name="LocalExtensionMode" value="4" />
+<Setting name="PlugInEnabled" value="1" />
+<Setting name="szIncludeExts" value="" />
+<Setting name="szProgExts" value="::: do? * abc" />
+</Section>
+<Section name="ICAPGeneral">
+<Setting name="bFilterConnections" value="0" />
+<Setting name="bOverwriteLocalConnectionList" value="0" />
+<Setting name="bOverwriteServerConfig" value="0" />
+<Setting name="dwICAPClientCount" value="3" />
+<Setting name="dwPort" value="65535" />
+<Setting name="szBindAddress" value="223.255.255.255" />
+<Setting name="szICAPClient_0" value="1.2.3.4" />
+<Setting name="szICAPClient_1" value="0.0.0.1" />
+<Setting name="szICAPClient_2" value="010.000.0.1" />
+</Section>
+<Section name="ICAPPerformance">
+<Setting name="dwMaxScanTime" value="9999" />
+<Setting name="dwScanThreadCount" value="800" />
+</Section>
+<Section name="ICAPReporting">
+<Setting name="LogFileFormat" value="1" />
+<Setting name="bLimitSize" value="1" />
+<Setting name="bLogScanEncryptFail" value="1" />
+<Setting name="bLogSettings" value="0" />
+<Setting name="bLogSummary" value="1" />
+<Setting name="bLogToFile" value="1" />
+<Setting name="dwMaxLogSizeMB" value="999" />
+</Section>
+<Section name="ICAPSpyware">
+<Setting name="ApplyNVP" value="1" />
+<Setting name="uAction_Program" value="5" />
+<Setting name="uSecAction_Program" value="1" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ENSSP NetApp Test::Settings (EB8BECCE-4C44-43EC-9CDD-3B44531E7960)" featureid="VSESTOMD1300" categoryid="VSES1000_Netapp_Policies" typeid="VSES1000_Netapp_Policies" param_int="0" param_str="">
+<Section name="NetAppAction">
+<Setting name="uAction" value="5" />
+<Setting name="uSecAction" value="4" />
+</Section>
+<Section name="NetAppAdvanced">
+<Setting name="ScanArchives" value="0" />
+<Setting name="ScanMime" value="0" />
+<Setting name="dwMacroHeuristicsLevel" value="1" />
+<Setting name="dwProgramHeuristicsLevel" value="1" />
+</Section>
+<Section name="NetAppDetection">
+<Setting name="LocalExtensionMode" value="1" />
+<Setting name="PlugInEnabled" value="1" />
+<Setting name="szIncludeExts" value="" />
+<Setting name="szProgExts" value="" />
+</Section>
+<Section name="NetAppExclusions">
+<Setting name="ExcludedItem_0" value="3|4|C:\dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\" />
+<Setting name="ExcludedItem_1" value="3|0|\\server\share\" />
+<Setting name="ExcludedItem_2" value="3|0|*.log" />
+<Setting name="ExcludedItem_3" value="4|0|abcdefghij" />
+<Setting name="ExcludedItem_4" value="4|0|:::" />
+<Setting name="ExcludedItem_5" value="0|0|9999" />
+<Setting name="ExcludedItem_6" value="2|0|1" />
+<Setting name="bAppendExclusions" value="0" />
+<Setting name="dwExclusionCount" value="7" />
+</Section>
+<Section name="NetAppGeneral">
+<Setting name="bKeepAliveProbes" value="1" />
+<Setting name="bOverwriteLocalFilerList" value="0" />
+<Setting name="bResetCache" value="1" />
+<Setting name="bUseGroupedFilerAccount" value="0" />
+<Setting name="dwFilerCount" value="2" />
+<Setting name="szFilerDomainName" value="" />
+<Setting name="szFilerPassword" value="" />
+<Setting name="szFilerPasswordConfirm" value="" />
+<Setting name="szFilerUsername" value="" />
+<Setting name="szFiler_0" value="filer01" />
+<Setting name="szFiler_1" value="10.0.0.5" />
+</Section>
+<Section name="NetAppPerformance">
+<Setting name="dwMaxScanTime" value="60" />
+<Setting name="dwScanThreadCount" value="100" />
+</Section>
+<Section name="NetAppReporting">
+<Setting name="LogFileFormat" value="1" />
+<Setting name="bLimitSize" value="1" />
+<Setting name="bLogScanEncryptFail" value="1" />
+<Setting name="bLogSettings" value="0" />
+<Setting name="bLogSummary" value="1" />
+<Setting name="bLogToFile" value="1" />
+<Setting name="dwMaxLogSizeMB" value="50" />
+</Section>
+<Section name="NetAppSpyware">
+<Setting name="ApplyNVP" value="1" />
+<Setting name="uAction_Program" value="5" />
+<Setting name="uSecAction_Program" value="4" />
+</Section>
+</EPOPolicySettings>
+
+<EPOPolicyObject name="Claude - ENSSP ICAP Test" featureid="VSESTOMD1300" categoryid="VSES1000_Icap_Policies" serverid="W2022EPO510" editflag="0" typeid="VSES1000_Icap_Policies">
+<description /><PolicySettings>Claude - ENSSP ICAP Test::Settings (C85FD4D1-5CF1-4A5A-9927-CBE3EAA3F4A2)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - ENSSP NetApp Test" featureid="VSESTOMD1300" categoryid="VSES1000_Netapp_Policies" serverid="W2022EPO510" editflag="0" typeid="VSES1000_Netapp_Policies">
+<description /><PolicySettings>Claude - ENSSP NetApp Test::Settings (EB8BECCE-4C44-43EC-9CDD-3B44531E7960)</PolicySettings>
+</EPOPolicyObject>
+</EPOPolicySchema>

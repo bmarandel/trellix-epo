@@ -289,7 +289,7 @@ def test_no_html_injection_access_protection():
     policy.load_from_file(str(FIXTURES / 'ap_policy_rules.xml'))
     rule = APRule('<img src=x onerror=alert(1)>', report=True)
     rule.add_subrule(APSubRule('<script>alert(1)</script>', APSubRule.FILES, ['read'],
-                               targets=[APTarget('<b>a</b>')]))
+                               targets=[APTarget('C:\\Data\\*')]))   # < > refused in a target
     policy.add_rule(rule)
     text = policy.to_markdown()
     assert '<img' not in text and '<script' not in text and '<b>' not in text

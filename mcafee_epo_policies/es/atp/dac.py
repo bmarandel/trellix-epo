@@ -26,6 +26,7 @@ import uuid
 import xml.etree.ElementTree as et
 
 from ...policies import Policy
+from ...validators import check_length, is_ens_executable_path
 
 
 class DACExclusion():
@@ -34,7 +35,8 @@ class DACExclusion():
     Exclusion" page): executables never contained.
 
     :param: name: Name (required, 256 characters max).
-    :param: path: File name or path (can include * or ? wildcards).
+    :param: path: File name or path (can include * or ? wildcards, 256
+                  characters max).
     :param: md5: MD5 hash (32 hexadecimal digits).
     :param: signer: None = no digital signature check, ANY_SIGNATURE = Allow
                     any signature, else the "Signed by" distinguished name,
@@ -49,7 +51,7 @@ class DACExclusion():
         self.name = name
         self.path = path or ''
         self.md5 = md5 or ''
-        self.signer = signer or None
+        self.signer = None if signer in (None, '') else signer
         self.notes = notes or ''
         self.id = exclusion_id or str(uuid.uuid4())
 
@@ -65,19 +67,28 @@ class DACExclusion():
 
     def check(self):
         """
-        Raise ValueError if the console would refuse the exclusion.
+        Raise ValueError if the console would refuse the exclusion (checks of
+        the "Add Exclusion" page of ENS ATP 26.8, compared on the lab): name
+        required (256 characters), file name or path (256, Windows path or
+        file name, wildcards allowed - same rule as the Access Protection
+        executables, see is_ens_executable_path), MD5 hash (32 hexadecimal
+        digits), signer (1024; any text is accepted by the server check of
+        ATP, unlike Threat Prevention and Firewall, but not blanks), notes
+        (256). At least a path, an MD5 hash or a signer is required.
         """
-        if not self.name:
-            raise ValueError('An exclusion needs a name.')
-        if not (self.path or self.md5 or self.signer):
+        check_length('Name', self.name, 256, required=True)
+        check_length('File name or path', self.path, 256)
+        check_length('MD5 hash', self.md5, 32)
+        check_length('Signed by', self.signer or '', 1024)
+        check_length('Notes', self.notes, 256)
+        if not (self.path.strip() or self.md5.strip() or self.signer):
             raise ValueError('File name or path, MD5 hash, or signer must be specified.')
+        if self.path and not is_ens_executable_path(self.path):
+            raise ValueError('Invalid file name or path: {!r}'.format(self.path))
         if self.md5 and not re.fullmatch('[0-9a-fA-F]{32}', self.md5):
             raise ValueError('The MD5 hash must be 32 hexadecimal digits: {}'.format(self.md5))
-        for label, value, limit in [('name', self.name, 256), ('path', self.path, 256),
-                                    ('signer', self.signer or '', 1024),
-                                    ('notes', self.notes, 256)]:
-            if len(value) > limit:
-                raise ValueError('The {} is limited to {} characters.'.format(label, limit))
+        if self.signer is not None and not self.signer.strip():
+            raise ValueError('Enter the "Signed by" distinguished name.')
 
     @property
     def signer_label(self):
@@ -260,8 +271,13 @@ class ESATPPolicyDAC(Policy):
         """
         Set the exclusions (list of DACExclusion).
         """
+        names = set()
         for exclusion in exclusions:
             exclusion.check()
+            name = exclusion.name.strip().upper()
+            if name in names:
+                raise ValueError('An exclusion named {!r} already exists.'.format(exclusion.name))
+            names.add(name)
         section = self.__general()
         if section is None:
             raise ValueError('No dacGeneral section in this policy.')

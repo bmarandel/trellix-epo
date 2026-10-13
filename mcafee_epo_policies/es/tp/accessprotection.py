@@ -20,12 +20,28 @@ or "APLinuxRule" (Linux); the module state and the exclusions are in
 Section "BehaviorBlockAP".
 """
 
+import re
 import uuid
 import xml.etree.ElementTree as et
 from ...policies import Policy
+from ...validators import (check_length, is_x500_name, is_ens_executable_path,
+                           is_ens_parameter_path, ENS_USER_NAME)
 
 def _new_id():
     return str(uuid.uuid4())
+
+def _check_unique(label, names):
+    """
+    The console refuses two items with the same name (case and surrounding
+    spaces ignored).
+    """
+    seen = set()
+    for name in names:
+        key = name.strip().upper()
+        if key in seen:
+            raise ValueError('{}: duplicate name {!r}.'.format(label, name))
+        seen.add(key)
+
 
 def _check_inclusion(inclusion):
     if inclusion not in ['include', 'exclude']:
@@ -62,6 +78,32 @@ class APExecutable():
         self.inclusion = _check_inclusion(inclusion)
         self.notes = notes
         self.id = exe_id or _new_id()
+
+    def check(self, linux=False):
+        """
+        Raise ValueError if the console refuses the executable (Threat
+        Prevention 26.8, checked on the lab): name 256 characters; Windows:
+        file name or path of 256 characters (see
+        mcafee_epo_policies.validators.is_ens_executable_path), MD5 of 32
+        hexadecimal digits, signer of 1024 characters (APExecutable.ANY_SIGNATURE
+        or a distinguished name, see is_x500_name), notes 256 characters;
+        Linux: path of 256 characters, no MD5 nor signer.
+        """
+        check_length('Executable name', self.name, 256, required=True)
+        check_length('File name or path', self.path, 256)
+        check_length('Notes', self.notes, 256)
+        if linux:
+            if self.md5 or self.signer:
+                raise ValueError('A Linux executable has no MD5 hash nor signer.')
+            return self
+        if self.path and not is_ens_executable_path(self.path):
+            raise ValueError('Invalid file name or path: {!r}'.format(self.path))
+        if self.md5 and not re.fullmatch(r'[a-fA-F0-9]{32}', self.md5):
+            raise ValueError('The MD5 hash is 32 hexadecimal digits: {!r}'.format(self.md5))
+        check_length('Signer', self.signer, 1024)
+        if self.signer and self.signer != self.ANY_SIGNATURE and not is_x500_name(self.signer):
+            raise ValueError('Invalid signer distinguished name: {!r}'.format(self.signer))
+        return self
 
     def __repr__(self):
         return 'APExecutable({!r}, path={!r}, inclusion={!r})'.format(
@@ -129,6 +171,17 @@ class APUserName():
         self.inclusion = _check_inclusion(inclusion)
         self.id = user_id or _new_id()
 
+    def check(self, linux=False):
+        """
+        Raise ValueError if the console refuses the user name: 100
+        characters; Windows: domain\\user (see
+        mcafee_epo_policies.validators.ENS_USER_NAME).
+        """
+        check_length('User name', self.name, 100, required=True)
+        if not linux and not ENS_USER_NAME.match(self.name):
+            raise ValueError('Invalid user name (domain\\user): {!r}'.format(self.name))
+        return self
+
     def __repr__(self):
         return 'APUserName({!r}, inclusion={!r})'.format(self.name, self.inclusion)
 
@@ -164,6 +217,27 @@ class APTarget():
         self.name = name
         self.inclusion = _check_inclusion(inclusion)
         self.id = target_id or _new_id()
+
+    # Maximum length of a target value, per subrule type (EditSubruleParameter.jsp).
+    MAX_LENGTHS = {'FILE': 256, 'KEY': 255, 'VALUE': 3070, 'PROCESS': 3070, 'SERVICE': 3070}
+
+    def check(self, subrule_type, linux=False):
+        """
+        Raise ValueError if the console refuses the target of a subrule:
+        length per subrule type (MAX_LENGTHS); Windows files: a drive type of
+        APSubRule.DRIVE_TYPES, or a path accepted by
+        mcafee_epo_policies.validators.is_ens_parameter_path.
+        """
+        check_length('Target value', self.value, self.MAX_LENGTHS.get(subrule_type, 3070),
+                     required=True)
+        if subrule_type == 'FILE' and not linux:
+            if self.name == self.DRIVE_TYPE:
+                if self.value not in APSubRule.DRIVE_TYPES:
+                    raise ValueError('Drive type must be within {}.'.format(
+                        list(APSubRule.DRIVE_TYPES)))
+            elif not is_ens_parameter_path(self.value):
+                raise ValueError('Invalid file, folder name, or file path: {!r}'.format(self.value))
+        return self
 
     def __repr__(self):
         return 'APTarget({!r}, name={!r}, inclusion={!r})'.format(
@@ -267,6 +341,20 @@ class APSubRule():
 
     def __eq__(self, other):
         return isinstance(other, APSubRule) and vars(self) == vars(other)
+
+    def check(self):
+        """
+        Raise ValueError if the console refuses the subrule: name of 100
+        characters, valid targets and target executables (no duplicate
+        executable name).
+        """
+        check_length('Subrule name', self.name, 100, required=True)
+        for target in self.targets:
+            target.check(self.type, self.linux)
+        for executable in self.executables:
+            executable.check(self.linux)
+        _check_unique('Target executables', [executable.name for executable in self.executables])
+        return self
 
     def add_target(self, target):
         """
@@ -413,6 +501,25 @@ class APRule():
         Returns False when both Block and Report are deselected.
         """
         return self.block or self.report
+
+    def check(self, other_names=()):
+        """
+        Raise ValueError if the console refuses the rule: name of 128
+        characters not used by another rule (other_names; case ignored),
+        notes of 256 characters, valid executables (no duplicate name), user
+        names and subrules.
+        """
+        check_length('Rule name', self.name, 128, required=True)
+        _check_unique('Rule name', [self.name] + list(other_names))
+        check_length('Notes', self.notes, 256)
+        for executable in self.executables:
+            executable.check(self.linux)
+        _check_unique('Executables', [executable.name for executable in self.executables])
+        for user_name in self.user_names:
+            user_name.check(self.linux)
+        for subrule in self.subrules:
+            subrule.check()
+        return self
 
     def add_executable(self, executable):
         """
@@ -650,7 +757,9 @@ class ESTPPolicyAccessProtection(Policy):
         if section_obj is None:
             return False
         for executable in executables:
+            executable.check()
             executable.inclusion = 'exclude'
+        _check_unique('Exclusions', [executable.name for executable in executables])
         had_count = section_obj.find('Setting[@name="ExecutableCount"]') is not None
         values = {setting.get('name'): setting.get('value')
                   for setting in section_obj.findall('Setting')
@@ -698,6 +807,7 @@ class ESTPPolicyAccessProtection(Policy):
         if self.__find_rule(rule.id)[0] is not None:
             raise ValueError('A rule with the ID {} already exists.'.format(rule.id))
         self.__check_rule(rule)
+        rule.check(self.__other_rule_names(rule))
         policy_obj = self.root.find('EPOPolicyObject')
         settings_name = 'AccessProtectionSettings_Rule_{} ({})'.format(
             rule.id, str(uuid.uuid4()).upper())
@@ -721,7 +831,14 @@ class ESTPPolicyAccessProtection(Policy):
             return False
         if rule.origin == APRule.USER:
             self.__check_rule(rule)
+            rule.check(self.__other_rule_names(rule))
             section_obj.set('name', rule.section_name())
+        else:
+            # Trellix-defined: only block, report, executables and notes change.
+            check_length('Notes', rule.notes, 256)
+            for executable in rule.executables:
+                executable.check(rule.linux)
+            _check_unique('Executables', [executable.name for executable in rule.executables])
         self.__write_section(section_obj, rule.to_values())
         self.__update_legacy_rules(rule)
         return True
@@ -741,6 +858,9 @@ class ESTPPolicyAccessProtection(Policy):
             if reference.text == settings_obj.get('name'):
                 policy_obj.remove(reference)
         return True
+
+    def __other_rule_names(self, rule):
+        return [other.name for other in self.get_rules() if other.id != rule.id]
 
     @staticmethod
     def __check_rule(rule):

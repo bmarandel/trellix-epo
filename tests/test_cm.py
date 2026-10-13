@@ -1,5 +1,5 @@
 """
-Endpoint Security Common (es/common): Options policy.
+Endpoint Security Common (es/cm): Options policy.
 
 common_policies.xml is an export of the lab ePO 5.10 (productId ENDP_GS_1000)
 with "My Default" and "Claude - Common Options Test", changed in the console:
@@ -141,3 +141,77 @@ def test_markdown():
     text = load().to_markdown()
     assert '| Client Interface Mode | Full access |' in text
     assert 'Administrator password' not in text
+
+
+# ------------------------------ Values accepted by the console ------------------------------
+# Number bounds tested on the lab page (Endpoint Security Platform 26.8.0.19750): min - 1 and
+# max + 1 refused, min and max accepted; the cases below are the results of the page validators
+# (validateLogfilePath, validateServerIpOrFqdn, validateExclusion) run on the lab.
+NUMBER_BOUNDS = [('password_attempts', 1, 99), ('lockout_time_frame', 1, 999),
+                 ('lockout_minutes', 1, 999), ('activity_log_size', 1, 999),
+                 ('debug_log_size', 1, 999), ('event_db_size', 50, 999)]
+LOG_LOCATIONS = [('%DEFLOGDIR%', True), ('C:\\Logs', True), ('<SYSTEM_DRIVE>\\Logs', True),
+                 ('<COMPUTER_NAME>\\x', False), ('C:\\Lo*gs', False), ('C:\\a|b', False),
+                 ('<SYSTEM_DRIVE', False), ('C:\\a"b', False), ('/var/log/ens', True),
+                 ('/var/log/a;b', False), ('/var/log/a\\b', False), ('relative\\x', True),
+                 ('D:\\a b\\c?', False)]
+PROXY_ADDRESSES = [('proxy.example.com', True), ('proxy', True), ('10.0.0.1', True),
+                   ('fd00::1', True), (' proxy', False), ('proxy ', False), ('pro xy.com', False),
+                   ('proxy.example.com.', False), ('proxy-.com', False),
+                   ('proxy_1.example.com', True), ('http://proxy', False), ('proxy:8080', False),
+                   ('a.b-c.d', True), ('é.com', True)]
+SP_EXCLUSIONS = [('C:\\Tools\\app.exe', True), ('app.exe', True), ('*.exe', True),
+                 ('C:\\Tools\\*', True), ('C:\\\\Tools', False), ('\\\\server\\share\\a.exe', False),
+                 ('C:/Tools/app.exe', False), ('a"b.exe', False), ('a|b.exe', False), ('C:', True),
+                 ('  ', False), ('?:\\x\\*.exe', True), ('<SYSTEM_DRIVE>\\a.exe', False),
+                 ('%ProgramFiles%\\a.exe', False)]
+
+
+@pytest.mark.parametrize('name,minimum,maximum', NUMBER_BOUNDS)
+def test_number_bounds(name, minimum, maximum):
+    policy = load()
+    for value in (minimum, maximum, ' {} '.format(maximum)):
+        policy.set_option(name, value)
+    for value in (minimum - 1, maximum + 1, '1.5', True):
+        with pytest.raises(ValueError):
+            policy.set_option(name, value)
+
+
+def test_console_values():
+    policy = load()
+    for setter, cases in [(policy.set_log_location, LOG_LOCATIONS),
+                          (lambda value: policy.set_proxy('2', address=value), PROXY_ADDRESSES),
+                          (lambda value: policy.set_sp_process_exclusions([value]), SP_EXCLUSIONS)]:
+        for value, valid in cases:
+            if valid:
+                setter(value)
+            else:
+                with pytest.raises(ValueError):
+                    setter(value)
+    for location in ['C:\\' + 'L' * 253, 'C:\\' + 'L' * 254]:
+        if len(location) <= 256:
+            policy.set_log_location(location)
+        else:
+            with pytest.raises(ValueError):
+                policy.set_log_location(location)
+    with pytest.raises(ValueError):
+        policy.set_proxy('2', address='p' * 101)
+    for port in (0, 65536, '80a'):
+        with pytest.raises(ValueError):
+            policy.set_proxy('2', port=port)
+    policy.set_proxy('2', port=' 3128 ')
+    assert policy.get_proxy()['port'] == 3128
+    with pytest.raises(ValueError):
+        policy.set_sp_process_exclusions(['app.exe', ' app.exe'])      # duplicate
+
+
+def test_setting_length():
+    """
+    The ePO server keeps 3072 characters per setting (an import truncates
+    the rest, checked on the lab with the proxy exclusions).
+    """
+    policy = load()
+    exclusions = ['host{:04d}.example.com'.format(index) for index in range(146)]
+    policy.set_proxy('2', address='proxy.example.com', exclusions=exclusions)   # 3065 characters
+    with pytest.raises(ValueError):
+        policy.set_proxy('2', exclusions=exclusions + ['host0146.example.com'])

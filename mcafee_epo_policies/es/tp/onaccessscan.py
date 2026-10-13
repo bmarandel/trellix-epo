@@ -9,7 +9,8 @@ This module defines the class ESTPPolicyOnAccessScan.
 
 import xml.etree.ElementTree as et
 from ...policies import Policy
-from .exclusions import ExclusionList
+from ...validators import check_int, check_length, is_ens_process_name
+from .exclusions import ExclusionList, check_file_type_list, check_exclusion_rows
 
 class ESTPPolicyOnAccessScan(Policy):
     """
@@ -117,9 +118,9 @@ class ESTPPolicyOnAccessScan(Policy):
         """
         Set the maximum number of seconds for each file scan
         """
-        if int_seconds < 10:
-            raise ValueError('Timeout below 10 seconds is not accepted.')
-        return self.set_setting_value('General', 'dwScannerThreadTimeout', int_seconds)
+        int_seconds = check_int('Maximum number of seconds for each file scan', int_seconds,
+                                10, 9999)
+        return self.set_setting_value('General', 'dwScannerThreadTimeout', str(int_seconds))
 
     max_scan_time = property(get_max_scan_time, set_max_scan_time)
 
@@ -349,8 +350,7 @@ class ESTPPolicyOnAccessScan(Policy):
         """
         Set Threat Detection message (256 caracters maximum)
         """
-        if len(str_message) == 0 or len(str_message) > 256:
-            raise ValueError('The message cannot be empty or longer than 256 caracters.')
+        check_length('Message', str_message, 256, required=True)
         return self.set_setting_value('Alerting', 'szDialogMessage', str_message)
 
     alert_message = property(get_alert_message, set_alert_message)
@@ -395,7 +395,14 @@ class ESTPPolicyOnAccessScan(Policy):
         Return true or false.
         """
         rows = []
+        names = set()
         for name, risk in table:
+            check_length('Process', name, 259, required=True)
+            if not is_ens_process_name(name):
+                raise ValueError('Invalid process name: {!r}'.format(name))
+            if name.strip().lower() in names:
+                raise ValueError('Duplicate process: {!r}'.format(name))
+            names.add(name.strip().lower())
             if risk == 'Low Risk':
                 type_item = '0'
             elif risk == 'High Risk':
@@ -523,6 +530,7 @@ class ESTPPolicyOnAccessScan(Policy):
             raise ValueError('Level must be within ["1", "2", "3", "4"].')
         if level == '4' and len(extensions) < 3:
             raise ValueError('Extensions list, comma separated, must be defined for this level.')
+        check_file_type_list(extensions)
         self.set_setting_value(__section__, 'extensionMode', level)
         self.set_setting_value(__section__, 'szProgExts', extensions)
         return True
@@ -773,9 +781,10 @@ class ESTPPolicyOnAccessScan(Policy):
     def set_exclusion_list(self, table, __section__='Default-Detection_Exclusions'):
         """
         Set exclusions list
-        Use a list or a ProcessList object as input
+        Use a list or a ProcessList object as input (rows checked as in the
+        console, see check_exclusion_rows)
         """
-        values = ['|'.join(row) for row in table]
+        values = ['|'.join(row) for row in check_exclusion_rows(table)]
         return self.set_indexed_list(__section__, 'dwExclusionCount', 'ExcludedItem_{}', values)
 
     exclusion_list = property(get_exclusion_list, set_exclusion_list)
@@ -1312,8 +1321,14 @@ class ESTPPolicyOnAccessScan(Policy):
     def set_script_scan_exclusions(self, excluded_urls):
         """
         Set Excluded URLs
-        Use URLList object as input
+        Use URLList object as input (2048 characters max each, no duplicate)
         """
+        seen = set()
+        for url in excluded_urls:
+            check_length('Excluded URL', url, 2048, required=True)
+            if url.strip() in seen:
+                raise ValueError('Duplicate excluded URL: {!r}'.format(url))
+            seen.add(url.strip())
         return self.set_indexed_list('ScriptScanURLExclItems', 'dwScriptScanURLExclItemCount',
                                      'ScriptScanExclusionURL_{}', excluded_urls)
 

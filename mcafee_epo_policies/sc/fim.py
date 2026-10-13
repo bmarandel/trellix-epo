@@ -8,10 +8,14 @@ This module defines the class for the Solidcore "Integrity Monitor" policies
 (SCOR_FIM): SCFIMPolicyRules.
 """
 
+import re
 import uuid
+
 from ..policies import Policy
 from .scpolicies import SCPolicy
 from .rules import SCRules
+from ..validators import (check_length, is_sc_fim_pattern, is_sc_fim_user, is_sc_path,
+                          is_sc_registry_key, is_sc_top_level_path)
 
 class SCFIMRules(SCRules):
     """
@@ -32,6 +36,26 @@ class SCFIMRules(SCRules):
             return False
         return self.add_rule({'type': rule_type, 'pattern': pattern,
                               'action': 'Include' if include else 'Exclude'})
+
+    def __os(self):
+        return 'UNIX' if self.is_unix() else 'WIN'
+
+    def __check_value(self, label, value, check=None):
+        value = check_length(label, str(value).strip(), 3072, required=True)
+        if check is not None and not check(value):
+            raise ValueError('Invalid {}: {!r}'.format(label, value))
+        return value
+
+    def __check_tracked_path(self, path):
+        """
+        The Content Change Tracking checks of the console (validatePathForFD,
+        enableDisableFDElements): not a network path, not a top-level path
+        (is_sc_top_level_path), no * folder.
+        """
+        bad = r'.:\\\*\\|.\\\*\\|^\*' if self.__os() == 'WIN' else r'./\*/|^/\*/|^\*'
+        if path.startswith('\\\\') or is_sc_top_level_path(path) or re.search(bad, path):
+            raise ValueError('Content Change Tracking is not available for {!r} (network, '
+                             'top-level or wildcard folder path).'.format(path))
 
     def __remove_pattern(self, rule_type, pattern):
         return self.remove_rules(rule_type, {'pattern': pattern}) > 0
@@ -78,8 +102,17 @@ class SCFIMRules(SCRules):
 
         :param: change_tracking: Enable Content Change Tracking (files only).
         :param: encoding: File encoding (see ENCODINGS) when change_tracking is True.
+        As in the console, the path is trimmed and checked by is_sc_path;
+        Content Change Tracking needs Include and a path accepted by the
+        console (no network, top-level or wildcard folder path).
+
         :return: True, or False if the path is already in the list.
         """
+        path = self.__check_value('File', path, lambda value: is_sc_path(value, self.__os()))
+        if change_tracking:
+            if not include:
+                raise ValueError('Content Change Tracking needs Include.')
+            self.__check_tracked_path(path)
         if self.get_rules('mon-file', {'pattern': path}):
             return False
         rule = {'type': 'mon-file', 'pattern': path, 'action': 'Include' if include else 'Exclude'}
@@ -96,8 +129,16 @@ class SCFIMRules(SCRules):
         :param: recurse: Recurse Directory checkbox.
         :param: include_patterns: Include Patterns (e.g. ['*.cfg']).
         :param: exclude_patterns: Exclude Patterns (e.g. ['*.tmp']).
+        As in the console, the path is trimmed and checked like a tracked
+        file (see add_file), the patterns by is_sc_fim_pattern.
+
         :return: True, or False if the directory is already in the list.
         """
+        path = self.__check_value('File', path, lambda value: is_sc_path(value, self.__os()))
+        self.__check_tracked_path(path)
+        for pattern in list(include_patterns) + list(exclude_patterns):
+            if not str(pattern).strip() or not is_sc_fim_pattern(pattern):
+                raise ValueError('Invalid pattern (see is_sc_fim_pattern): {!r}'.format(pattern))
         if self.get_rules('file-diff-dir', {'pattern': path}):
             return False
         self.__check_encoding(encoding)
@@ -128,9 +169,11 @@ class SCFIMRules(SCRules):
 
     def add_registry(self, key, include=True):
         """
-        Add a monitored registry key (Include), or exclude it (Exclude).
+        Add a monitored registry key (Include), or exclude it (Exclude). The
+        key is trimmed and checked by is_sc_registry_key.
         """
-        return self.__add_pattern('mon-reg', key, include)
+        return self.__add_pattern('mon-reg', self.__check_value('Registry', key,
+                                                                is_sc_registry_key), include)
 
     def remove_registry(self, key):
         """
@@ -148,9 +191,11 @@ class SCFIMRules(SCRules):
 
     def add_extension(self, extension, include=False):
         """
-        Add a file extension, excluded by default (Exclude) or included (Include).
+        Add a file extension, excluded by default (Exclude) or included
+        (Include). The extension is trimmed and cannot contain -.
         """
-        return self.__add_pattern('mon-extn', extension, include)
+        return self.__add_pattern('mon-extn', self.__check_value(
+            'Extension', extension, lambda value: '-' not in value), include)
 
     def remove_extension(self, extension):
         """
@@ -169,8 +214,9 @@ class SCFIMRules(SCRules):
     def add_program(self, program, include=False):
         """
         Add a program, excluded by default (Exclude) or included (Include).
+        The program is required and trimmed.
         """
-        return self.__add_pattern('mon-proc', program, include)
+        return self.__add_pattern('mon-proc', self.__check_value('Program', program), include)
 
     def remove_program(self, program):
         """
@@ -188,9 +234,11 @@ class SCFIMRules(SCRules):
 
     def add_user(self, user, include=False):
         """
-        Add a user, excluded by default (Exclude) or included (Include).
+        Add a user, excluded by default (Exclude) or included (Include). The
+        user is trimmed and checked by is_sc_fim_user.
         """
-        return self.__add_pattern('mon-user', user, include)
+        return self.__add_pattern('mon-user', self.__check_value(
+            'User', user, lambda value: is_sc_fim_user(value, self.__os())), include)
 
     def remove_user(self, user):
         """

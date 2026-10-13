@@ -7,8 +7,12 @@
 This module defines the class ESFWPolicyOptions.
 """
 
+import re
 import xml.etree.ElementTree as et
 from ...policies import Policy
+from ...validators import (check_int, check_length, check_setting_length, is_fw_defined_network,
+                           is_fw_file_path, is_x500_name, FW_BLOCKED_DOMAIN, FW_LOCAL_SUBNET, FW_ANY_IPV4,
+                           FW_ANY_IPV6)
 
 class ESFWPolicyOptions(Policy):
     """
@@ -87,6 +91,7 @@ class ESFWPolicyOptions(Policy):
         setting_obj = self.__section().find('Setting[@name="{}"]'.format(setting))
         if setting_obj is None:
             return False
+        check_setting_length(setting, str(value))
         setting_obj.set('value', str(value))
         return True
 
@@ -112,6 +117,8 @@ class ESFWPolicyOptions(Policy):
             if setting_obj.get('name') == '_' + name or \
                     setting_obj.get('name').startswith('+{}#'.format(name)):
                 section.remove(setting_obj)
+        for value in values:
+            check_setting_length(name, value)
         et.SubElement(section, 'Setting', {'name': '_' + name, 'value': str(len(values))})
         for row, value in enumerate(values):
             et.SubElement(section, 'Setting', {'name': '+{}#{}'.format(name, row),
@@ -179,9 +186,7 @@ class ESFWPolicyOptions(Policy):
         """
         Set the Number of seconds (1-240) before TCP connections time out
         """
-        if int_seconds < 1 or int_seconds > 240:
-            raise ValueError('The TCP time-out must be within 1-240 seconds.')
-        return self.set_option('TCPTimeout', int_seconds)
+        return self.set_option('TCPTimeout', check_int('TCP time-out', int_seconds, 1, 240))
 
     tcp_timeout = property(get_tcp_timeout, set_tcp_timeout)
 
@@ -197,9 +202,7 @@ class ESFWPolicyOptions(Policy):
         Set the Number of seconds (1-300) before UDP and ICMP echo virtual
         connections time out
         """
-        if int_seconds < 1 or int_seconds > 300:
-            raise ValueError('The UDP/ICMP time-out must be within 1-300 seconds.')
-        return self.set_option('VCTimeout', int_seconds)
+        return self.set_option('VCTimeout', check_int('UDP/ICMP time-out', int_seconds, 1, 300))
 
     udp_icmp_timeout = property(get_udp_icmp_timeout, set_udp_icmp_timeout)
 
@@ -212,13 +215,28 @@ class ESFWPolicyOptions(Policy):
 
     def set_blocked_domains(self, domains):
         """
-        Set the DNS Blocking domain names (list of strings)
+        Set the DNS Blocking domain names (list of strings): * or labels of
+        letters, digits, - and the * ? wildcards, two labels at least (see
+        mcafee_epo_policies.validators.FW_BLOCKED_DOMAIN), no space, no
+        duplicate (the console Add dialog removes the spaces and ignores the
+        duplicates).
         """
+        for domain in domains:
+            if domain != '*' and not FW_BLOCKED_DOMAIN.fullmatch(str(domain)):
+                raise ValueError('Invalid domain name: {!r} (e.g. *.example.com)'.format(domain))
+        if len(set(domains)) != len(domains):
+            raise ValueError('Duplicate domain names: {}'.format(domains))
         return self.__set_list('BlockedDomains', domains)
 
     blocked_domains = property(get_blocked_domains, set_blocked_domains)
 
     # Defined Networks: Address type, Address, Trusted/Not trusted
+    # Address types whose address is typed (and checked) in the console.
+    __TYPED_ADDRESSES = ['SingleIP', 'Subnet', 'Range', 'FQDN']
+    # Value stored by the console for the other address types (lab, Firewall 26.8).
+    SPECIAL_ADDRESSES = {'LocalSubnet': FW_LOCAL_SUBNET, 'AnyIPv4': FW_ANY_IPV4,
+                         'AnyIPv6': FW_ANY_IPV6, 'AnyLocalIP': '[local]'}
+
     def get_defined_networks(self):
         """
         Get the Defined Networks: a list of dicts {'type', 'address', 'trusted'}
@@ -232,11 +250,29 @@ class ESFWPolicyOptions(Policy):
     def set_defined_networks(self, networks):
         """
         Set the Defined Networks from a list of dicts {'type', 'address', 'trusted'}.
+        The address (100 characters) is checked as the console does for its
+        type (see mcafee_epo_policies.validators.is_fw_defined_network); for
+        Local subnet and the Any types it can be left empty: the library
+        writes the value stored by the console
+        (ESFWPolicyOptions.SPECIAL_ADDRESSES).
         """
+        networks = [dict(network) for network in networks]
         for network in networks:
+            special = self.SPECIAL_ADDRESSES.get(network['type'])
+            if special is not None:
+                if network.get('address', '') not in ['', special]:
+                    raise ValueError('A {} has no address: {!r}'.format(
+                        self.ADDRESS_TYPES[network['type']], network['address']))
+                network['address'] = special
             if network['type'] not in self.ADDRESS_TYPES:
                 raise ValueError('Address type must be within {}.'.format(
                     list(self.ADDRESS_TYPES)))
+            if network['trusted'] not in ['0', '1']:
+                raise ValueError('Trusted must be "1" or "0".')
+            if network['type'] in self.__TYPED_ADDRESSES and \
+                    not is_fw_defined_network(network['type'], network['address']):
+                raise ValueError('Invalid {} address: {!r}'.format(
+                    self.ADDRESS_TYPES[network['type']], network['address']))
         self.__set_list('AddressType', [network['type'] for network in networks])
         self.__set_list('AddressValue', [network['address'] for network in networks])
         return self.__set_list('IsTrusted', [network['trusted'] for network in networks])
@@ -249,6 +285,8 @@ class ESFWPolicyOptions(Policy):
                     ('description', 'TrustedExeDesc'), ('hash', 'TrustedExeHash'),
                     ('signature', 'TrustedExeSignature'), ('note', 'TrustedExeNote')]
 
+    ANY_SIGNATURE = '*'     # "Allow any signature" (stored by the console)
+
     def get_trusted_executables(self):
         """
         Get the Trusted Executables: a list of dicts {'name', 'path',
@@ -260,8 +298,37 @@ class ESFWPolicyOptions(Policy):
     def set_trusted_executables(self, executables):
         """
         Set the Trusted Executables from a list of dicts {'name', 'path',
-        'description', 'hash', 'signature', 'note'} (missing keys are empty).
+        'description', 'hash', 'signature', 'note'} (missing keys are empty;
+        signature: '' no digital signature check, ESFWPolicyOptions.ANY_SIGNATURE
+        "Allow any signature" or the distinguished name of the signer),
+        checked as the console executable dialog does: name of 100
+        characters, path 257 (see mcafee_epo_policies.validators.
+        is_fw_file_path), description 255, MD5 hash of 32 hexadecimal digits,
+        signature 1024, note 3000; one of description, path, hash or
+        signature is required.
         """
+        for executable in executables:
+            name = executable.get('name', '')
+            check_length('Executable name', name, 100, required=True)
+            for key, label, maximum in [('path', 'File name or path', 257),
+                                        ('description', 'File description', 255),
+                                        ('signature', 'Signer', 1024), ('note', 'Notes', 3000)]:
+                check_length('{} of "{}"'.format(label, name), executable.get(key, ''), maximum)
+            path, md5 = executable.get('path', ''), executable.get('hash', '')
+            if not (executable.get('description', '').strip() or path.strip() or md5 or
+                    executable.get('signature', '')):
+                raise ValueError('Executable "{}": a file description, a path, an MD5 hash or a '
+                                 'signer is required.'.format(name))
+            if path and not is_fw_file_path(path):
+                raise ValueError('Executable "{}": invalid file name or path: {!r}'.format(
+                    name, path))
+            if md5 and not re.fullmatch(r'[0-9a-fA-F]{32}', md5):
+                raise ValueError('Executable "{}": the MD5 hash is 32 hexadecimal digits: '
+                                 '{!r}'.format(name, md5))
+            signature = executable.get('signature', '')
+            if signature not in ['', self.ANY_SIGNATURE] and not is_x500_name(signature):
+                raise ValueError('Executable "{}": the signer is a distinguished name (e.g. '
+                                 'CN=Contoso, O=Contoso, C=US): {!r}'.format(name, signature))
         for key, setting in self.__EXE_FIELDS:
             self.__set_list(setting, [executable.get(key, '') for executable in executables])
         return True

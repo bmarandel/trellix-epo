@@ -25,6 +25,7 @@ Storage learnt from test policies changed in the ePO 5.10 console:
 """
 
 from ...policies import Policy
+from ...validators import check_int, is_sp_file_type
 
 
 class ESSPPolicy(Policy):
@@ -109,8 +110,13 @@ class ESSPPolicy(Policy):
     def set_file_types_to_scan(self, mode, file_types=(), no_extension=False, scan_macros=False):
         """
         Set the "File types to scan" options (see get_file_types_to_scan).
-        The file types of the other mode are kept, as in the console.
+        The file types of the other mode are kept, as in the console. A file
+        type has 3 characters at most, without / " | < > \\ : or space
+        (is_sp_file_type; use no_extension for the files with no extension).
         """
+        for file_type in file_types:
+            if not is_sp_file_type(file_type) or file_type == self.NO_EXTENSION:
+                raise ValueError('Invalid file type: {!r}'.format(file_type))
         if mode == self.ALL_FILES:
             return self._set('Detection', 'LocalExtensionMode', '1')
         if mode == self.DEFAULT_AND_SPECIFIED:
@@ -206,9 +212,10 @@ class ESSPPolicy(Policy):
 
     def set_max_scan_time(self, seconds):
         """
-        Set Maximum scan time (seconds).
+        Set Maximum scan time (seconds, 10-9999).
         """
-        return self._set('Performance', 'dwMaxScanTime', int(seconds))
+        return self._set('Performance', 'dwMaxScanTime',
+                         check_int('Maximum scan time', seconds, 10, 9999))
 
     max_scan_time = property(get_max_scan_time, set_max_scan_time)
 
@@ -221,9 +228,10 @@ class ESSPPolicy(Policy):
 
     def set_scan_threads(self, count):
         """
-        Set Number of antivirus scan threads.
+        Set Number of antivirus scan threads (1-800).
         """
-        return self._set('Performance', 'dwScanThreadCount', int(count))
+        return self._set('Performance', 'dwScanThreadCount',
+                         check_int('Number of antivirus scan threads', count, 1, 800))
 
     scan_threads = property(get_scan_threads, set_scan_threads)
 
@@ -292,13 +300,17 @@ class ESSPPolicy(Policy):
     def set_reporting(self, **options):
         """
         Set Reports tab options, e.g. set_reporting(log_to_file='1',
-        max_size_mb=100, format='1') (see get_reporting).
+        max_size_mb=100, format='1') (see get_reporting). The maximum size
+        is 1-999 MB (a textbox of 3 digits).
         """
         for key, value in options.items():
             if key not in self.__REPORTING:
                 raise ValueError('Unknown reporting option: {}'.format(key))
             if key == 'format' and str(value) not in self.LOG_FORMATS:
                 raise ValueError('Unknown log file format: {}'.format(value))
+            if key == 'max_size_mb':
+                options[key] = check_int('Maximum log file size (MB)', value, 1, 999)
+        for key, value in options.items():
             self._set('Reporting', self.__REPORTING[key], value)
         return True
 

@@ -13,6 +13,7 @@ and language, "<message>_<language>" (e.g. szBlock_en, szBlock_fr), for the
 """
 
 from .common import ESWCPolicy
+from ...validators import check_length
 
 
 class ESWCPolicyMessaging(ESWCPolicy):
@@ -96,13 +97,14 @@ class ESWCPolicyMessaging(ESWCPolicy):
     def set_message(self, message, text, language='en'):
         """
         Set a message, e.g. set_message('szBlock', 'Site interdit.', 'fr').
-        Messages are limited to 100 characters, explanations (HTML OK) to
-        1000 and the image URL to 254.
+        Messages are required and limited to 100 characters, explanations
+        (HTML OK, a line break counts for one and is stored as \n) to 1000
+        and the image URL to 254.
         """
         self.__check(message, language)
-        limit = self.MESSAGES[message][1]
-        if len(text) > limit:
-            raise ValueError('{} is limited to {} characters.'.format(message, limit))
+        label, limit = self.MESSAGES[message]
+        text = str(text).replace('\r\n', '\n')
+        check_length('{} ({})'.format(label, message), text, limit, required=limit == 100)
         return self._set('EnforcementMessaging', '{}_{}'.format(message, language), text, True)
 
     def set_message_all_languages(self, message, text):

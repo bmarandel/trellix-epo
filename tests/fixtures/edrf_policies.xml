@@ -1,0 +1,638 @@
+<epo:EPOPolicySchema xmlns:epo="mcafee-epo-policy">
+<EPOPolicyVerInfo vermjr="5" vermin="10" verrel="0" verbld="0" />
+<EPOPolicySettings name="My Default::Settings (657E715C-2FB4-409D-8D09-4F75F622FE92)" featureid="XCLIENT_META" categoryid="General" typeid="General" param_int="0" param_str="">
+<Section name="General">
+<Setting name="HXServerName" value="" />
+<Setting name="UEDR/ContextInfo/enabled" value="true" />
+<Setting name="UEDR/General/unattended_update_enabled" value="true" />
+<Setting name="UEDR/General/unattended_update_timeout" value="240" />
+<Setting name="UEDR/MarLogger/buffer_size" value="20" />
+<Setting name="UEDR/MarLogger/log_level" value="3" />
+<Setting name="UEDR/MarLogger/log_path" value="" />
+<Setting name="UEDR/MarLogger/max_file_size" value="10" />
+<Setting name="UEDR/MarLogger/storage_format" value="file" />
+<Setting name="UEDR/SystemRuntime/enabled" value="true" />
+<Setting name="UEDR/WinRegistry/enabled" value="true" />
+<Setting name="job_enabled" value="false" />
+<Setting name="libuv_enabled" value="false" />
+<Setting name="max_count_enabled" value="true" />
+<Setting name="max_days_enabled" value="false" />
+<Setting name="mxa/container/UnifiedEdr/enabled" value="true" />
+<Setting name="mxa/eventor/db_in_memory" value="false" />
+<Setting name="mxa/eventor/db_journal_mode" value="WAL" />
+<Setting name="mxa/eventor/db_memory_mapped" value="false" />
+<Setting name="mxa/eventor/db_page_size" value="1024" />
+<Setting name="mxa/eventor/db_synchronous" value="NORMAL" />
+<Setting name="mxa/eventor/max_db_size" value="120" />
+<Setting name="mxa/eventor/storage_mode" value="highintegrity" />
+<Setting name="mxa/health/report" value="false" />
+<Setting name="mxa/health/report_interval" value="600" />
+<Setting name="mxa/intel/rsrc/size_limit" value="33554432" />
+<Setting name="mxa/intel/url" value="/content/v1/intel/ioc/win-current_xagent_win" />
+<Setting name="mxa/intel/url_linux" value="/content/v1/intel/ioc/linux-xagent_linux" />
+<Setting name="mxa/intel/url_mac" value="/content/v1/intel/ioc/osx-xagent_mac" />
+<Setting name="mxa/ioc_metadata/url" value="/content/v1/intel/plugins/forensics-bridge" />
+<Setting name="mxa/log/enabled" value="true" />
+<Setting name="mxa/log/level" value="INFO" />
+<Setting name="mxa/log/mask" value="" />
+<Setting name="mxa/log/max_count" value="100000" />
+<Setting name="mxa/log/max_days" value="0" />
+<Setting name="mxa/log/per_module" value="false" />
+<Setting name="mxa/process/cpu_limit" value="100" />
+<Setting name="mxa/process/priority" value="idle" />
+<Setting name="mxa/process/protection_enabled" value="true" />
+<Setting name="mxa/process/uninstall_password" value="" />
+<Setting name="mxa/process/uninstall_password_enabled" value="false" />
+<Setting name="mxa/proxy" value="true" />
+<Setting name="mxa/proxy/exclude_hosts" value="" />
+<Setting name="mxa/proxy/exclude_local_host" value="false" />
+<Setting name="mxa/proxy/failed_retry_delay" value="1200" />
+<Setting name="mxa/proxy/host" value="" />
+<Setting name="mxa/proxy/password" value="" />
+<Setting name="mxa/proxy/port" value="80" />
+<Setting name="mxa/proxy/type" value="system" />
+<Setting name="mxa/proxy/username" value="" />
+<Setting name="mxs/ca/pem" value="" />
+<Setting name="mxs/clusters" value="" />
+<Setting name="mxs/fastpoll_agents" value="30" />
+<Setting name="mxs/hx_enabled" value="false" />
+<Setting name="mxs/pki/distro/crl" value="" />
+<Setting name="mxs/poll_agents" value="600" />
+<Setting name="mxs/provo/cert" value="" />
+<Setting name="mxs/provo/key" value="" />
+<Setting name="mxs/provo/servers" value="" />
+<Setting name="queue_enabled" value="false" />
+<Setting name="ssl_enabled" value="false" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="My Default::Settings (47E18AA0-E185-4718-A29D-069E3C82CFF8)" featureid="XCLIENT_META" categoryid="Protection" typeid="Protection" param_int="0" param_str="">
+<Section name="Protection">
+<Setting name="mxa/MalwareProtection/GTI/enabled" value="false" />
+<Setting name="mxa/MalwareProtection/Quarantine/actions/cleanEnabled" value="false" />
+<Setting name="mxa/MalwareProtection/Quarantine/actions/delete_infected_archives" value="false" />
+<Setting name="mxa/MalwareProtection/Quarantine/actions/notifyEnabled" value="false" />
+<Setting name="mxa/MalwareProtection/Quarantine/actions/remove-traceEnabled" value="false" />
+<Setting name="mxa/MalwareProtection/Quarantine/exceptions/adwareEnabled" value="false" />
+<Setting name="mxa/MalwareProtection/Quarantine/exceptions/hueristicEnabled" value="false" />
+<Setting name="mxa/MalwareProtection/Quarantine/exceptions/pupEnabled" value="false" />
+<Setting name="mxa/MalwareProtection/Quarantine/exceptions/spywareEnabled" value="false" />
+<Setting name="mxa/MalwareProtection/UpdateInterval" value="7200" />
+<Setting name="mxa/MalwareProtection/clean32_uri" value="/content/v1/intel/mal/clean32" />
+<Setting name="mxa/MalwareProtection/clean64_uri" value="/content/v1/intel/mal/clean64" />
+<Setting name="mxa/MalwareProtection/cleandb/rsrc/size_limit" value="146800640" />
+<Setting name="mxa/MalwareProtection/cleandb32/rsrc/size_limit" value="146800640" />
+<Setting name="mxa/MalwareProtection/cleandb32/url" value="/content/v1/intel/mal/clean32" />
+<Setting name="mxa/MalwareProtection/cleandb64/rsrc/size_limit" value="146800640" />
+<Setting name="mxa/MalwareProtection/cleandb64/url" value="/content/v1/intel/mal/clean64" />
+<Setting name="mxa/MalwareProtection/dti_config/rsrc/size_limit" value="52428800" />
+<Setting name="mxa/MalwareProtection/dti_config/uri" value="/content/v1/intel/mal/dti_config" />
+<Setting name="mxa/MalwareProtection/dti_config/url" value="/content/v1/intel/mal/dti_config" />
+<Setting name="mxa/MalwareProtection/dti_exclusions/rsrc/size_limit" value="52428800" />
+<Setting name="mxa/MalwareProtection/dti_exclusions/url" value="/content/v1/intel/mal/exclusions" />
+<Setting name="mxa/MalwareProtection/dti_exclusions_uri" value="/content/v1/intel/mal/exclusions" />
+<Setting name="mxa/MalwareProtection/enable_content_rollback" value="false" />
+<Setting name="mxa/MalwareProtection/enable_white_list" value="true" />
+<Setting name="mxa/MalwareProtection/engine_configuration/av/cloud_lookup" value="false" />
+<Setting name="mxa/MalwareProtection/engine_configuration/bd/enable" value="false" />
+<Setting name="mxa/MalwareProtection/engine_configuration/bd/quarantine_enable" value="false" />
+<Setting name="mxa/MalwareProtection/engine_configuration/mg/enable" value="false" />
+<Setting name="mxa/MalwareProtection/engine_configuration/mg/quarantine_enable" value="false" />
+<Setting name="mxa/MalwareProtection/excludedFiles" value="" />
+<Setting name="mxa/MalwareProtection/excludedMD5s" value="" />
+<Setting name="mxa/MalwareProtection/excludedProcesses" value="" />
+<Setting name="mxa/MalwareProtection/hx_exclusions/rsrc/size_limit" value="52428800" />
+<Setting name="mxa/MalwareProtection/hx_exclusions/url" value="/content/v1/intel/mal/hx_exclusions" />
+<Setting name="mxa/MalwareProtection/hx_exclusions_uri" value="/content/v1/intel/mal/hx_exclusions" />
+<Setting name="mxa/MalwareProtection/mg_intel/rsrc/size_limit" value="52428800" />
+<Setting name="mxa/MalwareProtection/mg_intel/url" value="/content/v1/intel/mal/mg_content" />
+<Setting name="mxa/MalwareProtection/mg_intel_uri" value="/content/v1/intel/mal/mg_content" />
+<Setting name="mxa/MalwareProtection/network_oas/enabled" value="false" />
+<Setting name="mxa/MalwareProtection/network_oas/mode" value="read-write" />
+<Setting name="mxa/MalwareProtection/network_oas/mode_read" value="read" />
+<Setting name="mxa/MalwareProtection/network_oas/mode_write" value="write" />
+<Setting name="mxa/MalwareProtection/oas/archive_scan_enabled" value="false" />
+<Setting name="mxa/MalwareProtection/oas/av/max_file_size" value="30" />
+<Setting name="mxa/MalwareProtection/oas/blocking_timeout" value="10" />
+<Setting name="mxa/MalwareProtection/oas/max_archive_depth" value="4" />
+<Setting name="mxa/MalwareProtection/oas/mg/max_file_size" value="12" />
+<Setting name="mxa/MalwareProtection/oas/scan_timeout" value="15" />
+<Setting name="mxa/MalwareProtection/ods/archive_scan_enabled" value="true" />
+<Setting name="mxa/MalwareProtection/ods/av/max_file_size" value="2048" />
+<Setting name="mxa/MalwareProtection/ods/max_archive_depth" value="4" />
+<Setting name="mxa/MalwareProtection/ods/mg/max_file_size" value="100" />
+<Setting name="mxa/MalwareProtection/ods/scan_timeout" value="180" />
+<Setting name="mxa/MalwareProtection/scan_configuration/ods/event_based_scans" value="" />
+<Setting name="mxa/MalwareProtection/scancontrol/cancel_allowed" value="false" />
+<Setting name="mxa/MalwareProtection/scancontrol/pause_enabled" value="false" />
+<Setting name="mxa/MalwareProtection/scancontrol/pause_max" value="10" />
+<Setting name="mxa/MalwareProtection/scancontrol/pause_period" value="3600" />
+<Setting name="mxa/MalwareProtection/updateEnable" value="true" />
+<Setting name="mxa/MalwareProtection/update_version_exclusions" value="" />
+<Setting name="mxa/MalwareProtection/user_exclusions_uri" value="/content/v1/intel/mal/hx_exclusions" />
+<Setting name="mxa/ProRemSvc/age_to_purge" value="90" />
+<Setting name="mxa/ProRemSvc/auto_purge_check_interval" value="90" />
+<Setting name="mxa/ProRemSvc/generate_xml" value="false" />
+<Setting name="mxa/ProRemSvc/max_quarantine_size" value="100" />
+<Setting name="mxa/ProRemSvc/quarantine_path" value="" />
+<Setting name="mxa/container/MalwareProtection/enabled" value="false" />
+<Setting name="mxa/container/ProRemSvc/enabled" value="false" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="My Default::Settings (F54E3C64-EDE0-417B-A8C7-18812FCB8F74)" featureid="XCLIENT_META" categoryid="Streaming" typeid="Streaming" param_int="0" param_str="">
+<Section name="Streaming">
+<Setting name="UEDR/TraceScanner/audit_rate_limit" value="9500" />
+<Setting name="UEDR/TraceScanner/bulk_time" value="30" />
+<Setting name="UEDR/TraceScanner/cairo_topic_compressed" value="/mcafee/bridge/traceEventCompressed" />
+<Setting name="UEDR/TraceScanner/cairo_topic_uncompressed" value="/mcafee/bridge/traceEvent" />
+<Setting name="UEDR/TraceScanner/cds_retention_period_days" value="7" />
+<Setting name="UEDR/TraceScanner/cds_size_limit_mb" value="210" />
+<Setting name="UEDR/TraceScanner/compression" value="true" />
+<Setting name="UEDR/TraceScanner/disabled_rules" value="" />
+<Setting name="UEDR/TraceScanner/disabled_rules_by_internal_tag" value="2147483644" />
+<Setting name="UEDR/TraceScanner/disabled_rules_linux" value="" />
+<Setting name="UEDR/TraceScanner/disabled_rules_mac" value="" />
+<Setting name="UEDR/TraceScanner/enabled" value="true" />
+<Setting name="UEDR/TraceScanner/ignored_exact_files_linux" value="" />
+<Setting name="UEDR/TraceScanner/ignored_exact_folders_linux" value="" />
+<Setting name="UEDR/TraceScanner/ignored_process" value="" />
+<Setting name="UEDR/TraceScanner/ignored_process_linux" value="" />
+<Setting name="UEDR/TraceScanner/ignored_process_mac" value="" />
+<Setting name="UEDR/TraceScanner/injectcore_enabled" value="true" />
+<Setting name="UEDR/TraceScanner/log_level" value="3" />
+<Setting name="UEDR/TraceScanner/max_db_size_mb" value="80" />
+<Setting name="UEDR/TraceScanner/report_connectivity_status" value="false" />
+<Setting name="UEDR/TraceScanner/s3_bucket_aws_access_key_id" value="" />
+<Setting name="UEDR/TraceScanner/s3_bucket_aws_secret_access_key" value="" />
+<Setting name="UEDR/TraceScanner/s3_bucket_name" value="" />
+<Setting name="UEDR/TraceScanner/s3_default_region_name" value="" />
+<Setting name="UEDR/TraceScanner/s3_push_frequency_seconds" value="30" />
+<Setting name="UEDR/TraceScanner/send_traces_to_edr_cloud" value="true" />
+<Setting name="UEDR/TraceScanner/send_traces_to_s3_bucket" value="false" />
+<Setting name="UEDR/TraceScanner/topic_compressed" value="/mcafee/bridge/traceDataCompressed" />
+<Setting name="UEDR/TraceScanner/topic_uncompressed" value="/mcafee/bridge/traceData" />
+<Setting name="UEDR/TraceScanner/use_oplocks" value="false" />
+<Setting name="mxa/eventor/ioc_alerts_to_edr_epp_enabled" value="true" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="My Default::Settings (1C7C4467-B2D2-483E-A457-D4DC073C5230)" featureid="XCLIENT_META" categoryid="Detection" typeid="Detection" param_int="0" param_str="">
+<Section name="Detection">
+<Setting name="mxa/container/Eventor/enabled" value="true" />
+<Setting name="mxa/eventor/dns_evts_enabled" value="true" />
+<Setting name="mxa/eventor/excludedPaths" value="" />
+<Setting name="mxa/eventor/excludedProcessNames" value="" />
+<Setting name="mxa/eventor/match_interval" value="60" />
+<Setting name="mxa/eventor/network_evts_enabled" value="true" />
+<Setting name="mxa/eventor/registry_key_exclusion_filter" value="" />
+<Setting name="mxa/eventor/udp_send_events" value="false" />
+<Setting name="mxa/eventor/url_evts_enabled" value="true" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Demo (Monitor)::Settings (56ED7604-3D90-4157-98CA-558DF647016C)" featureid="XCLIENT_META" categoryid="Detection" typeid="Detection" param_int="0" param_str="">
+<Section name="Detection">
+<Setting name="mxa/container/Eventor/enabled" value="true" />
+<Setting name="mxa/eventor/dns_evts_enabled" value="true" />
+<Setting name="mxa/eventor/excludedPaths" value="" />
+<Setting name="mxa/eventor/excludedProcessNames" value="" />
+<Setting name="mxa/eventor/match_interval" value="60" />
+<Setting name="mxa/eventor/network_evts_enabled" value="true" />
+<Setting name="mxa/eventor/registry_key_exclusion_filter" value="" />
+<Setting name="mxa/eventor/udp_send_events" value="false" />
+<Setting name="mxa/eventor/url_evts_enabled" value="true" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="My Default::Settings (5417424D-8003-44E7-A396-FADB58163D35)" featureid="XCLIENT_META" categoryid="Investigation" typeid="Investigation" param_int="0" param_str="">
+<Section name="Investigation">
+<Setting name="UEDR/FileHashing/enabled" value="true" />
+<Setting name="UEDR/FileHashing/hash_delay" value="120" />
+<Setting name="UEDR/FileHashing/hash_strategy" value="low" />
+<Setting name="UEDR/FileHashing/ignored_exact_files_linux" value="/etc/cma.d/lpc.conf;" />
+<Setting name="UEDR/FileHashing/ignored_exact_files_macos" value="/etc/cma.d/lpc.conf;" />
+<Setting name="UEDR/FileHashing/ignored_exact_files_windows" value="C:\\PAGEFILE.SYS;C:\\hiberfil.sys;C:\\swapfile.sys;" />
+<Setting name="UEDR/FileHashing/ignored_extensions_linux" value=".swp;.o;.temp;.obj;.pdb;.log;.db;.db-journal;.pset;.tmp;.ost;.lnk;.stamp;.java;.h;.cpp;.py;.manifest;.c;.xml;.cc;.test;.txt;.conf;.mk;.properties;.vcxproj;.svn-base;.js;.filters;.jar;.crt;.dat;.pst;.tlog;.stattmp;.sdf;.etl;.que;.msg;" />
+<Setting name="UEDR/FileHashing/ignored_extensions_macos" value=".strings;.swp;.o;.temp;.obj;.pdb;.log;.db;.db-journal;.pset;.tmp;.ost;.lnk;.stamp;.java;.h;.cpp;.py;.manifest;.c;.xml;.cc;.test;.txt;.conf;.mk;.properties;.vcxproj;.svn-base;.js;.filters;.jar;.crt;.dat;.pst;.tlog;.stattmp;.sdf;.etl;.que;.msg;.png;.jpg;.jpeg;.hpp;" />
+<Setting name="UEDR/FileHashing/ignored_extensions_windows" value=".swp;.o;.temp;.obj;.pdb;.log;.log1;.db;.db-journal;.dat-journal;.pset;.tmp;.ost;.lnk;.stamp;.java;.h;.cpp;.py;.manifest;.c;.xml;.cc;.test;.txt;.conf;.mk;.properties;.vcxproj;.svn-base;.js;.filters;.jar;.crt;.dat;.pst;.tlog;.stattmp;.sdf;.etl;.que;.msg;" />
+<Setting name="UEDR/FileHashing/ignored_paths_linux" value="/var/log;/var/run;/proc;/sys;/dev;/tmp;*/.cache;*/.git;" />
+<Setting name="UEDR/FileHashing/ignored_paths_macos" value="/var/log;/var/run;/proc;/sys;/dev;/tmp;*/.cache;*/.git;/private/var/vm;/System/Volumes/Data;/usr/local/McAfee;" />
+<Setting name="UEDR/FileHashing/ignored_paths_windows" value="FOLDERID_Windows\\..\\$Recycle.Bin;FOLDERID_Windows\\System32\\wbem\\Repository;*.git;*.svn;FOLDERID_UserProfiles\\*\\AppData\\Local\\Google\\Chrome\\User Data;FOLDERID_Windows\\Prefetch;FOLDERID_UserProfiles\\*\\AppData\\Local\\Microsoft\\Windows\\Temporary Internet Files\\Content.IE5;FOLDERID_ProgramFilesX64\\BigFix Enterprise\\BES Client\\__BESData;FOLDERID_ProgramFilesX86\\BigFix Enterprise\\BES Client\\__BESData;FOLDERID_System\\LogFiles\\Scm;FOLDERID_ProgramData\\McAfee\\Common Framework;FOLDERID_UserProfiles\\*\\AppData\\Local\\Microsoft\\Windows\\Temporary Internet Files\\Content.MSO;FOLDERID_UserProfiles\\*\\AppData\\Local\\Microsoft\\Windows\\WER\\ReportQueue;FOLDERID_ProgramData\\McAfee\\ENDPOINT SECURITY\\LOGCFG;" />
+<Setting name="UEDR/FileHashing/max_db_size_mb" value="60" />
+<Setting name="UEDR/FileHashing/max_db_size_percentage" value="2" />
+<Setting name="UEDR/FileHashing/max_file_size_mb" value="100" />
+<Setting name="UEDR/FileHashing/max_retrieve" value="512" />
+<Setting name="UEDR/FileHashing/power_saved" value="true" />
+<Setting name="UEDR/General/max_merge_retrieve" value="512" />
+<Setting name="UEDR/NetworkFlow/enabled" value="true" />
+<Setting name="UEDR/NetworkFlow/ignored_paths" value="" />
+<Setting name="UEDR/NetworkFlow/log_system" value="false" />
+<Setting name="UEDR/NetworkFlow/max_db_size_mb" value="120" />
+<Setting name="UEDR/NetworkFlow/max_db_size_percentage" value="2" />
+<Setting name="UEDR/NetworkFlow/max_retrieve" value="512" />
+<Setting name="UEDR/NetworkFlow/netsniffing" value="false" />
+<Setting name="UEDR/SystemInfo/enabled" value="true" />
+<Setting name="UEDR/SystemInfo/processhistory" value="true" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="My Default::Settings (F872A0BF-06FB-45C5-B9CC-90A09CD25231)" featureid="XCLIENT_META" categoryid="Remediation" typeid="Remediation" param_int="0" param_str="">
+<Section name="Remediation">
+<Setting name="Allowed_IP_Addresses" value="" />
+<Setting name="UEDR/NetworkFlow/allow_paths_macos" value="" />
+<Setting name="UEDR/NetworkFlow/allow_paths_windows" value="" />
+<Setting name="UEDR/NetworkFlow/display_quarantine" value="true" />
+<Setting name="UEDR/NetworkFlow/quarantine_message" value="WARNING: Endpoint Contained. Your device has been disconnected from the network and can only connect to the Trellix management console." />
+<Setting name="UEDR/NetworkFlow/unquarantine_message" value="WARNING: Endpoint Removed from containment. Your device has been reconnected to the network." />
+<Setting name="UEDR/NetworkFlow/unquarantine_password" value="" />
+<Setting name="UEDR/NetworkFlow/unquarantine_password_enabled" value="false" />
+<Setting name="UEDR/NetworkFlow/unquarantine_salted_password" value="" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Demo (RemoteShell)::Settings (B08C7BDF-0271-4F2F-87E3-40C452448E7C)" featureid="XCLIENT_META" categoryid="Remediation" typeid="Remediation" param_int="0" param_str="">
+<Section name="Remediation">
+<Setting name="Allowed_IP_Addresses" value="[]" />
+<Setting name="UEDR/NetworkFlow/allow_paths_linux" value="" />
+<Setting name="UEDR/NetworkFlow/allow_paths_macos" value="" />
+<Setting name="UEDR/NetworkFlow/allow_paths_windows" value="" />
+<Setting name="UEDR/NetworkFlow/display_quarantine" value="true" />
+<Setting name="UEDR/NetworkFlow/quarantine_message" value="WARNING: Endpoint Contained. Your device has been disconnected from the network and can only connect to the Trellix management console." />
+<Setting name="UEDR/NetworkFlow/unquarantine_message" value="WARNING: Endpoint Removed from containment. Your device has been reconnected to the network." />
+<Setting name="UEDR/NetworkFlow/unquarantine_password" value="" />
+<Setting name="UEDR/NetworkFlow/unquarantine_password_enabled" value="false" />
+<Setting name="UEDR/NetworkFlow/unquarantine_salted_password" value="" />
+<Setting name="mxa/container/HostRemediation/enabled" value="true" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - EDRF General Test 1::Settings (76241B7D-3A89-4083-9487-FBD9FB34B8B1)" featureid="XCLIENT_META" categoryid="General" typeid="General" param_int="0" param_str="">
+<Section name="General">
+<Setting name="HXServerName" value="none" />
+<Setting name="UEDR/ContextInfo/enabled" value="true" />
+<Setting name="UEDR/General/unattended_update_enabled" value="true" />
+<Setting name="UEDR/General/unattended_update_timeout" value="120" />
+<Setting name="UEDR/MarLogger/buffer_size" value="40" />
+<Setting name="UEDR/MarLogger/log_level" value="2" />
+<Setting name="UEDR/MarLogger/log_path" value="" />
+<Setting name="UEDR/MarLogger/max_file_size" value="50" />
+<Setting name="UEDR/MarLogger/storage_format" value="file" />
+<Setting name="UEDR/SystemRuntime/enabled" value="true" />
+<Setting name="UEDR/WinRegistry/enabled" value="true" />
+<Setting name="job_enabled" value="false" />
+<Setting name="libuv_enabled" value="true" />
+<Setting name="max_count_enabled" value="false" />
+<Setting name="max_days_enabled" value="true" />
+<Setting name="mxa/container/UnifiedEdr/enabled" value="true" />
+<Setting name="mxa/eventor/db_in_memory" value="false" />
+<Setting name="mxa/eventor/db_journal_mode" value="MEMORY" />
+<Setting name="mxa/eventor/db_memory_mapped" value="true" />
+<Setting name="mxa/eventor/db_page_size" value="4096" />
+<Setting name="mxa/eventor/db_synchronous" value="OFF" />
+<Setting name="mxa/eventor/max_db_size" value="200" />
+<Setting name="mxa/eventor/storage_mode" value="mmapio" />
+<Setting name="mxa/fips/enabled" value="false" />
+<Setting name="mxa/health/report" value="true" />
+<Setting name="mxa/health/report_interval" value="900" />
+<Setting name="mxa/intel/rsrc/size_limit" value="33554432" />
+<Setting name="mxa/intel/url" value="/content/v1/intel/ioc/win-current_xagent_win" />
+<Setting name="mxa/intel/url_linux" value="/content/v1/intel/ioc/linux-xagent_linux" />
+<Setting name="mxa/intel/url_mac" value="/content/v1/intel/ioc/osx-xagent_mac" />
+<Setting name="mxa/ioc_metadata/url" value="/content/v1/intel/plugins/forensics-bridge" />
+<Setting name="mxa/log/enabled" value="true" />
+<Setting name="mxa/log/level" value="DEBUG" />
+<Setting name="mxa/log/mask" value="UVPROC:SSLPROC" />
+<Setting name="mxa/log/max_count" value="100000" />
+<Setting name="mxa/log/max_days" value="30" />
+<Setting name="mxa/log/per_module" value="true" />
+<Setting name="mxa/process/cpu_limit" value="50" />
+<Setting name="mxa/process/priority" value="below" />
+<Setting name="mxa/process/protection_enabled" value="false" />
+<Setting name="mxa/process/uninstall_password" value="" />
+<Setting name="mxa/process/uninstall_password_enabled" value="false" />
+<Setting name="mxa/proxy" value="true" />
+<Setting name="mxa/proxy/exclude_hosts" value="*.lab.local;10.0.0.1" />
+<Setting name="mxa/proxy/exclude_local_host" value="true" />
+<Setting name="mxa/proxy/failed_retry_delay" value="1800" />
+<Setting name="mxa/proxy/host" value="proxy.lab.local" />
+<Setting name="mxa/proxy/password" value="" />
+<Setting name="mxa/proxy/port" value="8080" />
+<Setting name="mxa/proxy/type" value="manual" />
+<Setting name="mxa/proxy/username" value="claude" />
+<Setting name="mxs/ca/pem" value="" />
+<Setting name="mxs/clusters" value="" />
+<Setting name="mxs/fastpoll_agents" value="45" />
+<Setting name="mxs/hx_enabled" value="false" />
+<Setting name="mxs/pki/distro/crl" value="" />
+<Setting name="mxs/poll_agents" value="900" />
+<Setting name="mxs/provo/cert" value="" />
+<Setting name="mxs/provo/key" value="" />
+<Setting name="mxs/provo/key_overflow" value="" />
+<Setting name="mxs/provo/keysize" value="" />
+<Setting name="mxs/provo/servers" value="" />
+<Setting name="queue_enabled" value="false" />
+<Setting name="ssl_enabled" value="true" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - EDRF General Test 2::Settings (76241B7D-3A89-4083-9487-FBD9FB34B8B1)" featureid="XCLIENT_META" categoryid="General" typeid="General" param_int="0" param_str="">
+<Section name="General">
+<Setting name="HXServerName" value="LABSE" />
+<Setting name="UEDR/ContextInfo/enabled" value="true" />
+<Setting name="UEDR/General/unattended_update_enabled" value="true" />
+<Setting name="UEDR/General/unattended_update_timeout" value="120" />
+<Setting name="UEDR/MarLogger/buffer_size" value="40" />
+<Setting name="UEDR/MarLogger/log_level" value="2" />
+<Setting name="UEDR/MarLogger/log_path" value="" />
+<Setting name="UEDR/MarLogger/max_file_size" value="50" />
+<Setting name="UEDR/MarLogger/storage_format" value="none" />
+<Setting name="UEDR/SystemRuntime/enabled" value="true" />
+<Setting name="UEDR/WinRegistry/enabled" value="true" />
+<Setting name="job_enabled" value="true" />
+<Setting name="libuv_enabled" value="false" />
+<Setting name="max_count_enabled" value="true" />
+<Setting name="max_days_enabled" value="false" />
+<Setting name="mxa/container/UnifiedEdr/enabled" value="true" />
+<Setting name="mxa/eventor/db_in_memory" value="true" />
+<Setting name="mxa/eventor/db_journal_mode" value="MEMORY" />
+<Setting name="mxa/eventor/db_memory_mapped" value="false" />
+<Setting name="mxa/eventor/db_page_size" value="4096" />
+<Setting name="mxa/eventor/db_synchronous" value="OFF" />
+<Setting name="mxa/eventor/max_db_size" value="200" />
+<Setting name="mxa/eventor/storage_mode" value="inmemory" />
+<Setting name="mxa/fips/enabled" value="false" />
+<Setting name="mxa/health/report" value="false" />
+<Setting name="mxa/health/report_interval" value="900" />
+<Setting name="mxa/intel/rsrc/size_limit" value="33554432" />
+<Setting name="mxa/intel/url" value="/content/v1/intel/ioc/win-current_xagent_win" />
+<Setting name="mxa/intel/url_linux" value="/content/v1/intel/ioc/linux-xagent_linux" />
+<Setting name="mxa/intel/url_mac" value="/content/v1/intel/ioc/osx-xagent_mac" />
+<Setting name="mxa/ioc_metadata/url" value="/content/v1/intel/plugins/forensics-bridge" />
+<Setting name="mxa/log/enabled" value="true" />
+<Setting name="mxa/log/level" value="DEBUG" />
+<Setting name="mxa/log/mask" value="QUEUE:JOB" />
+<Setting name="mxa/log/max_count" value="200000" />
+<Setting name="mxa/log/max_days" value="0" />
+<Setting name="mxa/log/per_module" value="true" />
+<Setting name="mxa/process/cpu_limit" value="50" />
+<Setting name="mxa/process/priority" value="below" />
+<Setting name="mxa/process/protection_enabled" value="true" />
+<Setting name="mxa/process/uninstall_password" value="" />
+<Setting name="mxa/process/uninstall_password_enabled" value="false" />
+<Setting name="mxa/proxy" value="false" />
+<Setting name="mxa/proxy/exclude_hosts" value="*.lab.local;10.0.0.1" />
+<Setting name="mxa/proxy/exclude_local_host" value="true" />
+<Setting name="mxa/proxy/failed_retry_delay" value="1800" />
+<Setting name="mxa/proxy/host" value="proxy.lab.local" />
+<Setting name="mxa/proxy/password" value="" />
+<Setting name="mxa/proxy/port" value="8080" />
+<Setting name="mxa/proxy/type" value="none" />
+<Setting name="mxa/proxy/username" value="claude" />
+<Setting name="mxs/ca/pem" value="RkFLRS1DQS1QRU0=" />
+<Setting name="mxs/clusters" value="hx.example.com" />
+<Setting name="mxs/fastpoll_agents" value="45" />
+<Setting name="mxs/hx_enabled" value="true" />
+<Setting name="mxs/pki/distro/crl" value="&#10;RkFLRS1DUkw=&#10;" />
+<Setting name="mxs/poll_agents" value="900" />
+<Setting name="mxs/provo/cert" value="RkFLRS1DRVJUSUZJQ0FURQ==" />
+<Setting name="mxs/provo/key" value="RkFLRS1QUklWQVRFLUtFWQ==" />
+<Setting name="mxs/provo/key_overflow" value="" />
+<Setting name="mxs/provo/keysize" value="2048" />
+<Setting name="mxs/provo/servers" value="hx.example.com" />
+<Setting name="queue_enabled" value="true" />
+<Setting name="ssl_enabled" value="false" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - EDRF General Test::Settings (76241B7D-3A89-4083-9487-FBD9FB34B8B1)" featureid="XCLIENT_META" categoryid="General" typeid="General" param_int="0" param_str="">
+<Section name="General">
+<Setting name="HXServerName" value="none" />
+<Setting name="UEDR/ContextInfo/enabled" value="true" />
+<Setting name="UEDR/General/unattended_update_enabled" value="true" />
+<Setting name="UEDR/General/unattended_update_timeout" value="120" />
+<Setting name="UEDR/MarLogger/buffer_size" value="40" />
+<Setting name="UEDR/MarLogger/log_level" value="2" />
+<Setting name="UEDR/MarLogger/log_path" value="" />
+<Setting name="UEDR/MarLogger/max_file_size" value="50" />
+<Setting name="UEDR/MarLogger/storage_format" value="file" />
+<Setting name="UEDR/SystemRuntime/enabled" value="true" />
+<Setting name="UEDR/WinRegistry/enabled" value="true" />
+<Setting name="job_enabled" value="false" />
+<Setting name="libuv_enabled" value="false" />
+<Setting name="max_count_enabled" value="true" />
+<Setting name="max_days_enabled" value="false" />
+<Setting name="mxa/container/UnifiedEdr/enabled" value="true" />
+<Setting name="mxa/eventor/db_in_memory" value="false" />
+<Setting name="mxa/eventor/db_journal_mode" value="WAL" />
+<Setting name="mxa/eventor/db_memory_mapped" value="false" />
+<Setting name="mxa/eventor/db_page_size" value="4096" />
+<Setting name="mxa/eventor/db_synchronous" value="NORMAL" />
+<Setting name="mxa/eventor/max_db_size" value="200" />
+<Setting name="mxa/eventor/storage_mode" value="highintegrity" />
+<Setting name="mxa/fips/enabled" value="false" />
+<Setting name="mxa/health/report" value="false" />
+<Setting name="mxa/health/report_interval" value="900" />
+<Setting name="mxa/intel/rsrc/size_limit" value="33554432" />
+<Setting name="mxa/intel/url" value="/content/v1/intel/ioc/win-current_xagent_win" />
+<Setting name="mxa/intel/url_linux" value="/content/v1/intel/ioc/linux-xagent_linux" />
+<Setting name="mxa/intel/url_mac" value="/content/v1/intel/ioc/osx-xagent_mac" />
+<Setting name="mxa/ioc_metadata/url" value="/content/v1/intel/plugins/forensics-bridge" />
+<Setting name="mxa/log/enabled" value="true" />
+<Setting name="mxa/log/level" value="DEBUG" />
+<Setting name="mxa/log/mask" value="JOB" />
+<Setting name="mxa/log/max_count" value="200000" />
+<Setting name="mxa/log/max_days" value="0" />
+<Setting name="mxa/log/per_module" value="true" />
+<Setting name="mxa/process/cpu_limit" value="50" />
+<Setting name="mxa/process/priority" value="below" />
+<Setting name="mxa/process/protection_enabled" value="true" />
+<Setting name="mxa/process/uninstall_password" value="" />
+<Setting name="mxa/process/uninstall_password_enabled" value="false" />
+<Setting name="mxa/proxy" value="false" />
+<Setting name="mxa/proxy/exclude_hosts" value="*.lab.local;10.0.0.1" />
+<Setting name="mxa/proxy/exclude_local_host" value="true" />
+<Setting name="mxa/proxy/failed_retry_delay" value="1800" />
+<Setting name="mxa/proxy/host" value="proxy.lab.local" />
+<Setting name="mxa/proxy/password" value="" />
+<Setting name="mxa/proxy/port" value="8080" />
+<Setting name="mxa/proxy/type" value="none" />
+<Setting name="mxa/proxy/username" value="claude" />
+<Setting name="mxs/ca/pem" value="" />
+<Setting name="mxs/clusters" value="" />
+<Setting name="mxs/fastpoll_agents" value="45" />
+<Setting name="mxs/hx_enabled" value="false" />
+<Setting name="mxs/pki/distro/crl" value="" />
+<Setting name="mxs/poll_agents" value="900" />
+<Setting name="mxs/provo/cert" value="" />
+<Setting name="mxs/provo/key" value="" />
+<Setting name="mxs/provo/key_overflow" value="" />
+<Setting name="mxs/provo/keysize" value="" />
+<Setting name="mxs/provo/servers" value="" />
+<Setting name="queue_enabled" value="false" />
+<Setting name="ssl_enabled" value="false" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - EDRF Streaming Test::Settings (55B3DBE9-4711-47FD-8A26-811DEC400DD4)" featureid="XCLIENT_META" categoryid="Streaming" typeid="Streaming" param_int="0" param_str="">
+<Section name="Streaming">
+<Setting name="UEDR/TraceScanner/audit_rate_limit" value="9500" />
+<Setting name="UEDR/TraceScanner/bulk_time" value="120" />
+<Setting name="UEDR/TraceScanner/cairo_topic_compressed" value="/mcafee/bridge/traceEventCompressed" />
+<Setting name="UEDR/TraceScanner/cairo_topic_uncompressed" value="/mcafee/bridge/traceEvent" />
+<Setting name="UEDR/TraceScanner/cds_retention_period_days" value="7" />
+<Setting name="UEDR/TraceScanner/cds_size_limit_mb" value="210" />
+<Setting name="UEDR/TraceScanner/compression" value="true" />
+<Setting name="UEDR/TraceScanner/disabled_rules" value="1001;\&quot;x\&quot;" />
+<Setting name="UEDR/TraceScanner/disabled_rules_by_internal_tag" value="2147483644" />
+<Setting name="UEDR/TraceScanner/disabled_rules_linux" value="2001" />
+<Setting name="UEDR/TraceScanner/disabled_rules_mac" value="3001" />
+<Setting name="UEDR/TraceScanner/enabled" value="true" />
+<Setting name="UEDR/TraceScanner/etw_ti_enabled" value="false" />
+<Setting name="UEDR/TraceScanner/ignored_exact_files_linux" value="/var/log/app.log" />
+<Setting name="UEDR/TraceScanner/ignored_exact_folders_linux" value="/var/cache/app" />
+<Setting name="UEDR/TraceScanner/ignored_process" value="C:\\Tools\\app.exe&#10;C:\\Program Files\\Vendor\\agent.exe" />
+<Setting name="UEDR/TraceScanner/ignored_process_linux" value="/opt/vendor/bin/agent" />
+<Setting name="UEDR/TraceScanner/ignored_process_mac" value="/Applications/Vendor.app/Contents/MacOS/agent" />
+<Setting name="UEDR/TraceScanner/injectcore_enabled" value="false" />
+<Setting name="UEDR/TraceScanner/log_level" value="2" />
+<Setting name="UEDR/TraceScanner/max_db_size_mb" value="160" />
+<Setting name="UEDR/TraceScanner/report_connectivity_status" value="true" />
+<Setting name="UEDR/TraceScanner/s3_bucket_aws_access_key_id" value="" />
+<Setting name="UEDR/TraceScanner/s3_bucket_aws_secret_access_key" value="" />
+<Setting name="UEDR/TraceScanner/s3_bucket_name" value="" />
+<Setting name="UEDR/TraceScanner/s3_default_region_name" value="" />
+<Setting name="UEDR/TraceScanner/s3_endpoint" value="" />
+<Setting name="UEDR/TraceScanner/s3_push_frequency_seconds" value="30" />
+<Setting name="UEDR/TraceScanner/s3_use_endpoint" value="false" />
+<Setting name="UEDR/TraceScanner/send_traces_to_edr_cloud" value="true" />
+<Setting name="UEDR/TraceScanner/send_traces_to_s3_bucket" value="false" />
+<Setting name="UEDR/TraceScanner/topic_compressed" value="/mcafee/bridge/traceDataCompressed" />
+<Setting name="UEDR/TraceScanner/topic_uncompressed" value="/mcafee/bridge/traceData" />
+<Setting name="UEDR/TraceScanner/use_oplocks" value="false" />
+<Setting name="mxa/LogonTracker/backfill_events" value="true" />
+<Setting name="mxa/LogonTracker/disable_enrichment" value="true" />
+<Setting name="mxa/LogonTracker/filter_tunneled" value="true" />
+<Setting name="mxa/LogonTracker/ignore_accounts" value="svc_backup;\&quot;\&quot;;" />
+<Setting name="mxa/LogonTracker/ignore_addr" value="10.0.0.1;10.0.0.2" />
+<Setting name="mxa/LogonTracker/ignore_categories" value="network" />
+<Setting name="mxa/LogonTracker/ignore_hosts" value="scanner01" />
+<Setting name="mxa/LogonTracker/ignore_status" value="failed" />
+<Setting name="mxa/LogonTracker/logon_timeout_minutes" value="720" />
+<Setting name="mxa/LogonTracker/max_memory_cache_size" value="1000000" />
+<Setting name="mxa/container/LogonTracker/enabled" value="true" />
+<Setting name="mxa/container/ProcessTracker/enabled" value="true" />
+<Setting name="mxa/eventor/ioc_alerts_to_edr_epp_enabled" value="false" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - EDRF Detection Test::Settings (DBCBF579-3F69-4B66-89C8-5893EEC9797B)" featureid="XCLIENT_META" categoryid="Detection" typeid="Detection" param_int="0" param_str="">
+<Section name="Detection">
+<Setting name="mxa/container/Eventor/enabled" value="true" />
+<Setting name="mxa/eventor/dns_evts_enabled" value="false" />
+<Setting name="mxa/eventor/excludedPaths" value="C:\Temp\build\*;D:\Data|/tmp/build" />
+<Setting name="mxa/eventor/excludedProcessNames" value="C:\Tools\app.exe" />
+<Setting name="mxa/eventor/match_interval" value="60" />
+<Setting name="mxa/eventor/network_evts_enabled" value="false" />
+<Setting name="mxa/eventor/registry_key_exclusion_filter" value="{&quot;reg_key_filter&quot;:[{&quot;hive&quot;:&quot;LocalMachine&quot;,&quot;path&quot;:&quot;SOFTWARE\\Vendor\\Agent&quot;,&quot;values&quot;:[&quot;Version&quot;,&quot;InstallPath&quot;]},{&quot;hive&quot;:&quot;Users&quot;,&quot;path&quot;:&quot;*\\Software\\Vendor\\Cache&quot;,&quot;values&quot;:[]},{&quot;hive&quot;:&quot;ClassesRoot&quot;,&quot;path&quot;:&quot;CLSID\\{00000000-0000-0000-0000-000000000001}&quot;,&quot;values&quot;:[&quot;Default&quot;]},{&quot;hive&quot;:&quot;CurrentControlSet&quot;,&quot;path&quot;:&quot;Services\\VendorSvc&quot;,&quot;values&quot;:[]}]}" />
+<Setting name="mxa/eventor/udp_send_events" value="true" />
+<Setting name="mxa/eventor/url_evts_enabled" value="false" />
+<Setting name="mxa/intel/rsrc/refresh" value="1800" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - EDRF Investigation Test::Settings (C6A00469-C96B-4144-9494-7C0754EA0A70)" featureid="XCLIENT_META" categoryid="Investigation" typeid="Investigation" param_int="0" param_str="">
+<Section name="Investigation">
+<Setting name="UEDR/FileHashing/enabled" value="true" />
+<Setting name="UEDR/FileHashing/hash_delay" value="300" />
+<Setting name="UEDR/FileHashing/hash_strategy" value="auto" />
+<Setting name="UEDR/FileHashing/ignored_exact_files_linux" value="/etc/cma.d/lpc.conf;/opt/app/data.bin;" />
+<Setting name="UEDR/FileHashing/ignored_exact_files_macos" value="/Users/Shared/big.dmg;/tmp/\&quot;q\&quot;;" />
+<Setting name="UEDR/FileHashing/ignored_exact_files_windows" value="C:\\PAGEFILE.SYS;C:\\hiberfil.sys;C:\\swapfile.sys;C:\\Temp\\big.iso;" />
+<Setting name="UEDR/FileHashing/ignored_extensions_linux" value=".swp;.o;.temp;.obj;.pdb;.log;.db;.db-journal;.pset;.tmp;.ost;.lnk;.stamp;.java;.h;.cpp;.py;.manifest;.c;.xml;.cc;.test;.txt;.conf;.mk;.properties;.vcxproj;.svn-base;.js;.filters;.jar;.crt;.dat;.pst;.tlog;.stattmp;.sdf;.etl;.que;.msg;.iso;" />
+<Setting name="UEDR/FileHashing/ignored_extensions_macos" value=".strings;.swp;.o;.temp;.obj;.pdb;.log;.db;.db-journal;.pset;.tmp;.ost;.lnk;.stamp;.java;.h;.cpp;.py;.manifest;.c;.xml;.cc;.test;.txt;.conf;.mk;.properties;.vcxproj;.svn-base;.js;.filters;.jar;.crt;.dat;.pst;.tlog;.stattmp;.sdf;.etl;.que;.msg;.png;.jpg;.jpeg;.hpp;.dmg;" />
+<Setting name="UEDR/FileHashing/ignored_extensions_windows" value=".swp;.o;.temp;.obj;.pdb;.log;.log1;.db;.db-journal;.dat-journal;.pset;.tmp;.ost;.lnk;.stamp;.java;.h;.cpp;.py;.manifest;.c;.xml;.cc;.test;.txt;.conf;.mk;.properties;.vcxproj;.svn-base;.js;.filters;.jar;.crt;.dat;.pst;.tlog;.stattmp;.sdf;.etl;.que;.msg;.iso;" />
+<Setting name="UEDR/FileHashing/ignored_paths_linux" value="/var/log;/var/run;/proc;/sys;/dev;/tmp;*/.cache;*/.git;/opt/app/cache;" />
+<Setting name="UEDR/FileHashing/ignored_paths_macos" value="/var/log;/var/run;/proc;/sys;/dev;/tmp;*/.cache;*/.git;/private/var/vm;/System/Volumes/Data;/usr/local/McAfee;/opt/app/cache;" />
+<Setting name="UEDR/FileHashing/ignored_paths_windows" value="FOLDERID_Windows\\..\\$Recycle.Bin;FOLDERID_Windows\\System32\\wbem\\Repository;*.git;*.svn;FOLDERID_UserProfiles\\*\\AppData\\Local\\Google\\Chrome\\User Data;FOLDERID_Windows\\Prefetch;FOLDERID_UserProfiles\\*\\AppData\\Local\\Microsoft\\Windows\\Temporary Internet Files\\Content.IE5;FOLDERID_ProgramFilesX64\\BigFix Enterprise\\BES Client\\__BESData;FOLDERID_ProgramFilesX86\\BigFix Enterprise\\BES Client\\__BESData;FOLDERID_System\\LogFiles\\Scm;FOLDERID_ProgramData\\McAfee\\Common Framework;FOLDERID_UserProfiles\\*\\AppData\\Local\\Microsoft\\Windows\\Temporary Internet Files\\Content.MSO;FOLDERID_UserProfiles\\*\\AppData\\Local\\Microsoft\\Windows\\WER\\ReportQueue;FOLDERID_ProgramData\\McAfee\\ENDPOINT SECURITY\\LOGCFG;FOLDERID_ProgramData\\Vendor\\Cache;" />
+<Setting name="UEDR/FileHashing/max_db_size_mb" value="128" />
+<Setting name="UEDR/FileHashing/max_db_size_percentage" value="4" />
+<Setting name="UEDR/FileHashing/max_file_size_mb" value="200" />
+<Setting name="UEDR/FileHashing/max_retrieve" value="2048" />
+<Setting name="UEDR/FileHashing/power_saved" value="false" />
+<Setting name="UEDR/General/max_merge_retrieve" value="1024" />
+<Setting name="UEDR/NetworkFlow/enabled" value="true" />
+<Setting name="UEDR/NetworkFlow/ignored_paths" value="C:\\Tools\\scanner.exe;C:\\Tools\\backup.exe" />
+<Setting name="UEDR/NetworkFlow/log_system" value="true" />
+<Setting name="UEDR/NetworkFlow/max_db_size_mb" value="240" />
+<Setting name="UEDR/NetworkFlow/max_db_size_percentage" value="5" />
+<Setting name="UEDR/NetworkFlow/max_retrieve" value="1024" />
+<Setting name="UEDR/NetworkFlow/netsniffing" value="true" />
+<Setting name="UEDR/SystemInfo/enabled" value="true" />
+<Setting name="UEDR/SystemInfo/processhistory" value="false" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - EDRF Remediation Test::Settings (AB1FD77B-CABA-45B5-B057-93C39B0A3887)" featureid="XCLIENT_META" categoryid="Remediation" typeid="Remediation" param_int="0" param_str="">
+<Section name="Remediation">
+<Setting name="Allowed_IP_Addresses" value="[{\&quot;IP_Address\&quot;:\&quot;10.0.0.10\&quot;,\&quot;description\&quot;:\&quot;SOC jump host\&quot;},{\&quot;IP_Address\&quot;:\&quot;2001:db8:0:0:0:0:0:10\&quot;,\&quot;description\&quot;:\&quot;\&quot;}]" />
+<Setting name="UEDR/NetworkFlow/allow_paths_linux" value="/usr/sbin/openvpn" />
+<Setting name="UEDR/NetworkFlow/allow_paths_macos" value="/Applications/VPN.app/Contents/MacOS/vpn" />
+<Setting name="UEDR/NetworkFlow/allow_paths_windows" value="C:\\Tools\\remote.exe;C:\\Program Files\\Vendor\\vpn.exe" />
+<Setting name="UEDR/NetworkFlow/display_quarantine" value="false" />
+<Setting name="UEDR/NetworkFlow/quarantine_message" value="Call \&quot;SOC\&quot; at C:\\SOC now" />
+<Setting name="UEDR/NetworkFlow/unquarantine_message" value="Released by the SOC." />
+<Setting name="UEDR/NetworkFlow/unquarantine_password" value="" />
+<Setting name="UEDR/NetworkFlow/unquarantine_password_enabled" value="false" />
+<Setting name="UEDR/NetworkFlow/unquarantine_salted_password" value="" />
+<Setting name="mxa/container/HostRemediation/enabled" value="true" />
+</Section>
+</EPOPolicySettings>
+
+<EPOPolicyObject name="My Default" featureid="XCLIENT_META" categoryid="General" serverid="W2022EPO510" editflag="0" typeid="General">
+<description />
+<PolicySettings>My Default::Settings (657E715C-2FB4-409D-8D09-4F75F622FE92)</PolicySettings>
+</EPOPolicyObject>
+<EPOPolicyObject name="My Default" featureid="XCLIENT_META" categoryid="Protection" serverid="W2022EPO510" editflag="0" typeid="Protection">
+<description />
+<PolicySettings>My Default::Settings (47E18AA0-E185-4718-A29D-069E3C82CFF8)</PolicySettings>
+</EPOPolicyObject>
+<EPOPolicyObject name="My Default" featureid="XCLIENT_META" categoryid="Streaming" serverid="W2022EPO510" editflag="0" typeid="Streaming">
+<description />
+<PolicySettings>My Default::Settings (F54E3C64-EDE0-417B-A8C7-18812FCB8F74)</PolicySettings>
+</EPOPolicyObject>
+<EPOPolicyObject name="My Default" featureid="XCLIENT_META" categoryid="Detection" serverid="W2022EPO510" editflag="0" typeid="Detection">
+<description />
+<PolicySettings>My Default::Settings (1C7C4467-B2D2-483E-A457-D4DC073C5230)</PolicySettings>
+</EPOPolicyObject>
+<EPOPolicyObject name="Demo (Monitor)" featureid="XCLIENT_META" categoryid="Detection" serverid="W2022EPO510" editflag="0" typeid="Detection">
+<description />
+<PolicySettings>Demo (Monitor)::Settings (56ED7604-3D90-4157-98CA-558DF647016C)</PolicySettings>
+</EPOPolicyObject>
+<EPOPolicyObject name="My Default" featureid="XCLIENT_META" categoryid="Investigation" serverid="W2022EPO510" editflag="0" typeid="Investigation">
+<description />
+<PolicySettings>My Default::Settings (5417424D-8003-44E7-A396-FADB58163D35)</PolicySettings>
+</EPOPolicyObject>
+<EPOPolicyObject name="My Default" featureid="XCLIENT_META" categoryid="Remediation" serverid="W2022EPO510" editflag="0" typeid="Remediation">
+<description />
+<PolicySettings>My Default::Settings (F872A0BF-06FB-45C5-B9CC-90A09CD25231)</PolicySettings>
+</EPOPolicyObject>
+<EPOPolicyObject name="Demo (RemoteShell)" featureid="XCLIENT_META" categoryid="Remediation" serverid="W2022EPO510" editflag="0" typeid="Remediation">
+<description />
+<PolicySettings>Demo (RemoteShell)::Settings (B08C7BDF-0271-4F2F-87E3-40C452448E7C)</PolicySettings>
+</EPOPolicyObject>
+<EPOPolicyObject name="Claude - EDRF General Test 1" featureid="XCLIENT_META" categoryid="General" serverid="W2022EPO510" editflag="0" typeid="General">
+<description />
+<PolicySettings>Claude - EDRF General Test 1::Settings (76241B7D-3A89-4083-9487-FBD9FB34B8B1)</PolicySettings>
+</EPOPolicyObject>
+<EPOPolicyObject name="Claude - EDRF General Test 2" featureid="XCLIENT_META" categoryid="General" serverid="W2022EPO510" editflag="0" typeid="General">
+<description />
+<PolicySettings>Claude - EDRF General Test 2::Settings (76241B7D-3A89-4083-9487-FBD9FB34B8B1)</PolicySettings>
+</EPOPolicyObject>
+<EPOPolicyObject name="Claude - EDRF General Test" featureid="XCLIENT_META" categoryid="General" serverid="W2022EPO510" editflag="0" typeid="General">
+<description />
+<PolicySettings>Claude - EDRF General Test::Settings (76241B7D-3A89-4083-9487-FBD9FB34B8B1)</PolicySettings>
+</EPOPolicyObject>
+<EPOPolicyObject name="Claude - EDRF Streaming Test" featureid="XCLIENT_META" categoryid="Streaming" serverid="W2022EPO510" editflag="0" typeid="Streaming">
+<description />
+<PolicySettings>Claude - EDRF Streaming Test::Settings (55B3DBE9-4711-47FD-8A26-811DEC400DD4)</PolicySettings>
+</EPOPolicyObject>
+<EPOPolicyObject name="Claude - EDRF Detection Test" featureid="XCLIENT_META" categoryid="Detection" serverid="W2022EPO510" editflag="0" typeid="Detection">
+<description />
+<PolicySettings>Claude - EDRF Detection Test::Settings (DBCBF579-3F69-4B66-89C8-5893EEC9797B)</PolicySettings>
+</EPOPolicyObject>
+<EPOPolicyObject name="Claude - EDRF Investigation Test" featureid="XCLIENT_META" categoryid="Investigation" serverid="W2022EPO510" editflag="0" typeid="Investigation">
+<description />
+<PolicySettings>Claude - EDRF Investigation Test::Settings (C6A00469-C96B-4144-9494-7C0754EA0A70)</PolicySettings>
+</EPOPolicyObject>
+<EPOPolicyObject name="Claude - EDRF Remediation Test" featureid="XCLIENT_META" categoryid="Remediation" serverid="W2022EPO510" editflag="0" typeid="Remediation">
+<description />
+<PolicySettings>Claude - EDRF Remediation Test::Settings (AB1FD77B-CABA-45B5-B057-93C39B0A3887)</PolicySettings>
+</EPOPolicyObject>
+</epo:EPOPolicySchema>

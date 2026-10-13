@@ -1,0 +1,333 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ns0:EPOPolicySchema xmlns:ns0="mcafee-epo-policy">
+<EPOPolicyVerInfo vermjr="5" vermin="10" verrel="0" verbld="0" />
+<EPOPolicySettings name="My Default::Settings (F54E3C64-EDE0-417B-A8C7-18812FCB8F74)" featureid="XCLIENT_META" categoryid="Streaming" typeid="Streaming" param_int="0" param_str="">
+<Section name="Streaming">
+<Setting name="UEDR/TraceScanner/audit_rate_limit" value="9500" />
+<Setting name="UEDR/TraceScanner/bulk_time" value="30" />
+<Setting name="UEDR/TraceScanner/cairo_topic_compressed" value="/mcafee/bridge/traceEventCompressed" />
+<Setting name="UEDR/TraceScanner/cairo_topic_uncompressed" value="/mcafee/bridge/traceEvent" />
+<Setting name="UEDR/TraceScanner/cds_retention_period_days" value="7" />
+<Setting name="UEDR/TraceScanner/cds_size_limit_mb" value="210" />
+<Setting name="UEDR/TraceScanner/compression" value="true" />
+<Setting name="UEDR/TraceScanner/disabled_rules" value="" />
+<Setting name="UEDR/TraceScanner/disabled_rules_by_internal_tag" value="2147483644" />
+<Setting name="UEDR/TraceScanner/disabled_rules_linux" value="" />
+<Setting name="UEDR/TraceScanner/disabled_rules_mac" value="" />
+<Setting name="UEDR/TraceScanner/enabled" value="true" />
+<Setting name="UEDR/TraceScanner/ignored_exact_files_linux" value="" />
+<Setting name="UEDR/TraceScanner/ignored_exact_folders_linux" value="" />
+<Setting name="UEDR/TraceScanner/ignored_process" value="" />
+<Setting name="UEDR/TraceScanner/ignored_process_linux" value="" />
+<Setting name="UEDR/TraceScanner/ignored_process_mac" value="" />
+<Setting name="UEDR/TraceScanner/injectcore_enabled" value="true" />
+<Setting name="UEDR/TraceScanner/log_level" value="3" />
+<Setting name="UEDR/TraceScanner/max_db_size_mb" value="80" />
+<Setting name="UEDR/TraceScanner/report_connectivity_status" value="false" />
+<Setting name="UEDR/TraceScanner/s3_bucket_aws_access_key_id" value="" />
+<Setting name="UEDR/TraceScanner/s3_bucket_aws_secret_access_key" value="" />
+<Setting name="UEDR/TraceScanner/s3_bucket_name" value="" />
+<Setting name="UEDR/TraceScanner/s3_default_region_name" value="" />
+<Setting name="UEDR/TraceScanner/s3_push_frequency_seconds" value="30" />
+<Setting name="UEDR/TraceScanner/send_traces_to_edr_cloud" value="true" />
+<Setting name="UEDR/TraceScanner/send_traces_to_s3_bucket" value="false" />
+<Setting name="UEDR/TraceScanner/topic_compressed" value="/mcafee/bridge/traceDataCompressed" />
+<Setting name="UEDR/TraceScanner/topic_uncompressed" value="/mcafee/bridge/traceData" />
+<Setting name="UEDR/TraceScanner/use_oplocks" value="false" />
+<Setting name="mxa/eventor/ioc_alerts_to_edr_epp_enabled" value="true" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - EDRF 50.3 Streaming Test::Settings (CF36CD50-1653-4A58-9D34-00DC562D1D02)" featureid="XCLIENT_META" categoryid="Streaming" typeid="Streaming" param_int="0" param_str="">
+<Section name="Streaming">
+<Setting name="UEDR/TraceScanner/audit_rate_limit" value="9500" />
+<Setting name="UEDR/TraceScanner/bulk_time" value="30" />
+<Setting name="UEDR/TraceScanner/cairo_topic_compressed" value="/mcafee/bridge/traceEventCompressed" />
+<Setting name="UEDR/TraceScanner/cairo_topic_uncompressed" value="/mcafee/bridge/traceEvent" />
+<Setting name="UEDR/TraceScanner/cds_retention_period_days" value="7" />
+<Setting name="UEDR/TraceScanner/cds_size_limit_mb" value="210" />
+<Setting name="UEDR/TraceScanner/compression" value="true" />
+<Setting name="UEDR/TraceScanner/disabled_rules" value="" />
+<Setting name="UEDR/TraceScanner/disabled_rules_by_internal_tag" value="2147483644" />
+<Setting name="UEDR/TraceScanner/disabled_rules_linux" value="" />
+<Setting name="UEDR/TraceScanner/disabled_rules_mac" value="" />
+<Setting name="UEDR/TraceScanner/enabled" value="true" />
+<Setting name="UEDR/TraceScanner/etw_ti_enabled" value="true" />
+<Setting name="UEDR/TraceScanner/ignored_exact_files_linux" value="" />
+<Setting name="UEDR/TraceScanner/ignored_exact_folders_linux" value="" />
+<Setting name="UEDR/TraceScanner/ignored_process" value="C:\\Program Files\\Vendor000\\agent.exe&#10;C:\\Program Files\\Vendor001\\agent.exe&#10;C:\\Program Files\\Vendor002\\agent.exe&#10;C:\\Program Files\\Vendor003\\agent.exe&#10;C:\\Program Files\\Vendor004\\agent.exe&#10;C:\\Program Files\\Vendor005\\agent.exe&#10;C:\\Program Files\\Vendor006\\agent.exe&#10;C:\\Program Files\\Vendor007\\agent.exe&#10;C:\\Program Files\\Vendor008\\agent.exe&#10;C:\\Program Files\\Vendor009\\agent.exe&#10;C:\\Program Files\\Vendor010\\agent.exe&#10;C:\\Program Files\\Vendor011\\agent.exe&#10;C:\\Program Files\\Vendor012\\agent.exe&#10;C:\\Program Files\\Vendor013\\agent.exe&#10;C:\\Program Files\\Vendor014\\agent.exe&#10;C:\\Program Files\\Vendor015\\agent.exe&#10;C:\\Program Files\\Vendor016\\agent.exe&#10;C:\\Program Files\\Vendor017\\agent.exe&#10;C:\\Program Files\\Vendor018\\agent.exe&#10;C:\\Program Files\\Vendor019\\agent.exe&#10;C:\\Program Files\\Vendor020\\agent.exe&#10;C:\\Program Files\\Vendor021\\agent.exe&#10;C:\\Program Files\\Vendor022\\agent.exe&#10;C:\\Program Files\\Vendor023\\agent.exe&#10;C:\\Program Files\\Vendor024\\agent.exe&#10;C:\\Program Files\\Vendor025\\agent.exe&#10;C:\\Program Files\\Vendor026\\agent.exe&#10;C:\\Program Files\\Vendor027\\agent.exe&#10;C:\\Program Files\\Vendor028\\agent.exe&#10;C:\\Program Files\\Vendor029\\agent.exe&#10;C:\\Program Files\\Vendor030\\agent.exe&#10;C:\\Program Files\\Vendor031\\agent.exe&#10;C:\\Program Files\\Vendor032\\agent.exe&#10;C:\\Program Files\\Vendor033\\agent.exe&#10;C:\\Program Files\\Vendor034\\agent.exe&#10;C:\\Program Files\\Vendor035\\agent.exe&#10;C:\\Program Files\\Vendor036\\agent.exe&#10;C:\\Program Files\\Vendor037\\agent.exe&#10;C:\\Program Files\\Vendor038\\agent.exe&#10;C:\\Program Files\\Vendor039\\agent.exe&#10;C:\\Program Files\\Vendor040\\agent.exe&#10;C:\\Program Files\\Vendor041\\agent.exe&#10;C:\\Program Files\\Vendor042\\agent.exe&#10;C:\\Program Files\\Vendor043\\agent.exe&#10;C:\\Program Files\\Vendor044\\agent.exe&#10;C:\\Program Files\\Vendor045\\agent.exe&#10;C:\\Program Files\\Vendor046\\agent.exe&#10;C:\\Program Files\\Vendor047\\agent.exe&#10;C:\\Program Files\\Vendor048\\agent.exe&#10;C:\\Program Files\\Vendor049\\agent.exe&#10;C:\\Program Files\\Vendor050\\agent.exe&#10;C:\\Program Files\\Vendor051\\agent.exe&#10;C:\\Program Files\\Vendor052\\agent.exe&#10;C:\\Program Files\\Vendor053\\agent.exe&#10;C:\\Program Files\\Vendor054\\agent.exe&#10;C:\\Program Files\\Vendor055\\agent.exe&#10;C:\\Program Files\\Vendor056\\agent.exe&#10;C:\\Program Files\\Vendor057\\agent.exe&#10;C:\\Program Files\\Vendor058\\agent.exe&#10;C:\\Program Files\\Vendor059\\agent.exe&#10;C:\\Program Files\\Vendor060\\agent.exe&#10;C:\\Program Files\\Vendor061\\agent.exe&#10;C:\\Program Files\\Vendor062\\agent.exe&#10;C:\\Program Files\\Vendor063\\agent.exe&#10;C:\\Program Files\\Vendor064\\agent.exe&#10;C:\\Program Files\\Vendor065\\agent.exe&#10;C:\\Program Files\\Vendor066\\agent.exe&#10;C:\\Program Files\\Vendor067\\agent.exe&#10;C:\\Program Files\\Vendor068\\agent.exe&#10;C:\\Program Files\\Vendor069\\agent.exe&#10;C:\\Program Files\\Vendor070\\agent.exe&#10;C:\\Program Files\\Vendor071\\agent.exe&#10;C:\\Program Files\\Vendor072\\agent.exe&#10;C:\\Program Files\\Vendor073\\agent.exe&#10;C:\\Program Files\\Vendor074\\agent.exe&#10;C:\\Program Files\\Vendor075\\agent.exe&#10;C:\\Program Files\\Vendor076\\ag" />
+<Setting name="UEDR/TraceScanner/ignored_process_1" value="ent.exe&#10;C:\\Program Files\\Vendor077\\agent.exe&#10;C:\\Program Files\\Vendor078\\agent.exe&#10;C:\\Program Files\\Vendor079\\agent.exe&#10;C:\\Program Files\\Vendor080\\agent.exe&#10;C:\\Program Files\\Vendor081\\agent.exe&#10;C:\\Program Files\\Vendor082\\agent.exe&#10;C:\\Program Files\\Vendor083\\agent.exe&#10;C:\\Program Files\\Vendor084\\agent.exe&#10;C:\\Program Files\\Vendor085\\agent.exe&#10;C:\\Program Files\\Vendor086\\agent.exe&#10;C:\\Program Files\\Vendor087\\agent.exe&#10;C:\\Program Files\\Vendor088\\agent.exe&#10;C:\\Program Files\\Vendor089\\agent.exe&#10;C:\\Program Files\\Vendor090\\agent.exe&#10;C:\\Program Files\\Vendor091\\agent.exe&#10;C:\\Program Files\\Vendor092\\agent.exe&#10;C:\\Program Files\\Vendor093\\agent.exe&#10;C:\\Program Files\\Vendor094\\agent.exe&#10;C:\\Program Files\\Vendor095\\agent.exe&#10;C:\\Program Files\\Vendor096\\agent.exe&#10;C:\\Program Files\\Vendor097\\agent.exe&#10;C:\\Program Files\\Vendor098\\agent.exe&#10;C:\\Program Files\\Vendor099\\agent.exe&#10;C:\\Program Files\\Vendor100\\agent.exe&#10;C:\\Program Files\\Vendor101\\agent.exe&#10;C:\\Program Files\\Vendor102\\agent.exe&#10;C:\\Program Files\\Vendor103\\agent.exe&#10;C:\\Program Files\\Vendor104\\agent.exe&#10;C:\\Program Files\\Vendor105\\agent.exe&#10;C:\\Program Files\\Vendor106\\agent.exe&#10;C:\\Program Files\\Vendor107\\agent.exe&#10;C:\\Program Files\\Vendor108\\agent.exe&#10;C:\\Program Files\\Vendor109\\agent.exe&#10;C:\\Program Files\\Vendor110\\agent.exe&#10;C:\\Program Files\\Vendor111\\agent.exe&#10;C:\\Program Files\\Vendor112\\agent.exe&#10;C:\\Program Files\\Vendor113\\agent.exe&#10;C:\\Program Files\\Vendor114\\agent.exe&#10;C:\\Program Files\\Vendor115\\agent.exe&#10;C:\\Program Files\\Vendor116\\agent.exe&#10;C:\\Program Files\\Vendor117\\agent.exe&#10;C:\\Program Files\\Vendor118\\agent.exe&#10;C:\\Program Files\\Vendor119\\agent.exe&#10;C:\\Program Files\\Vendor120\\agent.exe&#10;C:\\Program Files\\Vendor121\\agent.exe&#10;C:\\Program Files\\Vendor122\\agent.exe&#10;C:\\Program Files\\Vendor123\\agent.exe&#10;C:\\Program Files\\Vendor124\\agent.exe&#10;C:\\Program Files\\Vendor125\\agent.exe&#10;C:\\Program Files\\Vendor126\\agent.exe&#10;C:\\Program Files\\Vendor127\\agent.exe&#10;C:\\Program Files\\Vendor128\\agent.exe&#10;C:\\Program Files\\Vendor129\\agent.exe&#10;C:\\Tools\\a&quot;b.exe" />
+<Setting name="UEDR/TraceScanner/ignored_process_linux" value="" />
+<Setting name="UEDR/TraceScanner/ignored_process_mac" value="" />
+<Setting name="UEDR/TraceScanner/injectcore_enabled" value="true" />
+<Setting name="UEDR/TraceScanner/log_level" value="3" />
+<Setting name="UEDR/TraceScanner/max_db_size_mb" value="80" />
+<Setting name="UEDR/TraceScanner/max_hash_file_size_mb" value="500" />
+<Setting name="UEDR/TraceScanner/max_hash_file_size_mb_linux" value="500" />
+<Setting name="UEDR/TraceScanner/max_hash_file_size_mb_mac" value="500" />
+<Setting name="UEDR/TraceScanner/report_connectivity_status" value="false" />
+<Setting name="UEDR/TraceScanner/s3_bucket_aws_access_key_id" value="" />
+<Setting name="UEDR/TraceScanner/s3_bucket_aws_secret_access_key" value="" />
+<Setting name="UEDR/TraceScanner/s3_bucket_name" value="" />
+<Setting name="UEDR/TraceScanner/s3_default_region_name" value="" />
+<Setting name="UEDR/TraceScanner/s3_endpoint" value="" />
+<Setting name="UEDR/TraceScanner/s3_push_frequency_seconds" value="30" />
+<Setting name="UEDR/TraceScanner/s3_use_endpoint" value="false" />
+<Setting name="UEDR/TraceScanner/send_traces_to_edr_cloud" value="true" />
+<Setting name="UEDR/TraceScanner/send_traces_to_s3_bucket" value="false" />
+<Setting name="UEDR/TraceScanner/topic_compressed" value="/mcafee/bridge/traceDataCompressed" />
+<Setting name="UEDR/TraceScanner/topic_uncompressed" value="/mcafee/bridge/traceData" />
+<Setting name="UEDR/TraceScanner/use_oplocks" value="false" />
+<Setting name="mxa/EventStreamer/deleteBatchCount" value="150" />
+<Setting name="mxa/EventStreamer/dxl/compressioned" value="true" />
+<Setting name="mxa/EventStreamer/dxl/enabled" value="true" />
+<Setting name="mxa/EventStreamer/dxl/topic_compressed" value="/trellix/bridge/eventStreamerCompressed" />
+<Setting name="mxa/EventStreamer/dxl/topic_uncompressed" value="/trellix/bridge/eventStreamer" />
+<Setting name="mxa/EventStreamer/eventlogs" value="[{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;Security\&quot;,\&quot;name\&quot;:\&quot;Security\&quot;,\&quot;ids\&quot;:\&quot;1102, 4610, 4611, 4614, 4622, 4624, 4652, 4657, 4663, 4688, 4689, 4697, 4698, 4699, 4702, 4704, 4719, 4720, 4728, 4732, 4756, 4768, 4769, 4771, 4776, 4946, 4947, 4948, 4950, 4951, 4952, 4953, 4954, 4957, 4958, 5025, 5027, 5028, 5029, 5030, 5031, 5034, 5035, 5037, 5038, 5050, 5145, 5152, 6281\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;System\&quot;,\&quot;name\&quot;:\&quot;System\&quot;,\&quot;ids\&quot;:\&quot;6, 20, 24, 25, 31, 34, 35, 41, 100, 104, 219, 1125, 1127, 1129, 7022, 7023, 7024, 7026, 7031, 7032, 7034, 7036, 7040, 7045\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;TerminalServicesLocalSessionManager\&quot;,\&quot;name\&quot;:\&quot;Microsoft-Windows-TerminalServices-LocalSessionManager/Operational\&quot;,\&quot;ids\&quot;:\&quot;21, 22, 23, 24, 25\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;TerminalServicesRemoteConnectionManager\&quot;,\&quot;name\&quot;:\&quot;Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational\&quot;,\&quot;ids\&quot;:\&quot;1149\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;TaskScheduler\&quot;,\&quot;name\&quot;:\&quot;Microsoft-Windows-TaskScheduler/Operational\&quot;,\&quot;ids\&quot;:\&quot;106, 200, 203\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;PowerShell\&quot;,\&quot;name\&quot;:\&quot;Microsoft-Windows-PowerShell/Operational\&quot;,\&quot;ids\&quot;:\&quot;4103, 4104\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;Windows Defender\&quot;,\&quot;name\&quot;:\&quot;Microsoft-Windows-Windows Defender/Operational\&quot;,\&quot;ids\&quot;:\&quot;1005, 1006, 1010, 2001, 2003, 2004, 3002, 5008\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;Application Experience\&quot;,\&quot;name\&quot;:\&quot;Microsoft-Windows-Application-Experience/Program-Inventory\&quot;,\&quot;ids\&quot;:\&quot;903, 904\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;Application\&quot;,\&quot;name\&quot;:\&quot;Application\&quot;,\&quot;ids\&quot;:\&quot;1, 2, 1001, 1033, 4097, 8194, 11707\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;AppLocker EXE and DLL\&quot;,\&quot;name\&quot;:\&quot;Microsoft-Windows-AppLocker/EXE and DLL\&quot;,\&quot;ids\&quot;:\&quot;8003, 8004\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;AppLocker MSI and Script\&quot;,\&quot;name\&quot;:\&quot;Microsoft-Windows-AppLocker/MSI and Script\&quot;,\&quot;ids\&quot;:\&quot;8005, 8006\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;PrintService\&quot;,\&quot;name\&quot;:\&quot;Microsoft-Windows-PrintService/Operational\&quot;,\&quot;ids\&quot;:\&quot;307\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;Sysmon \\&quot;x\\&quot;\&quot;,\&quot;name\&quot;:\&quot;Microsoft-Windows-Sysmon/Operational\&quot;,\&quot;ids\&quot;:\&quot;1, 3\&quot;}]" />
+<Setting name="mxa/EventStreamer/files" value="[{\&quot;enabled\&quot;:true,\&quot;name\&quot;:\&quot;IIS logs\&quot;,\&quot;type\&quot;:\&quot;IIS\&quot;,\&quot;path\&quot;:\&quot;C:\\\\inetpub\\\\logs\\\\*.log\&quot;}]" />
+<Setting name="mxa/EventStreamer/filters" value="[{\&quot;enabled\&quot;:true,\&quot;name\&quot;:\&quot;Drop \\&quot;noise\\&quot;\&quot;,\&quot;type\&quot;:\&quot;ms_windows_event\&quot;,\&quot;os\&quot;:\&quot;windows\&quot;,\&quot;defaultaction\&quot;:\&quot;allow\&quot;,\&quot;conditions\&quot;:[{\&quot;name\&quot;:\&quot;EventID\&quot;,\&quot;value\&quot;:\&quot;4688\&quot;,\&quot;includeExclude\&quot;:\&quot;exclude\&quot;,\&quot;type\&quot;:\&quot;match\&quot;},{\&quot;name\&quot;:\&quot;Image\&quot;,\&quot;value\&quot;:\&quot;.*\\\\svc\\&quot;x\\.exe\&quot;,\&quot;includeExclude\&quot;:\&quot;exclude\&quot;,\&quot;type\&quot;:\&quot;regex\&quot;}]}]" />
+<Setting name="mxa/EventStreamer/helixId" value="hx\&quot;id" />
+<Setting name="mxa/EventStreamer/helixPath" value="/ingest/abc" />
+<Setting name="mxa/EventStreamer/helixURL" value="abc.ingest.apps.fireeye.com" />
+<Setting name="mxa/EventStreamer/inmemorydb" value="true" />
+<Setting name="mxa/EventStreamer/maxEventsInDB" value="10000" />
+<Setting name="mxa/EventStreamer/numConsecutiveBatches" value="250" />
+<Setting name="mxa/EventStreamer/osevents/addressNotificationEvent" value="false" />
+<Setting name="mxa/EventStreamer/osevents/dnsLookupEvent" value="true" />
+<Setting name="mxa/EventStreamer/osevents/fileWriteEvent" value="false" />
+<Setting name="mxa/EventStreamer/osevents/imageLoadEvent" value="false" />
+<Setting name="mxa/EventStreamer/osevents/ipv4NetworkEvent" value="false" />
+<Setting name="mxa/EventStreamer/osevents/processEvent" value="true" />
+<Setting name="mxa/EventStreamer/osevents/regKeyEvent" value="true" />
+<Setting name="mxa/EventStreamer/osevents/urlMonitorEvent" value="false" />
+<Setting name="mxa/EventStreamer/send2Helix" value="true" />
+<Setting name="mxa/EventStreamer/sendEventsTimeout" value="20" />
+<Setting name="mxa/EventStreamer/sendOnEvents" value="true" />
+<Setting name="mxa/EventStreamer/sendOnNumEvents" value="100" />
+<Setting name="mxa/EventStreamer/syslog" value="[{\&quot;enabled\&quot;:true,\&quot;name\&quot;:\&quot;Syslog \\&quot;A\\&quot;\&quot;,\&quot;priority\&quot;:\&quot;P2\&quot;,\&quot;ip\&quot;:\&quot;10.0.0.5\&quot;,\&quot;port\&quot;:\&quot;514\&quot;,\&quot;tls\&quot;:false},{\&quot;enabled\&quot;:false,\&quot;name\&quot;:\&quot;B\&quot;,\&quot;priority\&quot;:\&quot;P4\&quot;,\&quot;ip\&quot;:\&quot;10.0.0.6\&quot;,\&quot;port\&quot;:\&quot;6514\&quot;,\&quot;tls\&quot;:true}]" />
+<Setting name="mxa/EventStreamer/syslog/enable" value="true" />
+<Setting name="mxa/EventStreamer/vacuumOnDeleteCount" value="1000" />
+<Setting name="mxa/LogonTracker/backfill_events" value="false" />
+<Setting name="mxa/LogonTracker/disable_enrichment" value="false" />
+<Setting name="mxa/LogonTracker/filter_tunneled" value="false" />
+<Setting name="mxa/LogonTracker/ignore_accounts" value="svc&quot;x;&lt;HOSTNAME&gt;$;&lt;SYSTEM ACCOUNTS&gt;;&lt;COMPUTER&gt;;&quot;&quot;;" />
+<Setting name="mxa/LogonTracker/ignore_addr" value="&lt;IPV4ADDR&gt;;127.0.0.1;::1;&lt;IPV6ADDR&gt;;" />
+<Setting name="mxa/LogonTracker/ignore_categories" value="local;" />
+<Setting name="mxa/LogonTracker/ignore_hosts" value="localhost;&lt;HOSTNAME&gt;;" />
+<Setting name="mxa/LogonTracker/ignore_status" value="" />
+<Setting name="mxa/LogonTracker/logon_timeout_minutes" value="1440" />
+<Setting name="mxa/LogonTracker/max_memory_cache_size" value="5000000" />
+<Setting name="mxa/container/EventStreamer/enabled" value="true" />
+<Setting name="mxa/container/LogonTracker/enabled" value="false" />
+<Setting name="mxa/container/ProcessTracker/enabled" value="false" />
+<Setting name="mxa/eventor/ioc_alerts_to_edr_epp_enabled" value="true" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - EDRF 50.3 Limits2 Streaming Test::Settings (608D1BD3-67DB-4CC8-A9A7-E06D84745FE0)" featureid="XCLIENT_META" categoryid="Streaming" typeid="Streaming" param_int="0" param_str="">
+<Section name="Streaming">
+<Setting name="UEDR/TraceScanner/audit_rate_limit" value="9500" />
+<Setting name="UEDR/TraceScanner/bulk_time" value="30" />
+<Setting name="UEDR/TraceScanner/cairo_topic_compressed" value="/mcafee/bridge/traceEventCompressed" />
+<Setting name="UEDR/TraceScanner/cairo_topic_uncompressed" value="/mcafee/bridge/traceEvent" />
+<Setting name="UEDR/TraceScanner/cds_retention_period_days" value="7" />
+<Setting name="UEDR/TraceScanner/cds_size_limit_mb" value="210" />
+<Setting name="UEDR/TraceScanner/compression" value="true" />
+<Setting name="UEDR/TraceScanner/disabled_rules" value="" />
+<Setting name="UEDR/TraceScanner/disabled_rules_by_internal_tag" value="2147483644" />
+<Setting name="UEDR/TraceScanner/disabled_rules_linux" value="" />
+<Setting name="UEDR/TraceScanner/disabled_rules_mac" value="" />
+<Setting name="UEDR/TraceScanner/enabled" value="true" />
+<Setting name="UEDR/TraceScanner/ignored_exact_files_linux" value="" />
+<Setting name="UEDR/TraceScanner/ignored_exact_folders_linux" value="" />
+<Setting name="UEDR/TraceScanner/ignored_process" value="" />
+<Setting name="UEDR/TraceScanner/ignored_process_linux" value="" />
+<Setting name="UEDR/TraceScanner/ignored_process_mac" value="" />
+<Setting name="UEDR/TraceScanner/injectcore_enabled" value="true" />
+<Setting name="UEDR/TraceScanner/log_level" value="3" />
+<Setting name="UEDR/TraceScanner/max_db_size_mb" value="80" />
+<Setting name="UEDR/TraceScanner/report_connectivity_status" value="false" />
+<Setting name="UEDR/TraceScanner/s3_bucket_aws_access_key_id" value="" />
+<Setting name="UEDR/TraceScanner/s3_bucket_aws_secret_access_key" value="" />
+<Setting name="UEDR/TraceScanner/s3_bucket_name" value="" />
+<Setting name="UEDR/TraceScanner/s3_default_region_name" value="" />
+<Setting name="UEDR/TraceScanner/s3_push_frequency_seconds" value="30" />
+<Setting name="UEDR/TraceScanner/send_traces_to_edr_cloud" value="true" />
+<Setting name="UEDR/TraceScanner/send_traces_to_s3_bucket" value="false" />
+<Setting name="UEDR/TraceScanner/topic_compressed" value="/mcafee/bridge/traceDataCompressed" />
+<Setting name="UEDR/TraceScanner/topic_uncompressed" value="/mcafee/bridge/traceData" />
+<Setting name="UEDR/TraceScanner/use_oplocks" value="false" />
+<Setting name="mxa/EventStreamer/eventlogs" value="[{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;L0\&quot;,\&quot;name\&quot;:\&quot;Microsoft-Windows-T0/Operational\&quot;,\&quot;ids\&quot;:\&quot;1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045, 1046, 1047, 1048, 1049, 1050, 1051, 1052, 1053, 1054, 1055, 1056, 1057, 1058, 1059, 1060, 1061, 1062, 1063, 1064, 1065, 1066, 1067, 1068, 1069, 1070, 1071, 1072, 1073, 1074, 1075, 1076, 1077, 1078, 1079, 1080, 1081, 1082, 1083, 1084, 1085, 1086, 1087, 1088, 1089, 1090, 1091, 1092, 1093, 1094, 1095, 1096, 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;L1\&quot;,\&quot;name\&quot;:\&quot;Microsoft-Windows-T1/Operational\&quot;,\&quot;ids\&quot;:\&quot;1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045, 1046, 1047, 1048, 1049, 1050, 1051, 1052, 1053, 1054, 1055, 1056, 1057, 1058, 1059, 1060, 1061, 1062, 1063, 1064, 1065, 1066, 1067, 1068, 1069, 1070, 1071, 1072, 1073, 1074, 1075, 1076, 1077, 1078, 1079, 1080, 1081, 1082, 1083, 1084, 1085, 1086, 1087, 1088, 1089, 1090, 1091, 1092, 1093, 1094, 1095, 1096, 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;L2\&quot;,\&quot;name\&quot;:\&quot;Microsoft-Windows-T2/Operational\&quot;,\&quot;ids\&quot;:\&quot;1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045, 1046, 1047, 1048, 1049, 1050, 1051, 1052, 1053, 1054, 1055, 1056, 1057, 1058, 1059, 1060, 1061, 1062, 1063, 1064, 1065, 1066, 1067, 1068, 1069, 1070, 1071, 1072, 1073, 1074, 1075, 1076, 1077, 1078, 1079, 1080, 1081, 1082, 1083, 1084, 1085, 1086, 1087, 1088, 1089, 1090, 1091, 1092, 1093, 1094, 1095, 1096, 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109\&quot;},{\&quot;enabled\&quot;:true,\&quot;displayName\&quot;:\&quot;L3\&quot;,\&quot;name\&quot;:\&quot;Microsoft-Windows-T3/Operational\&quot;,\&quot;ids\&quot;:\&quot;1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045, 1046, 1047, 1048, 1049, 1050, 1051, 1052, 1053, 1054, 1055, 1056, 1057, 1058, 1059, 1060, 1061, 1062, 1063, 1064, 1065, 1066, 1067, 1068, 1069, 1070, 1071, 1072, 1073, 1074, 1075, 1076, 1077, 1078, 1079, 1080, 1081, 1082, 1083, 1084, 1085, 1086, 1087, 1088, 1089, 1090, 1091, 1092, 1093, 1094, 1095, 1096, 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109\&quot;}]" />
+<Setting name="mxa/container/EventStreamer/enabled" value="true" />
+<Setting name="mxa/eventor/ioc_alerts_to_edr_epp_enabled" value="true" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="My Default::Settings (1C7C4467-B2D2-483E-A457-D4DC073C5230)" featureid="XCLIENT_META" categoryid="Detection" typeid="Detection" param_int="0" param_str="">
+<Section name="Detection">
+<Setting name="mxa/container/Eventor/enabled" value="true" />
+<Setting name="mxa/eventor/dns_evts_enabled" value="true" />
+<Setting name="mxa/eventor/excludedPaths" value="" />
+<Setting name="mxa/eventor/excludedProcessNames" value="" />
+<Setting name="mxa/eventor/match_interval" value="60" />
+<Setting name="mxa/eventor/network_evts_enabled" value="true" />
+<Setting name="mxa/eventor/registry_key_exclusion_filter" value="" />
+<Setting name="mxa/eventor/udp_send_events" value="false" />
+<Setting name="mxa/eventor/url_evts_enabled" value="true" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - EDRF 50.3 Detection Test::Settings (867DD9D2-C331-408B-94A3-6938615923DA)" featureid="XCLIENT_META" categoryid="Detection" typeid="Detection" param_int="0" param_str="">
+<Section name="Detection">
+<Setting name="mxa/container/Eventor/enabled" value="true" />
+<Setting name="mxa/eventor/dns_evts_enabled" value="true" />
+<Setting name="mxa/eventor/excludedPaths" value="D:\Data\Share000\*|D:\Data\Share001\*|D:\Data\Share002\*|D:\Data\Share003\*|D:\Data\Share004\*|D:\Data\Share005\*|D:\Data\Share006\*|D:\Data\Share007\*|D:\Data\Share008\*|D:\Data\Share009\*|D:\Data\Share010\*|D:\Data\Share011\*|D:\Data\Share012\*|D:\Data\Share013\*|D:\Data\Share014\*|D:\Data\Share015\*|D:\Data\Share016\*|D:\Data\Share017\*|D:\Data\Share018\*|D:\Data\Share019\*|D:\Data\Share020\*|D:\Data\Share021\*|D:\Data\Share022\*|D:\Data\Share023\*|D:\Data\Share024\*|D:\Data\Share025\*|D:\Data\Share026\*|D:\Data\Share027\*|D:\Data\Share028\*|D:\Data\Share029\*|D:\Data\Share030\*|D:\Data\Share031\*|D:\Data\Share032\*|D:\Data\Share033\*|D:\Data\Share034\*|D:\Data\Share035\*|D:\Data\Share036\*|D:\Data\Share037\*|D:\Data\Share038\*|D:\Data\Share039\*|D:\Data\Share040\*|D:\Data\Share041\*|D:\Data\Share042\*|D:\Data\Share043\*|D:\Data\Share044\*|D:\Data\Share045\*|D:\Data\Share046\*|D:\Data\Share047\*|D:\Data\Share048\*|D:\Data\Share049\*|D:\Data\Share050\*|D:\Data\Share051\*|D:\Data\Share052\*|D:\Data\Share053\*|D:\Data\Share054\*|D:\Data\Share055\*|D:\Data\Share056\*|D:\Data\Share057\*|D:\Data\Share058\*|D:\Data\Share059\*|D:\Data\Share060\*|D:\Data\Share061\*|D:\Data\Share062\*|D:\Data\Share063\*|D:\Data\Share064\*|D:\Data\Share065\*|D:\Data\Share066\*|D:\Data\Share067\*|D:\Data\Share068\*|D:\Data\Share069\*|D:\Data\Share070\*|D:\Data\Share071\*|D:\Data\Share072\*|D:\Data\Share073\*|D:\Data\Share074\*|D:\Data\Share075\*|D:\Data\Share076\*|D:\Data\Share077\*|D:\Data\Share078\*|D:\Data\Share079\*|D:\Data\Share080\*|D:\Data\Share081\*|D:\Data\Share082\*|D:\Data\Share083\*|D:\Data\Share084\*|D:\Data\Share085\*|D:\Data\Share086\*|D:\Data\Share087\*|D:\Data\Share088\*|D:\Data\Share089\*|D:\Data\Share090\*|D:\Data\Share091\*|D:\Data\Share092\*|D:\Data\Share093\*|D:\Data\Share094\*|D:\Data\Share095\*|D:\Data\Share096\*|D:\Data\Share097\*|D:\Data\Share098\*|D:\Data\Share099\*|D:\Data\Share100\*|D:\Data\Share101\*|D:\Data\Share102\*|D:\Data\Share103\*|D:\Data\Share104\*|D:\Data\Share105\*|D:\Data\Share106\*|D:\Data\Share107\*|D:\Data\Share108\*|D:\Data\Share109\*|D:\Data\Share110\*|D:\Data\Share111\*|D:\Data\Share112\*|D:\Data\Share113\*|D:\Data\Share114\*|D:\Data\Share115\*|D:\Data\Share116\*|D:\Data\Share117\*|D:\Data\Share118\*|D:\Data\Share119\*|D:\Data\Share120\*|D:\Data\Share121\*|D:\Data\Share122\*|D:\Data\Share123\*|D:\Data\Share124\*|D:\Data\Share125\*|D:\Data\Share126\*|D:\Data\Share127\*|D:\Data\Share128\*|D:\Data\Share129\*|D:\Data\Share130\*|D:\Data\Share131\*|D:\Data\Share132\*|D:\Data\Share133\*|D:\Data\Share134\*|D:\Data\Share135\*|D:\Data\Share136\*|D:\Data\Share137\*|D:\Data\Share138\*|D:\Data\Share139\*|D:\Data\Share140\*|D:\Data\Share141\*|D:\Data\Share142\*|D:\Data\Share143\*|D:\Data\Share144\*|D:\Data\Share145\*|D:\Data\Share146\*|D:\Data\Share147\*|D:\Data\Share148\*|D:\Data\Share149\*|D:\Data\Share150\*|D:\Data\Share151\*|D:\Data\Share152\*|D:\Data\Share153\*|D:\Data\Share154\*|D:\Data\Share155\*|D:\Data\Share156\*|D:\Data\Share157\*|D:\Data\Share158\*|D:\Data\Share159\*|D:\Data\Share160\*|D:\Data\Share" />
+<Setting name="mxa/eventor/excludedPaths_1" value="161\*|D:\Data\Share162\*|D:\Data\Share163\*|D:\Data\Share164\*|D:\Data\Share165\*|D:\Data\Share166\*|D:\Data\Share167\*|D:\Data\Share168\*|D:\Data\Share169\*|D:\Data\Share170\*|D:\Data\Share171\*|D:\Data\Share172\*|D:\Data\Share173\*|D:\Data\Share174\*|D:\Data\Share175\*|D:\Data\Share176\*|D:\Data\Share177\*|D:\Data\Share178\*|D:\Data\Share179\*|D:\Data\Share180\*|D:\Data\Share181\*|D:\Data\Share182\*|D:\Data\Share183\*|D:\Data\Share184\*|D:\Data\Share185\*|D:\Data\Share186\*|D:\Data\Share187\*|D:\Data\Share188\*|D:\Data\Share189\*|D:\Data\Share190\*|D:\Data\Share191\*|D:\Data\Share192\*|D:\Data\Share193\*|D:\Data\Share194\*|D:\Data\Share195\*|D:\Data\Share196\*|D:\Data\Share197\*|D:\Data\Share198\*|D:\Data\Share199\*|D:\Data\Share200\*|D:\Data\Share201\*|D:\Data\Share202\*|D:\Data\Share203\*|D:\Data\Share204\*|D:\Data\Share205\*|D:\Data\Share206\*|D:\Data\Share207\*|D:\Data\Share208\*|D:\Data\Share209\*|D:\Data\Share210\*|D:\Data\Share211\*|D:\Data\Share212\*|D:\Data\Share213\*|D:\Data\Share214\*|D:\Data\Share215\*|D:\Data\Share216\*|D:\Data\Share217\*|D:\Data\Share218\*|D:\Data\Share219\*" />
+<Setting name="mxa/eventor/excludedProcessNames" value="" />
+<Setting name="mxa/eventor/match_interval" value="60" />
+<Setting name="mxa/eventor/network_evts_enabled" value="true" />
+<Setting name="mxa/eventor/registry_key_exclusion_filter" value="{&quot;reg_key_filter&quot;:[]}" />
+<Setting name="mxa/eventor/udp_send_events" value="false" />
+<Setting name="mxa/eventor/url_evts_enabled" value="true" />
+<Setting name="mxa/intel/rsrc/refresh" value="60" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="My Default::Settings (5417424D-8003-44E7-A396-FADB58163D35)" featureid="XCLIENT_META" categoryid="Investigation" typeid="Investigation" param_int="0" param_str="">
+<Section name="Investigation">
+<Setting name="UEDR/FileHashing/enabled" value="true" />
+<Setting name="UEDR/FileHashing/hash_delay" value="120" />
+<Setting name="UEDR/FileHashing/hash_strategy" value="low" />
+<Setting name="UEDR/FileHashing/ignored_exact_files_linux" value="/etc/cma.d/lpc.conf;" />
+<Setting name="UEDR/FileHashing/ignored_exact_files_macos" value="/etc/cma.d/lpc.conf;" />
+<Setting name="UEDR/FileHashing/ignored_exact_files_windows" value="C:\\PAGEFILE.SYS;C:\\hiberfil.sys;C:\\swapfile.sys;" />
+<Setting name="UEDR/FileHashing/ignored_extensions_linux" value=".swp;.o;.temp;.obj;.pdb;.log;.db;.db-journal;.pset;.tmp;.ost;.lnk;.stamp;.java;.h;.cpp;.py;.manifest;.c;.xml;.cc;.test;.txt;.conf;.mk;.properties;.vcxproj;.svn-base;.js;.filters;.jar;.crt;.dat;.pst;.tlog;.stattmp;.sdf;.etl;.que;.msg;" />
+<Setting name="UEDR/FileHashing/ignored_extensions_macos" value=".strings;.swp;.o;.temp;.obj;.pdb;.log;.db;.db-journal;.pset;.tmp;.ost;.lnk;.stamp;.java;.h;.cpp;.py;.manifest;.c;.xml;.cc;.test;.txt;.conf;.mk;.properties;.vcxproj;.svn-base;.js;.filters;.jar;.crt;.dat;.pst;.tlog;.stattmp;.sdf;.etl;.que;.msg;.png;.jpg;.jpeg;.hpp;" />
+<Setting name="UEDR/FileHashing/ignored_extensions_windows" value=".swp;.o;.temp;.obj;.pdb;.log;.log1;.db;.db-journal;.dat-journal;.pset;.tmp;.ost;.lnk;.stamp;.java;.h;.cpp;.py;.manifest;.c;.xml;.cc;.test;.txt;.conf;.mk;.properties;.vcxproj;.svn-base;.js;.filters;.jar;.crt;.dat;.pst;.tlog;.stattmp;.sdf;.etl;.que;.msg;" />
+<Setting name="UEDR/FileHashing/ignored_paths_linux" value="/var/log;/var/run;/proc;/sys;/dev;/tmp;*/.cache;*/.git;" />
+<Setting name="UEDR/FileHashing/ignored_paths_macos" value="/var/log;/var/run;/proc;/sys;/dev;/tmp;*/.cache;*/.git;/private/var/vm;/System/Volumes/Data;/usr/local/McAfee;" />
+<Setting name="UEDR/FileHashing/ignored_paths_windows" value="FOLDERID_Windows\\..\\$Recycle.Bin;FOLDERID_Windows\\System32\\wbem\\Repository;*.git;*.svn;FOLDERID_UserProfiles\\*\\AppData\\Local\\Google\\Chrome\\User Data;FOLDERID_Windows\\Prefetch;FOLDERID_UserProfiles\\*\\AppData\\Local\\Microsoft\\Windows\\Temporary Internet Files\\Content.IE5;FOLDERID_ProgramFilesX64\\BigFix Enterprise\\BES Client\\__BESData;FOLDERID_ProgramFilesX86\\BigFix Enterprise\\BES Client\\__BESData;FOLDERID_System\\LogFiles\\Scm;FOLDERID_ProgramData\\McAfee\\Common Framework;FOLDERID_UserProfiles\\*\\AppData\\Local\\Microsoft\\Windows\\Temporary Internet Files\\Content.MSO;FOLDERID_UserProfiles\\*\\AppData\\Local\\Microsoft\\Windows\\WER\\ReportQueue;FOLDERID_ProgramData\\McAfee\\ENDPOINT SECURITY\\LOGCFG;" />
+<Setting name="UEDR/FileHashing/max_db_size_mb" value="60" />
+<Setting name="UEDR/FileHashing/max_db_size_percentage" value="2" />
+<Setting name="UEDR/FileHashing/max_file_size_mb" value="100" />
+<Setting name="UEDR/FileHashing/max_retrieve" value="512" />
+<Setting name="UEDR/FileHashing/power_saved" value="true" />
+<Setting name="UEDR/General/max_merge_retrieve" value="512" />
+<Setting name="UEDR/NetworkFlow/enabled" value="true" />
+<Setting name="UEDR/NetworkFlow/ignored_paths" value="" />
+<Setting name="UEDR/NetworkFlow/log_system" value="false" />
+<Setting name="UEDR/NetworkFlow/max_db_size_mb" value="120" />
+<Setting name="UEDR/NetworkFlow/max_db_size_percentage" value="2" />
+<Setting name="UEDR/NetworkFlow/max_retrieve" value="512" />
+<Setting name="UEDR/NetworkFlow/netsniffing" value="false" />
+<Setting name="UEDR/SystemInfo/enabled" value="true" />
+<Setting name="UEDR/SystemInfo/processhistory" value="true" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - EDRF 50.3 Investigation Test::Settings (C433BDF4-6457-49AE-8341-FAE383EF31F3)" featureid="XCLIENT_META" categoryid="Investigation" typeid="Investigation" param_int="0" param_str="">
+<Section name="Investigation">
+<Setting name="UEDR/FileHashing/enabled" value="true" />
+<Setting name="UEDR/FileHashing/hash_delay" value="120" />
+<Setting name="UEDR/FileHashing/hash_strategy" value="low" />
+<Setting name="UEDR/FileHashing/ignored_exact_files_linux" value="/etc/cma.d/lpc.conf;" />
+<Setting name="UEDR/FileHashing/ignored_exact_files_macos" value="/etc/cma.d/lpc.conf;" />
+<Setting name="UEDR/FileHashing/ignored_exact_files_windows" value="C:\\PAGEFILE.SYS;C:\\hiberfil.sys;C:\\swapfile.sys;" />
+<Setting name="UEDR/FileHashing/ignored_extensions_linux" value=".swp;.o;.temp;.obj;.pdb;.log;.db;.db-journal;.pset;.tmp;.ost;.lnk;.stamp;.java;.h;.cpp;.py;.manifest;.c;.xml;.cc;.test;.txt;.conf;.mk;.properties;.vcxproj;.svn-base;.js;.filters;.jar;.crt;.dat;.pst;.tlog;.stattmp;.sdf;.etl;.que;.msg;;.qcow2" />
+<Setting name="UEDR/FileHashing/ignored_extensions_macos" value=".strings;.swp;.o;.temp;.obj;.pdb;.log;.db;.db-journal;.pset;.tmp;.ost;.lnk;.stamp;.java;.h;.cpp;.py;.manifest;.c;.xml;.cc;.test;.txt;.conf;.mk;.properties;.vcxproj;.svn-base;.js;.filters;.jar;.crt;.dat;.pst;.tlog;.stattmp;.sdf;.etl;.que;.msg;.png;.jpg;.jpeg;.hpp;" />
+<Setting name="UEDR/FileHashing/ignored_extensions_windows" value=".swp;.o;.temp;.obj;.pdb;.log;.log1;.db;.db-journal;.dat-journal;.pset;.tmp;.ost;.lnk;.stamp;.java;.h;.cpp;.py;.manifest;.c;.xml;.cc;.test;.txt;.conf;.mk;.properties;.vcxproj;.svn-base;.js;.filters;.jar;.crt;.dat;.pst;.tlog;.stattmp;.sdf;.etl;.que;.msg;" />
+<Setting name="UEDR/FileHashing/ignored_paths_linux" value="/var/log;/var/run;/proc;/sys;/dev;/tmp;*/.cache;*/.git;" />
+<Setting name="UEDR/FileHashing/ignored_paths_macos" value="/var/log;/var/run;/proc;/sys;/dev;/tmp;*/.cache;*/.git;/private/var/vm;/System/Volumes/Data;/usr/local/McAfee;" />
+<Setting name="UEDR/FileHashing/ignored_paths_windows" value="FOLDERID_ProgramData\\Vendor000\\Cache;FOLDERID_ProgramData\\Vendor001\\Cache;FOLDERID_ProgramData\\Vendor002\\Cache;FOLDERID_ProgramData\\Vendor003\\Cache;FOLDERID_ProgramData\\Vendor004\\Cache;FOLDERID_ProgramData\\Vendor005\\Cache;FOLDERID_ProgramData\\Vendor006\\Cache;FOLDERID_ProgramData\\Vendor007\\Cache;FOLDERID_ProgramData\\Vendor008\\Cache;FOLDERID_ProgramData\\Vendor009\\Cache;FOLDERID_ProgramData\\Vendor010\\Cache;FOLDERID_ProgramData\\Vendor011\\Cache;FOLDERID_ProgramData\\Vendor012\\Cache;FOLDERID_ProgramData\\Vendor013\\Cache;FOLDERID_ProgramData\\Vendor014\\Cache;FOLDERID_ProgramData\\Vendor015\\Cache;FOLDERID_ProgramData\\Vendor016\\Cache;FOLDERID_ProgramData\\Vendor017\\Cache;FOLDERID_ProgramData\\Vendor018\\Cache;FOLDERID_ProgramData\\Vendor019\\Cache;FOLDERID_ProgramData\\Vendor020\\Cache;FOLDERID_ProgramData\\Vendor021\\Cache;FOLDERID_ProgramData\\Vendor022\\Cache;FOLDERID_ProgramData\\Vendor023\\Cache;FOLDERID_ProgramData\\Vendor024\\Cache;FOLDERID_ProgramData\\Vendor025\\Cache;FOLDERID_ProgramData\\Vendor026\\Cache;FOLDERID_ProgramData\\Vendor027\\Cache;FOLDERID_ProgramData\\Vendor028\\Cache;FOLDERID_ProgramData\\Vendor029\\Cache;FOLDERID_ProgramData\\Vendor030\\Cache;FOLDERID_ProgramData\\Vendor031\\Cache;FOLDERID_ProgramData\\Vendor032\\Cache;FOLDERID_ProgramData\\Vendor033\\Cache;FOLDERID_ProgramData\\Vendor034\\Cache;FOLDERID_ProgramData\\Vendor035\\Cache;FOLDERID_ProgramData\\Vendor036\\Cache;FOLDERID_ProgramData\\Vendor037\\Cache;FOLDERID_ProgramData\\Vendor038\\Cache;FOLDERID_ProgramData\\Vendor039\\Cache;FOLDERID_ProgramData\\Vendor040\\Cache;FOLDERID_ProgramData\\Vendor041\\Cache;FOLDERID_ProgramData\\Vendor042\\Cache;FOLDERID_ProgramData\\Vendor043\\Cache;FOLDERID_ProgramData\\Vendor044\\Cache;FOLDERID_ProgramData\\Vendor045\\Cache;FOLDERID_ProgramData\\Vendor046\\Cache;FOLDERID_ProgramData\\Vendor047\\Cache;FOLDERID_ProgramData\\Vendor048\\Cache;FOLDERID_ProgramData\\Vendor049\\Cache;FOLDERID_ProgramData\\Vendor050\\Cache;FOLDERID_ProgramData\\Vendor051\\Cache;FOLDERID_ProgramData\\Vendor052\\Cache;FOLDERID_ProgramData\\Vendor053\\Cache;FOLDERID_ProgramData\\Vendor054\\Cache;FOLDERID_ProgramData\\Vendor055\\Cache;FOLDERID_ProgramData\\Vendor056\\Cache;FOLDERID_ProgramData\\Vendor057\\Cache;FOLDERID_ProgramData\\Vendor058\\Cache;FOLDERID_ProgramData\\Vendor059\\Cache;FOLDERID_ProgramData\\Vendor060\\Cache;FOLDERID_ProgramData\\Vendor061\\Cache;FOLDERID_ProgramData\\Vendor062\\Cache;FOLDERID_ProgramData\\Vendor063\\Cache;FOLDERID_ProgramData\\Vendor064\\Cache;FOLDERID_ProgramData\\Vendor065\\Cache;FOLDERID_ProgramData\\Vendor066\\Cache;FOLDERID_ProgramData\\Vendor067\\Cache;FOLDERID_ProgramData\\Vendor068\\Cache;FOLDERID_ProgramData\\Vendor069\\Cache;FOLDERID_ProgramData\\Vendor070\\Cache;FOLDERID_ProgramData\\Vendor071\\Cache;FOLDERID_ProgramData\\Vendor072\\Cache;FOLDERID_ProgramData\\Vendor073\\Cache;FOLDERID_ProgramData\\Vendor074\\Cache;FOLDERID_ProgramData\\Vendor075\\Cache;FOLDERID_ProgramData\\Vendor076\\Cache;FOLDERID_ProgramData\\Vendor077\\Cache;" />
+<Setting name="UEDR/FileHashing/ignored_paths_windows_1" value="FOLDERID_ProgramData\\Vendor078\\Cache;FOLDERID_ProgramData\\Vendor079\\Cache;FOLDERID_ProgramData\\Vendor080\\Cache;FOLDERID_ProgramData\\Vendor081\\Cache;FOLDERID_ProgramData\\Vendor082\\Cache;FOLDERID_ProgramData\\Vendor083\\Cache;FOLDERID_ProgramData\\Vendor084\\Cache;FOLDERID_ProgramData\\Vendor085\\Cache;FOLDERID_ProgramData\\Vendor086\\Cache;FOLDERID_ProgramData\\Vendor087\\Cache;FOLDERID_ProgramData\\Vendor088\\Cache;FOLDERID_ProgramData\\Vendor089\\Cache;FOLDERID_ProgramData\\Vendor090\\Cache;FOLDERID_ProgramData\\Vendor091\\Cache;FOLDERID_ProgramData\\Vendor092\\Cache;FOLDERID_ProgramData\\Vendor093\\Cache;FOLDERID_ProgramData\\Vendor094\\Cache;FOLDERID_ProgramData\\Vendor095\\Cache;FOLDERID_ProgramData\\Vendor096\\Cache;FOLDERID_ProgramData\\Vendor097\\Cache;FOLDERID_ProgramData\\Vendor098\\Cache;FOLDERID_ProgramData\\Vendor099\\Cache;FOLDERID_ProgramData\\Vendor100\\Cache;FOLDERID_ProgramData\\Vendor101\\Cache;FOLDERID_ProgramData\\Vendor102\\Cache;FOLDERID_ProgramData\\Vendor103\\Cache;FOLDERID_ProgramData\\Vendor104\\Cache;FOLDERID_ProgramData\\Vendor105\\Cache;FOLDERID_ProgramData\\Vendor106\\Cache;FOLDERID_ProgramData\\Vendor107\\Cache;FOLDERID_ProgramData\\Vendor108\\Cache;FOLDERID_ProgramData\\Vendor109\\Cache;FOLDERID_ProgramData\\Vendor110\\Cache;FOLDERID_ProgramData\\Vendor111\\Cache;FOLDERID_ProgramData\\Vendor112\\Cache;FOLDERID_ProgramData\\Vendor113\\Cache;FOLDERID_ProgramData\\Vendor114\\Cache;FOLDERID_ProgramData\\Vendor115\\Cache;FOLDERID_ProgramData\\Vendor116\\Cache;FOLDERID_ProgramData\\Vendor117\\Cache;FOLDERID_ProgramData\\Vendor118\\Cache;FOLDERID_ProgramData\\Vendor119\\Cache;C:\\Users\\O'Brien\\Big" />
+<Setting name="UEDR/FileHashing/max_db_size_mb" value="60" />
+<Setting name="UEDR/FileHashing/max_db_size_percentage" value="2" />
+<Setting name="UEDR/FileHashing/max_file_size_mb" value="100" />
+<Setting name="UEDR/FileHashing/max_retrieve" value="512" />
+<Setting name="UEDR/FileHashing/power_saved" value="true" />
+<Setting name="UEDR/General/max_merge_retrieve" value="512" />
+<Setting name="UEDR/NetworkFlow/enabled" value="true" />
+<Setting name="UEDR/NetworkFlow/ignored_paths" value="" />
+<Setting name="UEDR/NetworkFlow/log_system" value="false" />
+<Setting name="UEDR/NetworkFlow/max_db_size_mb" value="120" />
+<Setting name="UEDR/NetworkFlow/max_db_size_percentage" value="2" />
+<Setting name="UEDR/NetworkFlow/max_retrieve" value="512" />
+<Setting name="UEDR/NetworkFlow/netsniffing" value="false" />
+<Setting name="UEDR/SystemInfo/enabled" value="true" />
+<Setting name="UEDR/SystemInfo/processhistory" value="true" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="My Default::Settings (F872A0BF-06FB-45C5-B9CC-90A09CD25231)" featureid="XCLIENT_META" categoryid="Remediation" typeid="Remediation" param_int="0" param_str="">
+<Section name="Remediation">
+<Setting name="Allowed_IP_Addresses" value="" />
+<Setting name="UEDR/NetworkFlow/allow_paths_macos" value="" />
+<Setting name="UEDR/NetworkFlow/allow_paths_windows" value="" />
+<Setting name="UEDR/NetworkFlow/display_quarantine" value="true" />
+<Setting name="UEDR/NetworkFlow/quarantine_message" value="WARNING: Endpoint Contained. Your device has been disconnected from the network and can only connect to the Trellix management console." />
+<Setting name="UEDR/NetworkFlow/unquarantine_message" value="WARNING: Endpoint Removed from containment. Your device has been reconnected to the network." />
+<Setting name="UEDR/NetworkFlow/unquarantine_password" value="" />
+<Setting name="UEDR/NetworkFlow/unquarantine_password_enabled" value="false" />
+<Setting name="UEDR/NetworkFlow/unquarantine_salted_password" value="" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - EDRF 50.3 Remediation ByHand Test::Settings (EDBC2753-096B-4DE0-B3C0-16F3EDA141A4)" featureid="XCLIENT_META" categoryid="Remediation" typeid="Remediation" param_int="0" param_str="">
+<Section name="Remediation">
+<Setting name="Allowed_IP_Addresses" value="[{\&quot;IP_Address\&quot;:\&quot;fd00::10\&quot;,\&quot;description\&quot;:\&quot;ULA host\&quot;}]" />
+<Setting name="UEDR/NetworkFlow/allow_paths_linux" value="" />
+<Setting name="UEDR/NetworkFlow/allow_paths_macos" value="" />
+<Setting name="UEDR/NetworkFlow/allow_paths_windows" value="C:\\Tools\\vpn.exe" />
+<Setting name="UEDR/NetworkFlow/byhand_enabled" value="true" />
+<Setting name="UEDR/NetworkFlow/containment_notify_html" value="PGh0bWw+PGhlYWQ+PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiLz48c3R5bGU+I2NvbnRlbnQtYXJlYS13cmFwcGVyIHsgd2lkdGg6IDYwMHB4OyBtYXJnaW46IGF1dG87IG92ZXJmbG93OiBoaWRkZW47IH0gI2NvbnRlbnQtYXJlYSB7IGxpbmUtaGVpZ2h0OiAyMHB4OyB3aGl0ZS1zcGFjZTogcHJlLXdyYXA7IHdoaXRlLXNwYWNlOiAtbW96LXByZS13cmFwOyB3b3JkLXdyYXA6IGJyZWFrLXdvcmQ7IGZvbnQtZmFtaWx5OiBzYW5zLXNlcmlmOyB9IGltZyB7IG1heC13aWR0aDogMTAwJTsgfSBib2R5LCBodG1sIHsgd2lkdGg6IDEwMCU7IH08L3N0eWxlPjx0aXRsZT5MYWIgU09DIEFsZXJ0PC90aXRsZT48bGluayByZWw9InNob3J0Y3V0IGljb24iIGhyZWY9Ii4vZmF2aWNvbi5pY28iIHR5cGU9ImltYWdlL3gtaWNvbiI+PC9oZWFkPjxib2R5PjxkaXYgaWQ9ImNvbnRlbnQtYXJlYS13cmFwcGVyIj48aW1nIHNyYz0ibG9nby5wbmciIC8+PHByZSBpZD0iY29udGVudC1hcmVhIj5Db250YWN0IHRoZSBTT0M6IEM6XFNPQ1xoZWxwLnR4dApMaW5lIDIgw6k8L3ByZT48L2Rpdj48L2JvZHk+PC9odG1sPg==" />
+<Setting name="UEDR/NetworkFlow/containment_notify_image" value="iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAFklEQVR4nGM4ISdHEmIY1TCqYfhqAADkYgQQ60fIxgAAAABJRU5ErkJggg==" />
+<Setting name="UEDR/NetworkFlow/containment_notify_image_name" value="logo.png" />
+<Setting name="UEDR/NetworkFlow/containment_title" value="Lab SOC Alert" />
+<Setting name="UEDR/NetworkFlow/containment_url" value="" />
+<Setting name="UEDR/NetworkFlow/display_quarantine" value="true" />
+<Setting name="UEDR/NetworkFlow/quarantine_message" value="Contact the SOC: C:\\SOC\\help.txt;Line 2 é" />
+<Setting name="UEDR/NetworkFlow/unquarantine_message" value="Released by the SOC." />
+<Setting name="UEDR/NetworkFlow/unquarantine_password" value="" />
+<Setting name="UEDR/NetworkFlow/unquarantine_password_enabled" value="false" />
+<Setting name="UEDR/NetworkFlow/unquarantine_salted_password" value="" />
+<Setting name="UEDR/NetworkFlow/url_enabled" value="false" />
+<Setting name="mxa/container/HostRemediation/enabled" value="true" />
+<Setting name="UEDR/NetworkFlow/favicon" value="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" /><Setting name="UEDR/NetworkFlow/favicon_1" value="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" /><Setting name="UEDR/NetworkFlow/favicon_2" value="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" /></Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - EDRF 50.3 Remediation URL Test::Settings (9FCE8451-D816-48CC-8EC4-C39BD4EBA4B6)" featureid="XCLIENT_META" categoryid="Remediation" typeid="Remediation" param_int="0" param_str="">
+<Section name="Remediation">
+<Setting name="Allowed_IP_Addresses" value="[]" />
+<Setting name="UEDR/NetworkFlow/allow_paths_linux" value="" />
+<Setting name="UEDR/NetworkFlow/allow_paths_macos" value="" />
+<Setting name="UEDR/NetworkFlow/allow_paths_windows" value="" />
+<Setting name="UEDR/NetworkFlow/byhand_enabled" value="false" />
+<Setting name="UEDR/NetworkFlow/containment_notify_html" value="" />
+<Setting name="UEDR/NetworkFlow/containment_notify_image" value="" />
+<Setting name="UEDR/NetworkFlow/containment_notify_image_name" value="" />
+<Setting name="UEDR/NetworkFlow/containment_title" value="Trellix Security Alert" />
+<Setting name="UEDR/NetworkFlow/containment_url" value="http://10.0.0.5/contained.html" />
+<Setting name="UEDR/NetworkFlow/display_quarantine" value="true" />
+<Setting name="UEDR/NetworkFlow/quarantine_message" value="WARNING: Endpoint Contained. Your device has been disconnected from the network and can only connect to the Trellix management console." />
+<Setting name="UEDR/NetworkFlow/unquarantine_message" value="WARNING: Endpoint Removed from containment. Your device has been reconnected to the network." />
+<Setting name="UEDR/NetworkFlow/unquarantine_password" value="" />
+<Setting name="UEDR/NetworkFlow/unquarantine_password_enabled" value="false" />
+<Setting name="UEDR/NetworkFlow/unquarantine_salted_password" value="" />
+<Setting name="UEDR/NetworkFlow/url_enabled" value="true" />
+<Setting name="mxa/container/HostRemediation/enabled" value="false" />
+</Section>
+</EPOPolicySettings>
+
+<EPOPolicyObject name="My Default" featureid="XCLIENT_META" categoryid="Streaming" serverid="W2022EPO510" editflag="0" typeid="Streaming">
+<description /><PolicySettings>My Default::Settings (F54E3C64-EDE0-417B-A8C7-18812FCB8F74)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - EDRF 50.3 Streaming Test" featureid="XCLIENT_META" categoryid="Streaming" serverid="W2022EPO510" editflag="0" typeid="Streaming">
+<description /><PolicySettings>Claude - EDRF 50.3 Streaming Test::Settings (CF36CD50-1653-4A58-9D34-00DC562D1D02)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - EDRF 50.3 Limits2 Streaming Test" featureid="XCLIENT_META" categoryid="Streaming" serverid="W2022EPO510" editflag="0" typeid="Streaming">
+<description /><PolicySettings>Claude - EDRF 50.3 Limits2 Streaming Test::Settings (608D1BD3-67DB-4CC8-A9A7-E06D84745FE0)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="My Default" featureid="XCLIENT_META" categoryid="Detection" serverid="W2022EPO510" editflag="0" typeid="Detection">
+<description /><PolicySettings>My Default::Settings (1C7C4467-B2D2-483E-A457-D4DC073C5230)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - EDRF 50.3 Detection Test" featureid="XCLIENT_META" categoryid="Detection" serverid="W2022EPO510" editflag="0" typeid="Detection">
+<description /><PolicySettings>Claude - EDRF 50.3 Detection Test::Settings (867DD9D2-C331-408B-94A3-6938615923DA)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="My Default" featureid="XCLIENT_META" categoryid="Investigation" serverid="W2022EPO510" editflag="0" typeid="Investigation">
+<description /><PolicySettings>My Default::Settings (5417424D-8003-44E7-A396-FADB58163D35)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - EDRF 50.3 Investigation Test" featureid="XCLIENT_META" categoryid="Investigation" serverid="W2022EPO510" editflag="0" typeid="Investigation">
+<description /><PolicySettings>Claude - EDRF 50.3 Investigation Test::Settings (C433BDF4-6457-49AE-8341-FAE383EF31F3)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="My Default" featureid="XCLIENT_META" categoryid="Remediation" serverid="W2022EPO510" editflag="0" typeid="Remediation">
+<description /><PolicySettings>My Default::Settings (F872A0BF-06FB-45C5-B9CC-90A09CD25231)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - EDRF 50.3 Remediation ByHand Test" featureid="XCLIENT_META" categoryid="Remediation" serverid="W2022EPO510" editflag="0" typeid="Remediation">
+<description /><PolicySettings>Claude - EDRF 50.3 Remediation ByHand Test::Settings (EDBC2753-096B-4DE0-B3C0-16F3EDA141A4)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - EDRF 50.3 Remediation URL Test" featureid="XCLIENT_META" categoryid="Remediation" serverid="W2022EPO510" editflag="0" typeid="Remediation">
+<description /><PolicySettings>Claude - EDRF 50.3 Remediation URL Test::Settings (9FCE8451-D816-48CC-8EC4-C39BD4EBA4B6)</PolicySettings>
+</EPOPolicyObject>
+</ns0:EPOPolicySchema>

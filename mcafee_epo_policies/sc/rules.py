@@ -17,6 +17,8 @@ Control and Integrity Monitor classes) work for both policies and rule groups.
 
 import re
 
+from ..validators import check_length, is_sc_exclusion_value, is_sc_updater_name
+
 class SCRules():
     """
     SCRules is the base class object giving access to Solidcore rules. A subclass
@@ -397,6 +399,8 @@ class SCExclusionRules(SCRules):
                         and optional for PROCESS_CONTEXT (Windows only).
         :param: library: Library Name, optional for VASR_FORCED_RELOCATION
                          (Windows only).
+        The values are trimmed and checked as by the console dialog (255
+        characters, see is_sc_exclusion_value).
         :return: True, or False if the exclusion already exists.
         """
         if library and (self.is_unix() or exclusion not in self.LIBRARY_OPTIONAL):
@@ -408,6 +412,17 @@ class SCExclusionRules(SCRules):
         if parent and (self.is_unix() or exclusion not in self.PARENT_REQUIRED +
                        self.PARENT_OPTIONAL):
             raise ValueError('Exclusion "{}" has no Parent Process Name.'.format(exclusion))
+        os = 'UNIX' if self.is_unix() else 'WIN'
+        name = str(name).strip()
+        for field, value in [(exclusion, name), ('parent_' + exclusion, parent),
+                             ('library', library)]:
+            if field == exclusion or value:
+                value = check_length(field, str(value).strip(), 255, required=True)
+                if not is_sc_exclusion_value(value, field, os):
+                    raise ValueError('Invalid {} value (see is_sc_exclusion_value): {!r}'.format(
+                        field, value))
+        parent = str(parent).strip() if parent else parent
+        library = str(library).strip() if library else library
         if self.contains_exclusion(exclusion, name, parent):
             return False
         rule_type, key = self.__rule_kind(exclusion)
@@ -506,7 +521,10 @@ class SCUpdaterRules(SCRules):
     def add_updater(self, file_name, label, parent=None, library=None,
                     disable_inheritance=False, suppress_events=False):
         """
-        Add an updater by name (Updater By Name).
+        Add an updater by name (Updater By Name). As in the console, the
+        values are trimmed, the file name and the label are required (255
+        characters, server check) and on Windows the file name, parent and
+        library are checked by is_sc_updater_name.
 
         :param: file_name: File Name (a file name or a path).
         :param: label: Updater Label.
@@ -517,6 +535,17 @@ class SCUpdaterRules(SCRules):
         """
         if parent and library:
             raise ValueError('Condition must be either Parent or Library, not both.')
+        os = 'UNIX' if self.is_unix() else 'WIN'
+        file_name = check_length('File Name', str(file_name).strip(), 255, required=True)
+        label = check_length('Updater Label', str(label).strip(), 255, required=True)
+        for field, value in [('File Name', file_name), ('Parent', parent), ('Library', library)]:
+            if value:
+                check_length(field, str(value).strip(), 255)
+                if not is_sc_updater_name(str(value).strip(), os):
+                    raise ValueError('Invalid updater {} (see is_sc_updater_name): {!r}'.format(
+                        field, value))
+        parent = str(parent).strip() if parent else parent
+        library = str(library).strip() if library else library
         rule = {'type': 'updater-binary', 'binary': file_name, 'tag': label,
                 'caseSensitive': 'false', 'inherit': self._bool(not disable_inheritance),
                 'log': self._bool(not suppress_events)}
@@ -531,6 +560,7 @@ class SCUpdaterRules(SCRules):
         Add an updater by checksum (Updater By File SHA-1 or SHA-256).
         """
         key = self._checksum_key(checksum)
+        label = check_length('Updater Label', str(label).strip(), 255, required=True)
         return self.add_rule({'type': 'installer', key: checksum.lower(), 'tag': label,
                               'ruletype': 'checksum', 'showas': 'updater'})
 
@@ -559,7 +589,14 @@ class SCUpdaterRules(SCRules):
         """
         Add a trusted user (Domain\\User, User Label, Name). Active Directory
         groups ("AD Import" of the console) are not supported (not tested).
+        The user and the label are required, all values take 255 characters
+        (server check) and a user already in the list is refused.
         """
+        user = check_length('User Name', str(user).strip(), 255, required=True)
+        label = check_length('User Label', str(label).strip(), 255, required=True)
+        display_name = check_length('Name', str(display_name or '').strip(), 255)
+        if any(rule.get('user') == user for rule in self.get_rules('updater-user')):
+            raise ValueError('The trusted user {!r} is already in the list.'.format(user))
         return self.add_rule({'type': 'updater-user', 'user': user, 'tag': label,
                               'displayName': display_name, 'activeDirectoryId': '',
                               'groupDN': '', 'netbiosName': ''})

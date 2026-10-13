@@ -10,6 +10,7 @@ SCGENPolicyConfiguration and SCGENPolicyExceptionRules.
 
 from .scpolicies import SCPolicy
 from .rules import SCExclusionRules
+from ..validators import check_int
 
 class SCGENPolicyConfiguration(SCPolicy):
     """
@@ -22,6 +23,65 @@ class SCGENPolicyConfiguration(SCPolicy):
     """
 
     TYPE_IDS = ('Lockdown Rules',)
+
+    # Number fields of the console (Numberbox min-max of the Solidcore 8.4
+    # page, checked on the lab; the server also checks the CLI, throttling
+    # and content change tracking ones): config name -> (label, min, max).
+    CONFIG_LIMITS = {
+        'AgentEventsThresholdOnWakeup': ('Events threshold', 1, 999999),
+        'SupplierCacheSizeOnWakeup': ('Events cache size', 1, 999999),
+        'InvDiffAgentEventsThreshold': ('Inventory threshold', 1, 999999),
+        'ObAgentEventsThresholdOnWakeup': ('Policy discovery threshold', 1, 999999),
+        'ObSupplierCacheSizeOnWakeup': ('Policy discovery cache size', 1, 999999),
+        'FileDiffMaxSize': ('Content change tracking maximum file size (KB)', 1, 10000),
+        'FileDiffMaxFiles': ('Content change tracking maximum file limit per rule', 1, 10000),
+        'logFileSize': ('Solidcore log file size (KB)', 2000, 100000),
+        'logFileNum': ('Number of solidcore log files', 5, 50),
+        'invMergeTimeout': ('Inventory merge timeout', 1800, 10000),
+        'invMergeBySizePeriod': ('Inventory merge by size period', 150, 300),
+        'mpCompat': ('mpCompat', 0, 2),
+        'inventoryCaseSensitivityEnabled': ('inventoryCaseSensitivityEnabled', 0, 2),
+    }
+    # The other number fields of the Certificate and Custom configuration
+    # tabs take 0 or 1.
+    for _name in ['checkCertTrustWithVTP', 'allowFailedCertTrustWithVTP',
+                  'catalogCertExtractionDisabled', 'embeddedCertExtractionDisabled',
+                  'disableDeviceGuardCompat', 'isInvBackupEnabled', 'isInvBootBackupEnabled',
+                  'soIsTidOptimizationEnabled', 'cksumCalcMode', 'cksumParallelCalcMode',
+                  'enableBinAllowedByCertOrChecksumToBeUpdaters', 'volumeMountRefCountDisabled',
+                  'unloadUnmountedVolumeDisabled', 'disableReputationCache',
+                  'skipValidateFileLength', 'disableCertCheck', 'isTrustedLocalGroupEnabled']:
+        CONFIG_LIMITS[_name] = (_name, 0, 1)
+    del _name
+    # CLI lockdown: setting of the local-cli-lock rule -> (label, min, max).
+    CLI_LIMITS = {'attempts': ('Disable CLI after failed attempts', 1, 100),
+                  'attempts_within_minutes': ('Failed attempts within minutes', 1, 1440),
+                  'lockdowntime_minutes': ('Disable CLI for minutes', 1, 1440)}
+    # Characters the console removes as they are typed (scorFDvalidateExtensions,
+    # scorValidatePaths).
+    CONFIG_FORBIDDEN = {'FileDiffAttrOnlyTypes': '.:?<>|*"\\/',
+                        'pathsWritableOnlyByUpdater': '?<>|,*"/'}
+
+    def set_config(self, name, value):
+        """
+        Sets the value of a 'config' rule (see SCPolicy.set_config), refusing
+        what the console refuses (CONFIG_LIMITS, CONFIG_FORBIDDEN).
+        """
+        if name in self.CONFIG_LIMITS:
+            label, minimum, maximum = self.CONFIG_LIMITS[name]
+            value = str(check_int(label, value, minimum, maximum))
+        elif name in self.CONFIG_FORBIDDEN:
+            value = str(value)
+            if value != value.strip() or any(char in value for char in self.CONFIG_FORBIDDEN[name]):
+                raise ValueError('{} cannot contain {} (nor surrounding blanks): {!r}'.format(
+                    name, ' '.join(self.CONFIG_FORBIDDEN[name]), value))
+        return super(SCGENPolicyConfiguration, self).set_config(name, value)
+
+    def _set_rule_value(self, rule_type, key, value):
+        if rule_type == 'local-cli-lock' and key in self.CLI_LIMITS:
+            label, minimum, maximum = self.CLI_LIMITS[key]
+            value = str(check_int(label, value, minimum, maximum))
+        return super(SCGENPolicyConfiguration, self)._set_rule_value(rule_type, key, value)
 
     # ------------------------------ CLI TAB ------------------------------
     # Local CLI Access Password:

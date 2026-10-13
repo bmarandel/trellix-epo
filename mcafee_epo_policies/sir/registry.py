@@ -26,10 +26,11 @@ SetRegistry):
 """
 
 import datetime
+import re
 import uuid
 
 from ..policies import Policy
-from .collect import check_registry_path
+from .collect import check_registry_path, check_characters
 
 
 class SIRRegistryValue():
@@ -55,6 +56,8 @@ class SIRRegistryValue():
         self.key = key
         self.reg_type = reg_type
         self.data = str(data)
+        if reg_type == 'REG_BINARY' and len(self.data) % 2:
+            self.data += '0'    # the console completes an odd number of digits
         self.action = str(action)
         self.flag = int(flag)
 
@@ -88,18 +91,39 @@ class SIRRegistryValue():
 
     def check(self):
         """
-        Raise ValueError if the console would refuse the value.
+        Raise ValueError if the console would refuse the value (Set Registry
+        page of SIR 1.0.x, compared on the lab): name 255 and key 1000
+        characters, data 400 (textarea), none of them with " or ;; a key
+        starting with a hive ([HKLM]\\...); REG_DWORD data of digits, at most
+        4294967295; REG_BINARY data of hexadecimal digits; REG_SZ and
+        REG_EXPAND_SZ data on one line; a key ending with \\ (key creation)
+        has no data and the REG_SZ type.
         """
+        if not self.key:
+            raise ValueError('The Key\\Value is required.')
         check_registry_path(self.key)
+        for text in (self.name, self.data):
+            check_characters(text)
         if len(self.key) > 1000 or len(self.name) > 255 or len(self.data) > 400:
             raise ValueError('Name, Key\\Value and Data are limited to 255, 1000 and 400 '
                              'characters.')
         if self.reg_type not in self.TYPES:
             raise ValueError('The type must be within {}.'.format(self.TYPES))
+        if self.key.endswith('\\') and (self.data or self.reg_type != 'REG_SZ'):
+            raise ValueError('A key (ending with \\) has no type nor data.')
+        if self.reg_type == 'REG_DWORD' and self.data and \
+                not (self.data.isdigit() and self.data.isascii() and int(self.data) < 2 ** 32):
+            raise ValueError('Not a valid Decimal DWORD number: {!r}'.format(self.data))
+        if self.reg_type == 'REG_BINARY' and not all(c in '0123456789abcdefABCDEF'
+                                                     for c in self.data):
+            raise ValueError('Not a valid Hexadecimal number: {!r}'.format(self.data))
+        if self.reg_type in ('REG_SZ', 'REG_EXPAND_SZ') and '\n' in self.data:
+            raise ValueError('Multiline strings are not allowed.')
         if self.action == self.CREATE and self.flag not in (self.ONLY_IF_NEW, self.OVERWRITE):
             raise ValueError('Create flag must be 0 (only if new) or 1 (overwrite).')
-        if self.action == self.DELETE and not 1 <= self.flag <= 7:
-            raise ValueError('Delete flag must be a sum of 1 (key), 2 (value) and 4 (data).')
+        if self.action == self.DELETE and self.flag not in (0, 4, 6, 7):
+            raise ValueError('Delete flag must be 4 (data), 6 (value and data) or 7 (key, '
+                             'value and data).')
         if self.action not in (self.CREATE, self.DELETE):
             raise ValueError('The action must be "0" (Create) or "1" (Delete).')
 
@@ -176,9 +200,12 @@ class SIRPolicySetRegistry(Policy):
         """
         for value in values:
             value.check()
-        if not backup_file or len(backup_file) > 20:
-            raise ValueError('A registry backup file name (1-20 characters) is required.')
-        if backup_file in [backup['name'] for backup in self.get_backups()]:
+        backup_file = str(backup_file or '').strip()
+        if not backup_file or len(backup_file) > 20 or \
+                not re.fullmatch(r'[A-Za-z0-9 _.]+', backup_file):
+            raise ValueError('A registry backup file name (1-20 letters, digits, spaces, _ or '
+                             '.) is required: {!r}'.format(backup_file))
+        if backup_file.lower() in [backup['name'].lower() for backup in self.get_backups()]:
             raise ValueError('The backup file {!r} already exists.'.format(backup_file))
         section = self.root.find('./EPOPolicySettings/Section[@name="{}"]'.format(self.SECTION))
         for setting_obj in section.findall('Setting'):

@@ -1,0 +1,541 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ns0:EPOPolicySchema xmlns:ns0="mcafee-epo-policy">
+<EPOPolicyVerInfo vermjr="5" vermin="10" verrel="0" verbld="0" />
+<EPOPolicySettings name="My Default::Settings (0CFC6E78-B9FA-4E8C-B5A3-9CD6B024381A)" featureid="EPOAGENTMETA" categoryid="General" typeid="General" param_int="0" param_str="">
+<Section name="AHService">
+<Setting name="CipherSuiteList5Openssl" value="ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:AES128-SHA" />
+<Setting name="CipherSuiteList5RSA" value="ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:EDH-RSA-AES256-SHA256:EDH-RSA-AES128-SHA256:EDH-RSA-AES256-SHA:AES128-SHA" />
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+</Section>
+<Section name="AgentEvents">
+<Setting name="AgPlcyEnableEventTrigger" value="1" />
+<Setting name="AgPlcyEventTriggerDelayMins" value="5" />
+<Setting name="AgPlcyEventTriggerThreshold" value="3" />
+<Setting name="AgPlcyMaxEventsPerTrigger" value="10" />
+<Setting name="AgPlcySendNonPriorityEventsAlso" value="1" />
+</Section>
+<Section name="AgentListenServer">
+<Setting name="AgentPingPort" value="8081" />
+<Setting name="AgtServiceMgrPort" value="8083" />
+<Setting name="ContentLongevity" value="30" />
+<Setting name="IsRelayClientEnabled" value="0" />
+<Setting name="LCDiskQuota" value="1" />
+<Setting name="NewRepositoryContentInterval" value="30" />
+<Setting name="VirtualDirectory" value="" />
+<Setting name="bEnableAgentPing" value="1" />
+<Setting name="bEnableBroadcastPing" value="1" />
+<Setting name="bEnableLazyCaching" value="1" />
+<Setting name="bEnableRelayService" value="0" />
+<Setting name="bEnableSuperAgent" value="0" />
+<Setting name="bEnableSuperAgentRepository" value="0" />
+<Setting name="bListenToEPOServerOnly" value="1" />
+</Section>
+<Section name="AgentLogging">
+<Setting name="IsApplicationLogEnabled" value="1" />
+<Setting name="LogMaxRollover" value="1" />
+<Setting name="LogSizeLimit" value="2" />
+<Setting name="bEnableGeneralLog" value="1" />
+<Setting name="bEnableLog" value="1" />
+<Setting name="bEnableRemoteLog" value="0" />
+<Setting name="bLimitLogSize" value="1" />
+<Setting name="bVerbose" value="0" />
+<Setting name="nGeneralRollOver" value="5" />
+<Setting name="nLogSizeGeneralLimit" value="2" />
+<Setting name="nLogSizeLimit" value="200" />
+</Section>
+<Section name="BranchSelection">
+<Setting name="BranchType_0" value="Current" />
+<Setting name="BranchType_1" value="Current" />
+<Setting name="BranchType_10" value="Current" />
+<Setting name="BranchType_11" value="Current" />
+<Setting name="BranchType_12" value="Current" />
+<Setting name="BranchType_13" value="Current" />
+<Setting name="BranchType_14" value="Current" />
+<Setting name="BranchType_15" value="Current" />
+<Setting name="BranchType_16" value="Current" />
+<Setting name="BranchType_2" value="Current" />
+<Setting name="BranchType_3" value="Current" />
+<Setting name="BranchType_4" value="Current" />
+<Setting name="BranchType_5" value="Current" />
+<Setting name="BranchType_6" value="Current" />
+<Setting name="BranchType_7" value="Current" />
+<Setting name="BranchType_8" value="Current" />
+<Setting name="BranchType_9" value="Current" />
+<Setting name="NumberOfItems" value="17" />
+<Setting name="OneClickEnabled_0" value="1" />
+<Setting name="OneClickEnabled_1" value="1" />
+<Setting name="OneClickEnabled_10" value="1" />
+<Setting name="OneClickEnabled_11" value="1" />
+<Setting name="OneClickEnabled_12" value="1" />
+<Setting name="OneClickEnabled_13" value="1" />
+<Setting name="OneClickEnabled_14" value="1" />
+<Setting name="OneClickEnabled_15" value="1" />
+<Setting name="OneClickEnabled_16" value="1" />
+<Setting name="OneClickEnabled_2" value="1" />
+<Setting name="OneClickEnabled_3" value="1" />
+<Setting name="OneClickEnabled_4" value="1" />
+<Setting name="OneClickEnabled_5" value="1" />
+<Setting name="OneClickEnabled_6" value="1" />
+<Setting name="OneClickEnabled_7" value="1" />
+<Setting name="OneClickEnabled_8" value="1" />
+<Setting name="OneClickEnabled_9" value="1" />
+<Setting name="SoftwareID_0" value="ENDPCNT_1000_LYNX" />
+<Setting name="SoftwareID_1" value="VSCANDAT1000" />
+<Setting name="SoftwareID_10" value="MED_DAT_1000" />
+<Setting name="SoftwareID_11" value="AMCORDAT2000" />
+<Setting name="SoftwareID_12" value="EPOAGENT3000META" />
+<Setting name="SoftwareID_13" value="EPOAGENT5000META" />
+<Setting name="SoftwareID_14" value="MAR_CONTENT_1000" />
+<Setting name="SoftwareID_15" value="JTICLIENTMETA" />
+<Setting name="SoftwareID_16" value="ENDP_GS_1070LYNX" />
+<Setting name="SoftwareID_2" value="MSCANENG1000" />
+<Setting name="SoftwareID_3" value="MVEDR_R_3000" />
+<Setting name="SoftwareID_4" value="VSCANENG1000" />
+<Setting name="SoftwareID_5" value="MVEDR_R_3000LYNX" />
+<Setting name="SoftwareID_6" value="LV2SNENG1000" />
+<Setting name="SoftwareID_7" value="ENDPCNT_1000" />
+<Setting name="SoftwareID_8" value="MVEDR_R_3000MACX" />
+<Setting name="SoftwareID_9" value="MVEDR_R_3000WINX" />
+</Section>
+<Section name="CompatService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+</Section>
+<Section name="CryptoService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+</Section>
+<Section name="DatachannelService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="MaxItems" value="64" />
+</Section>
+<Section name="Deployment">
+<Setting name="EnableCompatibilityCheck" value="1" />
+</Section>
+<Section name="EventService">
+<Setting name="EventFilterVersion" value="0" />
+<Setting name="EventFilteredList" value="0" />
+<Setting name="EventIsEnabledPriorityForward" value="1" />
+<Setting name="EventPriorityLevel" value="3" />
+<Setting name="EventUploadThreshold" value="10" />
+<Setting name="EventUploadTimeout" value="5" />
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="NonPriorityEventsAlso" value="1" />
+</Section>
+<Section name="General">
+<Setting name="ExtensionVersion" value="5.0.0" />
+<Setting name="ForceInstall" value="0" />
+<Setting name="IPVersionPreference" value="2" />
+<Setting name="IsCloud" value="0" />
+<Setting name="IsHealthcheckEnabled" value="1" />
+<Setting name="IsSelfProtectionEnabled" value="1" />
+<Setting name="IsTestCertAuthenticationEnabled" value="0" />
+<Setting name="PolicyEnforcementInterval" value="3600" />
+<Setting name="RebootTimeOut" value="-1" />
+<Setting name="ReduceProcessPriority" value="1" />
+<Setting name="ServerId" value="8A3F542A-70ED-403F-93DA-2B963B358A03" />
+<Setting name="ShowAgentUI" value="1" />
+<Setting name="ShowRebootUI" value="1" />
+<Setting name="bAllowMcTrayRDP" value="0" />
+<Setting name="bAllowUpdateSecurity" value="1" />
+<Setting name="bCollectFullProps" value="1" />
+<Setting name="bEnableAboutBox" value="1" />
+</Section>
+<Section name="HttpServerService">
+<Setting name="ContentLongevity" value="30" />
+<Setting name="DiskQuota" value="1" />
+<Setting name="HttpServerPort" value="8081" />
+<Setting name="IsAgentPingEnabled" value="1" />
+<Setting name="IsDataChannelPingEnabled" value="1" />
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="IsLazyCachingEnabled" value="1" />
+<Setting name="IsListenToEPOServerOnly" value="1" />
+<Setting name="IsSuperAgentEnabled" value="0" />
+<Setting name="IsSuperAgentRepositoryEnabled" value="0" />
+<Setting name="RepositorySyncInterval" value="30" />
+<Setting name="SAConcurrentConnectionsLimit" value="1024" />
+<Setting name="VirtualDirectory" value="DEFAULT" />
+<Setting name="VirtualDirectoryUnix" value="DEFAULT" />
+</Section>
+<Section name="LoggerService">
+<Setting name="IsApplicationLogEnabled" value="1" />
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="IsLogRecordingEnabled" value="1" />
+<Setting name="IsRemoteLogEnabled" value="0" />
+<Setting name="LogEnableRollover" value="1" />
+<Setting name="LogFilterPattern" value="*.Info" />
+<Setting name="LogFormatPattern" value="%d %+t %p(%P.%T) %f.%s: %m" />
+<Setting name="LogMaxRollover" value="1" />
+<Setting name="LogRecordsSize" value="200" />
+<Setting name="LogSizeLimit" value="2" />
+<Setting name="bEnableGeneralLog" value="1" />
+<Setting name="bVerbose" value="0" />
+</Section>
+<Section name="Network">
+<Setting name="AsciDoWhen" value="1" />
+<Setting name="CheckNetworkMessageInterval" value="3600" />
+<Setting name="bAgentASCI" value="1" />
+</Section>
+<Section name="P2pService">
+<Setting name="ConcurrentConnectionsLimit" value="10" />
+<Setting name="ContentLongevity" value="30" />
+<Setting name="DiskQuota" value="512" />
+<Setting name="EnableClient" value="1" />
+<Setting name="EnableServing" value="1" />
+<Setting name="HitCount" value="1" />
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="P2pRepoPath" value="DEFAULT" />
+<Setting name="P2pRepoPathUnix" value="DEFAULT" />
+<Setting name="PurgeMethod" value="1" />
+</Section>
+<Section name="PolicyService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="PolicyEnforcementTimeout" value="60" />
+</Section>
+<Section name="PropertyService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="PropertyCollectFullProps" value="1" />
+<Setting name="PropertyCollectSessionTimeout" value="1" />
+<Setting name="PropertyCollectionIfDelayByDays" value="1" />
+<Setting name="PropertyCollectionTimeout" value="60" />
+</Section>
+<Section name="RelayService">
+<Setting name="ConcurrentConnectionsLimit" value="1024" />
+<Setting name="EnableClient" value="1" />
+<Setting name="IsEnabled" value="0" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="IsRelayDiscoveryDisabled" value="0" />
+<Setting name="RelayMulticastAddress" value="ff08::2" />
+<Setting name="RelayServerCount" value="0" />
+<Setting name="RelayServerPort" value="8083" />
+</Section>
+<Section name="RepositoryService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+</Section>
+<Section name="SchedulerService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+</Section>
+<Section name="SensorService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+</Section>
+<Section name="StatsService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+</Section>
+<Section name="UdpService">
+<Setting name="IsBroadcastPingEnabled" value="1" />
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="UdpBroadcastPort" value="8082" />
+<Setting name="UdpMulticastAddress" value="ff08::2" />
+</Section>
+<Section name="UpdateOptions">
+<Setting name="bAllowDATDowngrade" value="0" />
+<Setting name="bRunIfUpdateSuccess" value="0" />
+<Setting name="bUpdateAfterDeployment" value="1" />
+<Setting name="szLogFileName" value="" />
+<Setting name="szRunAfterUpdateEXE" value="" />
+</Section>
+<Section name="UpdaterService">
+<Setting name="EnableAgentUI" value="1" />
+<Setting name="EnableDatDowngrade" value="0" />
+<Setting name="EnableExeAfterUpdate" value="0" />
+<Setting name="EnableRebootUI" value="1" />
+<Setting name="EnableUpdateAfterDeployment" value="1" />
+<Setting name="ExeNameToRunAfterUpdate" value="" />
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="RebootTimeout" value="-1" />
+<Setting name="UpdateLogFileName" value="" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - MA General Test::Settings (40EA04FB-C6EF-4FC0-B501-7AC963BE588D)" featureid="EPOAGENTMETA" categoryid="General" typeid="General" param_int="0" param_str="">
+<Section name="AHService">
+<Setting name="CipherSuiteList5Openssl" value="ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:AES128-SHA" />
+<Setting name="CipherSuiteList5RSA" value="ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:EDH-RSA-AES256-SHA256:EDH-RSA-AES128-SHA256:EDH-RSA-AES256-SHA:AES128-SHA" />
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+</Section>
+<Section name="AgentEvents">
+<Setting name="AgPlcyEnableEventTrigger" value="1" />
+<Setting name="AgPlcyEventTriggerDelayMins" value="5" />
+<Setting name="AgPlcyEventTriggerThreshold" value="3" />
+<Setting name="AgPlcyMaxEventsPerTrigger" value="10" />
+<Setting name="AgPlcySendNonPriorityEventsAlso" value="1" />
+</Section>
+<Section name="AgentListenServer">
+<Setting name="AgentPingPort" value="8081" />
+<Setting name="AgtServiceMgrPort" value="8083" />
+<Setting name="ContentLongevity" value="30" />
+<Setting name="IsRelayClientEnabled" value="1" />
+<Setting name="LCDiskQuota" value="1" />
+<Setting name="NewRepositoryContentInterval" value="30" />
+<Setting name="VirtualDirectory" value="DEFAULT" />
+<Setting name="VirtualDirectoryUnix" value="" />
+<Setting name="bEnableAgentPing" value="1" />
+<Setting name="bEnableBroadcastPing" value="1" />
+<Setting name="bEnableLazyCaching" value="1" />
+<Setting name="bEnableRelayService" value="0" />
+<Setting name="bEnableSuperAgent" value="0" />
+<Setting name="bEnableSuperAgentRepository" value="0" />
+<Setting name="bListenToEPOServerOnly" value="1" />
+</Section>
+<Section name="AgentLogging">
+<Setting name="IsApplicationLogEnabled" value="1" />
+<Setting name="LogMaxRollover" value="1" />
+<Setting name="LogSizeLimit" value="2" />
+<Setting name="bEnableLog" value="1" />
+<Setting name="bEnableRemoteLog" value="0" />
+<Setting name="bLimitLogSize" value="1" />
+<Setting name="bVerbose" value="0" />
+<Setting name="nLogSizeLimit" value="200" />
+<Setting name="sstZipSizeLimitMB" value="50" />
+</Section>
+<Section name="BranchSelection">
+<Setting name="BranchType_0" value="Current" />
+<Setting name="BranchType_1" value="Current" />
+<Setting name="BranchType_10" value="Current" />
+<Setting name="BranchType_11" value="Current" />
+<Setting name="BranchType_12" value="Current" />
+<Setting name="BranchType_13" value="Current" />
+<Setting name="BranchType_14" value="Current" />
+<Setting name="BranchType_15" value="Current" />
+<Setting name="BranchType_16" value="Current" />
+<Setting name="BranchType_17" value="Current" />
+<Setting name="BranchType_2" value="Current" />
+<Setting name="BranchType_3" value="Current" />
+<Setting name="BranchType_4" value="Current" />
+<Setting name="BranchType_5" value="Current" />
+<Setting name="BranchType_6" value="Current" />
+<Setting name="BranchType_7" value="Current" />
+<Setting name="BranchType_8" value="Current" />
+<Setting name="BranchType_9" value="Current" />
+<Setting name="NumberOfItems" value="18" />
+<Setting name="OneClickEnabled_0" value="1" />
+<Setting name="OneClickEnabled_1" value="1" />
+<Setting name="OneClickEnabled_10" value="1" />
+<Setting name="OneClickEnabled_11" value="1" />
+<Setting name="OneClickEnabled_12" value="1" />
+<Setting name="OneClickEnabled_13" value="1" />
+<Setting name="OneClickEnabled_14" value="1" />
+<Setting name="OneClickEnabled_15" value="1" />
+<Setting name="OneClickEnabled_16" value="1" />
+<Setting name="OneClickEnabled_17" value="1" />
+<Setting name="OneClickEnabled_2" value="1" />
+<Setting name="OneClickEnabled_3" value="1" />
+<Setting name="OneClickEnabled_4" value="1" />
+<Setting name="OneClickEnabled_5" value="1" />
+<Setting name="OneClickEnabled_6" value="1" />
+<Setting name="OneClickEnabled_7" value="1" />
+<Setting name="OneClickEnabled_8" value="1" />
+<Setting name="OneClickEnabled_9" value="1" />
+<Setting name="SoftwareID_0" value="ENDPCNT_1000_LYNX" />
+<Setting name="SoftwareID_1" value="MSCANENG1000" />
+<Setting name="SoftwareID_10" value="MED_DAT_1000" />
+<Setting name="SoftwareID_11" value="AMCORDAT2000" />
+<Setting name="SoftwareID_12" value="MAR_CONTENT_1000" />
+<Setting name="SoftwareID_13" value="JTICLIENTMETA" />
+<Setting name="SoftwareID_14" value="ENDP_GS_1070LYNX" />
+<Setting name="SoftwareID_15" value="EPOAGENT3000META" />
+<Setting name="SoftwareID_16" value="EPOAGENT5000META" />
+<Setting name="SoftwareID_17" value="SOLIDCOR_KMOD_5000_LNX" />
+<Setting name="SoftwareID_2" value="VSCANENG1000" />
+<Setting name="SoftwareID_3" value="MVEDR_R_3000LYNX" />
+<Setting name="SoftwareID_4" value="LV2SNENG1000" />
+<Setting name="SoftwareID_5" value="MVEDR_R_3000WINX" />
+<Setting name="SoftwareID_6" value="VSCANDAT1000" />
+<Setting name="SoftwareID_7" value="MVEDR_R_3000" />
+<Setting name="SoftwareID_8" value="ENDPCNT_1000" />
+<Setting name="SoftwareID_9" value="MVEDR_R_3000MACX" />
+</Section>
+<Section name="CompatService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+</Section>
+<Section name="CryptoService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+</Section>
+<Section name="DatachannelService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="MaxItems" value="64" />
+</Section>
+<Section name="Deployment">
+<Setting name="EnableCompatibilityCheck" value="1" />
+</Section>
+<Section name="EventService">
+<Setting name="EventFilterVersion" value="0" />
+<Setting name="EventFilteredList" value="0" />
+<Setting name="EventIsEnabledPriorityForward" value="1" />
+<Setting name="EventPriorityLevel" value="3" />
+<Setting name="EventUploadThreshold" value="10" />
+<Setting name="EventUploadTimeout" value="5" />
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="NonPriorityEventsAlso" value="1" />
+</Section>
+<Section name="General">
+<Setting name="ExtensionVersion" value="5.0.0" />
+<Setting name="ForceInstall" value="0" />
+<Setting name="IPVersionPreference" value="1" />
+<Setting name="IsCloud" value="0" />
+<Setting name="IsHealthcheckEnabled" value="1" />
+<Setting name="IsSelfProtectionEnabled" value="1" />
+<Setting name="IsTestCertAuthenticationEnabled" value="0" />
+<Setting name="PolicyEnforcementInterval" value="3600" />
+<Setting name="RebootTimeOut" value="120" />
+<Setting name="ReduceProcessPriority" value="1" />
+<Setting name="ServerId" value="8A3F542A-70ED-403F-93DA-2B963B358A03" />
+<Setting name="ShowAgentUI" value="1" />
+<Setting name="ShowRebootUI" value="1" />
+<Setting name="TestCertRootCA" value="" />
+<Setting name="TestCertSignerCA" value="" />
+<Setting name="bAllowMcTrayRDP" value="0" />
+<Setting name="bAllowUpdateSecurity" value="1" />
+<Setting name="bCollectFullProps" value="1" />
+<Setting name="bEnableAboutBox" value="1" />
+</Section>
+<Section name="HttpServerService">
+<Setting name="ContentLongevity" value="30" />
+<Setting name="DiskQuota" value="1" />
+<Setting name="HttpServerPort" value="8081" />
+<Setting name="IsAgentPingEnabled" value="1" />
+<Setting name="IsDataChannelPingEnabled" value="1" />
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="IsLazyCachingEnabled" value="0" />
+<Setting name="IsListenToEPOServerOnly" value="1" />
+<Setting name="IsSuperAgentEnabled" value="0" />
+<Setting name="IsSuperAgentRepositoryEnabled" value="0" />
+<Setting name="RepositorySyncInterval" value="30" />
+<Setting name="SAConcurrentConnectionsLimit" value="1024" />
+<Setting name="VirtualDirectory" value="DEFAULT" />
+<Setting name="VirtualDirectoryUnix" value="DEFAULT" />
+</Section>
+<Section name="LoggerService">
+<Setting name="IsApplicationLogEnabled" value="1" />
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="IsLogRecordingEnabled" value="1" />
+<Setting name="IsRemoteLogEnabled" value="0" />
+<Setting name="LogEnableRollover" value="1" />
+<Setting name="LogFilterPattern" value="*.Info" />
+<Setting name="LogFormatPattern" value="%d %+t %p(%P.%T) %f.%s: %m" />
+<Setting name="LogMaxRollover" value="1" />
+<Setting name="LogRecordsSize" value="200" />
+<Setting name="LogSizeLimit" value="2" />
+<Setting name="bEnableGeneralLog" value="1" />
+<Setting name="bVerbose" value="0" />
+</Section>
+<Section name="Network">
+<Setting name="AsciDoWhen" value="1" />
+<Setting name="CheckNetworkMessageInterval" value="3600" />
+<Setting name="bAgentASCI" value="1" />
+</Section>
+<Section name="P2pService">
+<Setting name="ConcurrentConnectionsLimit" value="10" />
+<Setting name="ContentLongevity" value="30" />
+<Setting name="DiskQuota" value="512" />
+<Setting name="EnableClient" value="1" />
+<Setting name="EnableServing" value="1" />
+<Setting name="HitCount" value="1" />
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="P2pRepoPath" value="DEFAULT" />
+<Setting name="P2pRepoPathUnix" value="DEFAULT" />
+<Setting name="PurgeMethod" value="1" />
+</Section>
+<Section name="PolicyService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="PolicyEnforcementTimeout" value="60" />
+</Section>
+<Section name="PropertyService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="PropertyCollectFullProps" value="1" />
+<Setting name="PropertyCollectSessionTimeout" value="1" />
+<Setting name="PropertyCollectionIfDelayByDays" value="1" />
+<Setting name="PropertyCollectionTimeout" value="60" />
+</Section>
+<Section name="RelayService">
+<Setting name="ConcurrentConnectionsLimit" value="1024" />
+<Setting name="EnableClient" value="1" />
+<Setting name="IsEnabled" value="0" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="IsRelayDiscoveryDisabled" value="1" />
+<Setting name="RelayMulticastAddress" value="ff08::2" />
+<Setting name="RelayServerCount" value="3" />
+<Setting name="RelayServerPort" value="8083" />
+<Setting name="relayip_1" value="relay01.example.com" />
+<Setting name="relayip_2" value="10.0.0.30" />
+<Setting name="relayip_3" value="[fd00::30]" />
+<Setting name="relayport_1" value="8081" />
+<Setting name="relayport_2" value="8085" />
+<Setting name="relayport_3" value="8086" />
+<Setting name="relayselect_1" value="DNS Name" />
+<Setting name="relayselect_2" value="IPv4" />
+<Setting name="relayselect_3" value="IPv6" />
+</Section>
+<Section name="RepositoryService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+</Section>
+<Section name="SchedulerService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+</Section>
+<Section name="SensorService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+</Section>
+<Section name="StatsService">
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+</Section>
+<Section name="UdpService">
+<Setting name="IsBroadcastPingEnabled" value="1" />
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="UdpBroadcastPort" value="8082" />
+<Setting name="UdpMulticastAddress" value="ff08::2" />
+</Section>
+<Section name="UpdateOptions">
+<Setting name="SensorAvoidUpdateMins" value="30" />
+<Setting name="bAllowDATDowngrade" value="0" />
+<Setting name="bEnablePowerOption" value="0" />
+<Setting name="bRunIfUpdateSuccess" value="0" />
+<Setting name="bUpdateAfterDeployment" value="1" />
+<Setting name="szLogFileName" value="" />
+<Setting name="szRunAfterUpdateEXE" value="" />
+</Section>
+<Section name="UpdaterService">
+<Setting name="EnableAgentUI" value="1" />
+<Setting name="EnableDatDowngrade" value="0" />
+<Setting name="EnableExeAfterUpdate" value="0" />
+<Setting name="EnableRebootUI" value="1" />
+<Setting name="EnableUpdateAfterDeployment" value="1" />
+<Setting name="ExeNameToRunAfterUpdate" value="" />
+<Setting name="IsEnabled" value="1" />
+<Setting name="IsInstalled" value="1" />
+<Setting name="RebootTimeout" value="120" />
+<Setting name="UpdateLogFileName" value="" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicyObject name="My Default" featureid="EPOAGENTMETA" categoryid="General" serverid="W2022EPO510" editflag="0" typeid="General">
+<description /><PolicySettings>My Default::Settings (0CFC6E78-B9FA-4E8C-B5A3-9CD6B024381A)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - MA General Test" featureid="EPOAGENTMETA" categoryid="General" serverid="W2022EPO510" editflag="0" typeid="General">
+<description /><PolicySettings>Claude - MA General Test::Settings (40EA04FB-C6EF-4FC0-B501-7AC963BE588D)</PolicySettings>
+</EPOPolicyObject></ns0:EPOPolicySchema>

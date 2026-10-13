@@ -11,6 +11,7 @@ This module defines the class for the Solidcore "Change Control" policies
 from ..policies import Policy
 from .scpolicies import SCPolicy
 from .rules import SCUpdaterRules
+from ..validators import check_length, is_sc_cc_path, is_sc_registry_key
 
 class SCCCRules(SCUpdaterRules):
     """
@@ -29,6 +30,12 @@ class SCCCRules(SCUpdaterRules):
         return self.add_rule({'type': rule_type, 'pattern': pattern,
                               'action': 'Include' if include else 'Exclude'})
 
+    def __check_path(self, path):
+        path = check_length('File', str(path).strip(), 3072, required=True)
+        if not is_sc_cc_path(path, 'UNIX' if self.is_unix() else 'WIN'):
+            raise ValueError('Invalid file or directory (see is_sc_cc_path): {!r}'.format(path))
+        return path
+
     def __remove_pattern(self, rule_type, pattern):
         return self.remove_rules(rule_type, {'pattern': pattern}) > 0
 
@@ -44,9 +51,12 @@ class SCCCRules(SCUpdaterRules):
         """
         Add a read-protected file or directory (Include), or exclude it (Exclude).
 
+        As in the console, the path is required and trimmed, and checked on
+        Windows by is_sc_cc_path (wildcards accepted).
+
         :return: True, or False if the path is already in the list.
         """
-        return self.__add_pattern('rp-file', path, include)
+        return self.__add_pattern('rp-file', self.__check_path(path), include)
 
     def remove_read_protect(self, path):
         """
@@ -66,9 +76,12 @@ class SCCCRules(SCUpdaterRules):
         """
         Add a write-protected file or directory (Include), or exclude it (Exclude).
 
+        As in the console, the path is required and trimmed, and checked on
+        Windows by is_sc_cc_path (wildcards accepted).
+
         :return: True, or False if the path is already in the list.
         """
-        return self.__add_pattern('wp-file', path, include)
+        return self.__add_pattern('wp-file', self.__check_path(path), include)
 
     def remove_write_protect_file(self, path):
         """
@@ -88,8 +101,14 @@ class SCCCRules(SCUpdaterRules):
         """
         Add a write-protected registry key (Include), or exclude it (Exclude).
 
+        As in the console, the key is required and trimmed, and checked by
+        is_sc_registry_key.
+
         :return: True, or False if the key is already in the list.
         """
+        key = check_length('Registry', str(key).strip(), 3072, required=True)
+        if not is_sc_registry_key(key):
+            raise ValueError('Invalid registry key (see is_sc_registry_key): {!r}'.format(key))
         return self.__add_pattern('wp-reg', key, include)
 
     def remove_write_protect_registry(self, key):

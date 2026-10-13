@@ -15,6 +15,8 @@ import copy
 import datetime
 import xml.etree.ElementTree as et
 
+from .validators import check_setting_length
+
 class XmlObject():
     """
     XmlObject is a common class object for Policies and Policy.
@@ -33,9 +35,15 @@ class XmlObject():
 
     def get_xml_content(self):
         """
-        Returns the current XML content, UTF-8 encoded (binary).
+        Returns the current XML content, UTF-8 encoded (binary). The
+        characters out of ASCII are written as XML character references
+        (é as &#233;): the policy import of the ePO Web API
+        (policy.importPolicy) reads a UTF-8 file as ISO-8859-1 whatever the
+        charset sent (é imported as Ã©; the Policy Catalog import of the
+        console reads it right; checked on ePO 5.10 Update 7), the
+        references are imported unchanged by both.
         """
-        return et.tostring(self.root, encoding='UTF-8', method='xml')
+        return et.tostring(self.root, encoding='us-ascii', method='xml')
 
     def set_xml_content(self, xml_data):
         """
@@ -47,7 +55,7 @@ class XmlObject():
         """
         Returns the current XML content, UTF-8 decoded (string).
         """
-        return self.get_xml_content().decode()
+        return et.tostring(self.root, encoding='unicode', method='xml')
 
     def load_from_file(self, file_path):
         """
@@ -257,6 +265,7 @@ class Policy(XmlObject):
         :param: force: If True the setting is created even if it doesn't exist.
         :return: True or False.
         """
+        check_setting_length(setting, value)
         success = False
         setting_obj = self.root.find('./EPOPolicySettings/Section[@name="{}"]'.format(section) +
                                      '/Setting[@name="{}"]'.format(setting))
@@ -293,6 +302,7 @@ class Policy(XmlObject):
         :param: force: If True the setting is created even if it doesn't exist.
         :return: True or False.
         """
+        check_setting_length(setting, value)
         success = False
         setting_obj = self.root.find('./EPOPolicySettings[@name="{}"]'.format(policy_set) +
                                      '/Section[@name="{}"]'.format(section) +

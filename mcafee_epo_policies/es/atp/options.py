@@ -26,6 +26,7 @@ settings are in the General section):
 """
 
 from ...policies import Policy
+from ...validators import check_int, check_length
 
 
 class ESATPPolicyOptions(Policy):
@@ -520,20 +521,24 @@ class ESATPPolicyOptions(Policy):
                           message=None, disable_offline=None):
         """
         Set the threat notifications (see get_notifications; None = keep the
-        current value). The timeout is 1-5 minutes; an empty message restores
-        the console default message.
+        current value). The timeout is 1-5 minutes; the message is limited to
+        160 characters (a line break counts for one, stored as \n); an empty
+        message or the console default message (DEFAULT_MESSAGE) is stored
+        as no custom message, as the console does.
         """
         if default_action is not None and str(default_action) not in self.DEFAULT_ACTIONS:
             raise ValueError('Default action must be "0" (Block) or "1" (Allow).')
-        if timeout is not None and not 1 <= int(timeout) <= 5:
-            raise ValueError('The timeout must be within 1-5 minutes.')
-        if message is not None and len(message) > 1024:
-            raise ValueError('The message is limited to 1024 characters.')
+        if timeout is not None:
+            timeout = check_int('Specify length (minutes) of timeout', timeout, 1, 5)
+        if message is not None:
+            message = check_length('Message', str(message).replace('\r\n', '\n'), 160)
+            if message == self.DEFAULT_MESSAGE:
+                message = ''
         self.set_action('notify', enabled, level)
         if default_action is not None:
             self.set_option('promptDefault', default_action)
         if timeout is not None:
-            self.set_option('promptTimeout', int(timeout))
+            self.set_option('promptTimeout', timeout)
         if message is not None:
             self.set_option('customPromptText', message)
             self.set_option('customPromptTextEnabled', '1' if message else '0')
@@ -581,13 +586,13 @@ class ESATPPolicyOptions(Policy):
         enabled = self.__check_mode(enabled)
         if level is not None and str(level) not in self.SANDBOX_LEVELS:
             raise ValueError('The threshold must be within {}.'.format(self.SANDBOX_LEVELS))
-        if size_limit is not None and not 1 <= int(size_limit) <= 128:
-            raise ValueError('The size limit must be within 1-128 MB.')
+        if size_limit is not None:
+            size_limit = check_int('Limit size (MB) to', size_limit, 1, 128)
         self.set_option('atdEnabled', enabled)
         if level is not None:
             self.set_option('atdLevel', level)
         if size_limit is not None:
-            self.set_option('atdFileSizeLimit', int(size_limit))
+            self.set_option('atdFileSizeLimit', size_limit)
         return True
 
     # ------------------------------ Story Graph ------------------------------

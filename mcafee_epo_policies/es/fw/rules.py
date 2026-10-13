@@ -20,12 +20,16 @@ among the executable aggregates of the rule.
 """
 
 import copy
+import re
 import uuid
 import datetime as dt
 import ipaddress as ip
 import xml.etree.ElementTree as et
 from .protocols import InternetProtocols, MessageTypes, MessageTypesv6, NetworkProtocols
 from ...policies import Policy
+from ...validators import (check_int, check_setting_length, is_fw_host, is_fw_single_ip,
+                           is_fw_port, is_fw_file_path, is_fw_registry_key, is_fw_fqdn,
+                           is_fw_dns_suffix, is_x500_name)
 
 
 def _new_guid():
@@ -75,6 +79,13 @@ NAME_MAX = 100
 NOTES_MAX = 3000
 
 
+def _is_unchanged(obj, unchanged):
+    """
+    True if obj is one of unchanged (same type and same attributes).
+    """
+    return any(type(obj) is type(other) and vars(obj) == vars(other) for other in unchanged)
+
+
 def _base_key(name):
     if name.startswith('+'):
         return name[1:].split('#')[0]
@@ -102,7 +113,9 @@ class FWAddress():
     TRUSTED = 'Defined Networks (Not trusted)'
     ANY_IPV4 = 'Any IPv4 address'
     ANY_IPV6 = 'Any IPv6 address'
-    __SPECIAL = {
+    ANY_LOCAL_IP = 'Any local IP address'
+    SPECIAL = {
+        ANY_LOCAL_IP: '[local]',
         LOCAL_SUBNET: '0000:0000:0000:0000:0000:ffff:0000:0000',
         TRUSTED: '[trusted]',
         ANY_IPV4: '0000:0000:0000:0000:0000:ffff:0000:0000-'
@@ -137,8 +150,8 @@ class FWAddress():
         """
         Returns the stored form of a console address.
         """
-        if value in cls.__SPECIAL:
-            return cls.__SPECIAL[value]
+        if value in cls.SPECIAL:
+            return cls.SPECIAL[value]
         if '-' in value:
             first, last = value.split('-', 1)
             if cls.__ip(first) is not None and cls.__ip(last) is not None:
@@ -155,15 +168,15 @@ class FWAddress():
         address = cls.__ip(value)
         if address is not None:
             return cls.__store_ip(address)
-        # Fully qualified domain name.
-        return value
+        # Fully qualified domain name: stored in lower case by the console.
+        return value.lower()
 
     @classmethod
     def from_epo(cls, value):
         """
         Returns the console form of a stored address.
         """
-        for name, stored in cls.__SPECIAL.items():
+        for name, stored in cls.SPECIAL.items():
             if value == stored:
                 return name
         if '-' in value:
@@ -245,8 +258,10 @@ class FWExecutable(_FWAggregate):
     """
     An executable of an application (console "Executable" dialog): name,
     file name or path (wildcards allowed), file description, MD5 hash and
-    signer (empty: no digital signature check).
+    signer ('' no digital signature check, FWExecutable.ANY_SIGNATURE "Allow
+    any signature" or the distinguished name of the signer).
     """
+    ANY_SIGNATURE = '*'
     TYPE = '65547'
     KIND = 'Executable'
     NO_HASH = '0' * 32
@@ -266,11 +281,21 @@ class FWExecutable(_FWAggregate):
         return 'FWExecutable({!r}, path={!r})'.format(self.name, self.path)
 
     def check(self):
-        if not self.name:
+        """
+        Raise ValueError if the console refuses the executable (Firewall
+        26.8): name of 100 characters, file name or path of 257 (see
+        mcafee_epo_policies.validators.is_fw_file_path), file description
+        255, MD5 hash of 32 hexadecimal digits, signer of 1024 characters
+        (ANY_SIGNATURE or a distinguished name accepted by the ePO server, see
+        mcafee_epo_policies.validators.is_x500_name),
+        notes 3000; one of file description, path, MD5 hash or signer is
+        required.
+        """
+        if not self.name or not self.name.strip():
             raise ValueError('An executable needs a name.')
-        if not (self.path or self.md5 or self.signer):
-            raise ValueError('Executable "{}": a path, an MD5 hash or a signer is '
-                             'required.'.format(self.name))
+        if not (self.description.strip() or self.path.strip() or self.md5 or self.signer):
+            raise ValueError('Executable "{}": a file description, a path, an MD5 hash or a '
+                             'signer is required.'.format(self.name))
         for what, value, maximum in [('Executable name', self.name, NAME_MAX),
                                      ('File name or path', self.path, 257),
                                      ('File description', self.description, 255),
@@ -278,6 +303,15 @@ class FWExecutable(_FWAggregate):
                                      ('Signer', self.signer, 1024),
                                      ('Executable notes', self.notes, NOTES_MAX)]:
             _check_length(what, value, maximum)
+        if self.path and not is_fw_file_path(self.path):
+            raise ValueError('Executable "{}": invalid file name or path: {!r}'.format(
+                self.name, self.path))
+        if self.md5 and not re.fullmatch(r'[0-9a-fA-F]{32}', self.md5):
+            raise ValueError('Executable "{}": the MD5 hash is 32 hexadecimal digits: '
+                             '{!r}'.format(self.name, self.md5))
+        if self.signer not in ['', self.ANY_SIGNATURE] and not is_x500_name(self.signer):
+            raise ValueError('Executable "{}": the signer is a distinguished name (e.g. '
+                             'CN=Contoso, O=Contoso, C=US): {!r}'.format(self.name, self.signer))
 
     @classmethod
     def from_values(cls, values):
@@ -319,7 +353,7 @@ class FWApplication():
     def __repr__(self):
         return 'FWApplication({!r}, {!r})'.format(self.name, self.executables)
 
-    def check(self):
+    def check(self, unchanged=()):
         if not self.name:
             raise ValueError('An application needs a name.')
         if not self.executables:
@@ -327,7 +361,8 @@ class FWApplication():
         _check_length('Application name', self.name, NAME_MAX)
         _check_length('Application notes', self.notes, NOTES_MAX)
         for exe in self.executables:
-            exe.check()
+            if not _is_unchanged(exe, unchanged):
+                exe.check()
 
 
 class FWNetwork(_FWAggregate):
@@ -352,14 +387,23 @@ class FWNetwork(_FWAggregate):
         return 'FWNetwork({!r}, {!r})'.format(self.name, self.addresses)
 
     def check(self):
-        if not self.name:
+        """
+        Raise ValueError if the console refuses the network (Firewall 26.8):
+        name of 100 characters, notes 3000, addresses of 255 characters (see
+        mcafee_epo_policies.validators.is_fw_host) or the special entries of
+        FWAddress.
+        """
+        if not self.name or not self.name.strip():
             raise ValueError('A network needs a name.')
         if not self.addresses:
             raise ValueError('Network "{}" needs at least one address.'.format(self.name))
         _check_length('Network name', self.name, NAME_MAX)
         _check_length('Network notes', self.notes, NOTES_MAX)
         for address in self.addresses:
-            _check_length('Address', address, 255)
+            if address not in FWAddress.SPECIAL and not is_fw_host(address):
+                raise ValueError('Network "{}": invalid address: {!r} (an IPv4 or IPv6 '
+                                 'address, a network, a range first-last or a domain '
+                                 'name)'.format(self.name, address))
 
     @classmethod
     def from_values(cls, values):
@@ -430,18 +474,37 @@ class FWLocation(_FWAggregate):
     def __repr__(self):
         return 'FWLocation({!r})'.format(self.name)
 
+    # Console check of each criterion (location dialog).
+    __VALIDATORS = {'dns_suffixes': is_fw_dns_suffix, 'domains_reachable': is_fw_fqdn}
+
     def check(self):
-        if not self.name:
+        """
+        Raise ValueError if the console refuses the location (Firewall 26.8):
+        name of 100 characters, criteria of 100 characters (DNS suffixes:
+        is_fw_dns_suffix, domains reachable: is_fw_fqdn, gateways, DHCP, DNS
+        and WINS servers: one IP address, is_fw_single_ip), registry key and
+        value of 1499 characters each, the key checked by is_fw_registry_key
+        (see mcafee_epo_policies.validators).
+        """
+        if not self.name or not self.name.strip():
             raise ValueError('A location needs a name.')
         if not (self.registry_key or any(getattr(self, attr) for attr, _, _ in self.CRITERIA)):
             raise ValueError('Location "{}" needs at least one criterion.'.format(self.name))
         _check_length('Location name', self.name, NAME_MAX)
         for attr, _, _ in self.CRITERIA:
+            valid = self.__VALIDATORS.get(attr, is_fw_single_ip)
             for value in getattr(self, attr):
                 _check_length('Location criterion', value, 100)
+                if not valid(value):
+                    raise ValueError('Location "{}": invalid {}: {!r}'.format(
+                        self.name, attr.replace('_', ' '), value))
         # Registry key and value fields: 1499 characters each.
-        for part in self.registry_key.split('=', 1):
+        parts = self.registry_key.split('=', 1)
+        for part in parts:
             _check_length('Registry key', part, 1499)
+        if self.registry_key and not is_fw_registry_key(parts[0]):
+            raise ValueError('Location "{}": invalid registry key: {!r}'.format(
+                self.name, parts[0]))
 
     @classmethod
     def from_values(cls, values):
@@ -573,7 +636,13 @@ class FWRule():
         items += [(network, FWNetwork.REMOTE) for network in self.remote_networks]
         return items
 
-    def check(self):
+    def check(self, unchanged=()):
+        """
+        Raise ValueError if the console refuses the rule. The objects of
+        unchanged (networks, executables, location as read from the policy)
+        are not checked again: some Trellix-defined rules hold values the
+        console dialogs refuse (e.g. the network address ::).
+        """
         if not self.name or not self.name.strip():
             raise ValueError('A rule needs a name.')
         _check_length('Rule name', self.name, NAME_MAX)
@@ -589,12 +658,38 @@ class FWRule():
                 self.transport_protocol not in [self.TCP, self.UDP]:
             raise ValueError('Rule "{}": ports need the TCP or UDP transport '
                              'protocol.'.format(self.name))
-        for time in [self.schedule_start, self.schedule_end]:
-            self.__split_time(time)
+        for port in self.local_ports + self.remote_ports:
+            _check_length('Port', port, 100)
+            if not port.strip() or not is_fw_port(port):
+                raise ValueError('Rule "{}": invalid port: {!r} (1-65535 or a range first-last '
+                                 'with first < last)'.format(self.name, port))
+        for ports in [self.local_ports, self.remote_ports]:
+            check_setting_length('Ports', ', '.join(ports))
+        self.__check_protocols()
+        start, end = [self.__split_time(time) for time in [self.schedule_start,
+                                                            self.schedule_end]]
+        if self.schedule_enabled and end <= start:
+            raise ValueError('Rule "{}": the schedule end time must be after the start '
+                             'time.'.format(self.name))
         for network in self.local_networks + self.remote_networks:
-            network.check()
+            if not _is_unchanged(network, unchanged):
+                network.check()
         for app in self.applications:
-            app.check()
+            app.check(unchanged)
+
+    def __check_protocols(self):
+        """
+        Network protocol of the console: Any protocol ([]), IP protocol
+        (IPv4 and/or IPv6) or one Non-IP protocol (an EtherType, 4
+        hexadecimal digits at most in the console, stored in decimal).
+        """
+        protocols = self.network_protocols
+        if not protocols or set(protocols) <= {self.IPV4, self.IPV6}:
+            return
+        if len(protocols) != 1 or not re.fullmatch('[0-9]+', protocols[0]) or \
+                int(protocols[0]) > 0xFFFF:
+            raise ValueError('Rule "{}": network protocols are [] (any), IPv4 and/or IPv6, or one '
+                             'Non-IP EtherType (0-65535): {}'.format(self.name, protocols))
 
     @staticmethod
     def __split_time(time):
@@ -797,12 +892,14 @@ class FWGroup(FWRule):
             items.insert(0, (self.location, FWLocation.KIND))
         return items
 
-    def check(self):
-        super(FWGroup, self).check()
-        # Console field "Number of minutes to enable the group": 2 digits.
-        if not 0 <= self.timed_minutes <= 99:
-            raise ValueError('Group "{}": timed group minutes must be 0-99.'.format(self.name))
-        if self.location is not None:
+    def check(self, unchanged=()):
+        super(FWGroup, self).check(unchanged)
+        # Console field "Number of minutes to enable the group" (Timed
+        # group): 1-60 when enabled, 0 when not.
+        if self.timed_minutes:
+            check_int('Group "{}": timed group minutes'.format(self.name), self.timed_minutes,
+                      1, 60)
+        if self.location is not None and not _is_unchanged(self.location, unchanged):
             self.location.check()
 
     def walk(self):
@@ -1168,7 +1265,8 @@ class ESFWPolicyRules(Policy):
             raise ValueError('Rule "{}" is view only.'.format(rule.name))
         if (current.get('Action') == FWRule.JUMP) != rule.is_group:
             raise ValueError('A rule cannot become a group (or a group a rule).')
-        rule.check()
+        stored = self.get_rule(rule.id)
+        rule.check([obj for obj, _ in stored.all_aggregates()] if stored is not None else ())
         self.__check_ids(rule, rules, aggregates, _get_list(current, 'AggRef'))
         rule.touch()
         self.__write_rule(rule, rules, aggregates, sequences)

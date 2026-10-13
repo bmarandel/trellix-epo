@@ -31,6 +31,19 @@ from .awl import SCAWLRules
 from .cc import SCCCRules
 from .fim import SCFIMRules
 
+
+def check_rule_group_name(name):
+    """
+    Raise ValueError if the console refuses a Rule Group name (Add and
+    Rename dialogs, scor.utils.validateRuleGroupName): required, not
+    starting with @ = + - or | (spreadsheet formula characters).
+    """
+    if not isinstance(name, str) or not name.strip():
+        raise ValueError('A Rule Group needs a name.')
+    if name[0] in '@=+-|':
+        raise ValueError('A Rule Group name cannot start with @ = + - or |: {!r}'.format(name))
+    return name
+
 class SCRuleGroup(SCRules):
     """
     SCRuleGroup is the base class object for one Solidcore Rule Group of a
@@ -216,6 +229,7 @@ class SCRuleGroups(XmlObject):
             raise ValueError('Rule Group type must be "{}".'.format('", "'.join(self.__CLASSES)))
         if platform not in (self.WINDOWS, self.UNIX):
             raise ValueError('Rule Group platform must be "WIN" or "UNIX".')
+        check_rule_group_name(name)
         if self.contain(name):
             raise ValueError('A Rule Group named "{}" already exists.'.format(name))
         rule_group_obj = et.Element('Rule-Group', {'is-read-only': 'false', 'name': name,
@@ -239,6 +253,7 @@ class SCRuleGroups(XmlObject):
             rule_group_obj = self.__find(rule_group)
         if rule_group_obj is None:
             return None
+        check_rule_group_name(new_name)
         if self.contain(new_name):
             raise ValueError('A Rule Group named "{}" already exists.'.format(new_name))
         new_obj = copy.deepcopy(rule_group_obj)
@@ -267,8 +282,7 @@ class SCRuleGroups(XmlObject):
         if rule_group_obj.get('is-read-only') == 'true':
             raise ValueError('Rule Group "{}" is predefined by Trellix and can\'t be '
                              'renamed.'.format(name))
-        if not new_name or not new_name.strip():
-            raise ValueError('A Rule Group needs a name.')
+        check_rule_group_name(new_name)
         if new_name != name and self.contain(new_name):
             raise ValueError('A Rule Group named "{}" already exists.'.format(new_name))
         rule_group_obj.set('name', new_name)

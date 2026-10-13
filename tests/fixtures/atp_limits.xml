@@ -1,0 +1,737 @@
+<?xml version='1.0' encoding='utf-8'?>
+<EPOPolicySchema><EPOPolicyVerInfo vermjr="5" vermin="10" verrel="0" verbld="0" />
+<EPOPolicySettings name="My Default::Settings (F5C93E08-6976-4D6F-A3D4-1A8BACFF8435)" featureid="TIEClientMETA" categoryid="General" typeid="General" param_int="0" param_str="">
+<Section name="General">
+<Setting name="ATPAMSIObserveMode" value="1" />
+<Setting name="ATP_AMSI_ENABLED" value="1" />
+<Setting name="CTPEnabled" value="1" />
+<Setting name="CTPObserveModeEnabled" value="0" />
+<Setting name="DisableAMSIInitFailBypass" value="0" />
+<Setting name="StoryGraphEnabled" value="1" />
+<Setting name="accessProtection" value="1" />
+<Setting name="allowDisableViaMcTray" value="0" />
+<Setting name="atdEnabled" value="0" />
+<Setting name="atdFileSizeLimit" value="5" />
+<Setting name="atdLevel" value="50" />
+<Setting name="blockEnabled" value="1" />
+<Setting name="blockLevel" value="15" />
+<Setting name="containEnabled" value="1" />
+<Setting name="containLevel" value="30" />
+<Setting name="customPromptText" value="" />
+<Setting name="customPromptTextEnabled" value="0" />
+<Setting name="enhancedRemFullMonitoringEnabled" value="0" />
+<Setting name="enhancedRemediationEnabled" value="1" />
+<Setting name="networkScanEnabled" value="0" />
+<Setting name="offlinePromptingDisabled" value="1" />
+<Setting name="operationMode" value="1" />
+<Setting name="promptDefault" value="1" />
+<Setting name="promptEnabled" value="0" />
+<Setting name="promptLevel" value="50" />
+<Setting name="promptTimeout" value="5" />
+<Setting name="realProtectEnabled" value="1" />
+<Setting name="realProtectStaticEnabled" value="1" />
+<Setting name="realProtectStaticOfflineModeEnabled" value="0" />
+<Setting name="repairEnabled" value="1" />
+<Setting name="repairLevel" value="1" />
+<Setting name="reputationSelector" value="1" />
+<Setting name="rpSensitivityLevel" value="1" />
+<Setting name="securityPosture" value="Medium" />
+<Setting name="telemetry" value="1" />
+<Setting name="useGTI" value="1" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP Options Console::Settings (FF5530DB-519F-4CED-83E1-40C75AB60249)" featureid="TIEClientMETA" categoryid="General" typeid="General" param_int="0" param_str="">
+<Section name="General">
+<Setting name="ATPAMSIObserveMode" value="1" />
+<Setting name="ATP_AMSI_ENABLED" value="1" />
+<Setting name="CTPEnabled" value="1" />
+<Setting name="CTPObserveModeEnabled" value="0" />
+<Setting name="StoryGraphEnabled" value="1" />
+<Setting name="accessProtection" value="1" />
+<Setting name="allowDisableViaMcTray" value="0" />
+<Setting name="atdEnabled" value="0" />
+<Setting name="atdFileSizeLimit" value="5" />
+<Setting name="atdLevel" value="50" />
+<Setting name="blockEnabled" value="1" />
+<Setting name="blockLevel" value="15" />
+<Setting name="containEnabled" value="1" />
+<Setting name="containLevel" value="30" />
+<Setting name="customPromptText" value="Line one&#10;ABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJA" />
+<Setting name="customPromptTextEnabled" value="1" />
+<Setting name="enhancedRemFullMonitoringEnabled" value="0" />
+<Setting name="enhancedRemediationEnabled" value="1" />
+<Setting name="networkScanEnabled" value="0" />
+<Setting name="offlinePromptingDisabled" value="1" />
+<Setting name="operationMode" value="1" />
+<Setting name="promptDefault" value="1" />
+<Setting name="promptEnabled" value="1" />
+<Setting name="promptLevel" value="50" />
+<Setting name="promptTimeout" value="5" />
+<Setting name="realProtectEnabled" value="1" />
+<Setting name="realProtectStaticEnabled" value="1" />
+<Setting name="realProtectStaticOfflineModeEnabled" value="0" />
+<Setting name="repairEnabled" value="1" />
+<Setting name="repairLevel" value="1" />
+<Setting name="reputationSelector" value="1" />
+<Setting name="rpSensitivityLevel" value="1" />
+<Setting name="securityPosture" value="Medium" />
+<Setting name="telemetry" value="1" />
+<Setting name="useGTI" value="1" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP Options Library::Settings (FF5530DB-519F-4CED-83E1-40C75AB60249)" featureid="TIEClientMETA" categoryid="General" typeid="General" param_int="0" param_str="">
+<Section name="General">
+<Setting name="ATPAMSIObserveMode" value="1" />
+<Setting name="ATP_AMSI_ENABLED" value="1" />
+<Setting name="CTPEnabled" value="1" />
+<Setting name="CTPObserveModeEnabled" value="0" />
+<Setting name="StoryGraphEnabled" value="1" />
+<Setting name="accessProtection" value="1" />
+<Setting name="allowDisableViaMcTray" value="0" />
+<Setting name="atdEnabled" value="1" />
+<Setting name="atdFileSizeLimit" value="128" />
+<Setting name="atdLevel" value="15" />
+<Setting name="blockEnabled" value="1" />
+<Setting name="blockLevel" value="15" />
+<Setting name="containEnabled" value="1" />
+<Setting name="containLevel" value="30" />
+<Setting name="customPromptText" value="MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM&#10;NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" />
+<Setting name="customPromptTextEnabled" value="1" />
+<Setting name="enhancedRemFullMonitoringEnabled" value="0" />
+<Setting name="enhancedRemediationEnabled" value="1" />
+<Setting name="networkScanEnabled" value="0" />
+<Setting name="offlinePromptingDisabled" value="1" />
+<Setting name="operationMode" value="1" />
+<Setting name="promptDefault" value="0" />
+<Setting name="promptEnabled" value="1" />
+<Setting name="promptLevel" value="70" />
+<Setting name="promptTimeout" value="1" />
+<Setting name="realProtectEnabled" value="1" />
+<Setting name="realProtectStaticEnabled" value="1" />
+<Setting name="realProtectStaticOfflineModeEnabled" value="0" />
+<Setting name="repairEnabled" value="1" />
+<Setting name="repairLevel" value="1" />
+<Setting name="reputationSelector" value="1" />
+<Setting name="rpSensitivityLevel" value="1" />
+<Setting name="securityPosture" value="Medium" />
+<Setting name="telemetry" value="1" />
+<Setting name="useGTI" value="1" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (02E1366B-022C-4013-AC5B-E95415070685)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_USER_DATA" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_USER_DATA" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (03866322-9384-46C8-9D10-19649A68A99A)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_PROCESS_SUSPEND_RESUME" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_PROCESS_SUSPEND_RESUME" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (03A23FCC-755B-422B-B04B-2057BA5C9393)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_NETWORK" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_NETWORK" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (08C9B014-6583-467A-A834-0DBAF51E10D1)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_CREATE_BATCH" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_CREATE_BATCH" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (0B1AD0EF-00E5-4F19-8EF2-425C9AD9BE88)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_IMG_FILE_EXECUTION" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_IMG_FILE_EXECUTION" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (0C5BE797-A4E7-4013-A6A8-2027C7C39C9A)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_PROCESS_CREATE_THREAD" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_PROCESS_CREATE_THREAD" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (20230581-8748-4A34-B377-3550467687B8)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_READ_ONLY" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_READ_ONLY" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (21898E08-3191-4117-BD54-C5FC4DA468FF)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_PROCESS_WRITEMEMORY" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_PROCESS_WRITEMEMORY" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (27EF8E49-453F-48DC-97D4-B02E2985D243)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_SCREENSAVER" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_SCREENSAVER" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (33CA0537-F946-48FA-8398-47C1B6B74AFD)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_CREATE_PICTURE" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_CREATE_PICTURE" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (3B1086DD-FA52-4C43-B148-1F30453F3062)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_VBSCRIPT" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_VBSCRIPT" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (3C1C4407-30DD-4589-BAF3-888FAEF33756)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_CREATE_CLSID_APPID_TYPELIB" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_CREATE_CLSID_APPID_TYPELIB" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (4068ACA2-640B-472A-A4DF-D6757F4EE618)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_CREATE_TASKS" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_CREATE_TASKS" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (473CA6E0-EAD3-4909-9BE4-3965FC7099A1)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_CREATE_REMOVABLE" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_CREATE_REMOVABLE" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (4A0C8C5B-B5E3-416A-8B03-F3365384C3EC)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_DELETE_TARGETED_EXTENSIONS" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_DELETE_TARGETED_EXTENSIONS" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (51B0BAFC-2128-4BE8-905F-7CD0A80A2DB1)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_PE" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_PE" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (656FFA3A-BFC9-4E36-8298-E60262AB2316)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_USER_POLICIES" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_USER_POLICIES" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (6B511FDC-D7A7-430C-91BB-F5F62A122792)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="dacGeneral">
+<Setting name="Executable#0_ID" value="43a5a64b-88d7-4881-9db4-07cedcdd99c7" />
+<Setting name="Executable#0_IncludeStatus" value="exclude" />
+<Setting name="Executable#0_Name" value="NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" />
+<Setting name="Executable#0_Notes" value="nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn" />
+<Setting name="Executable#0_Parameter#0_Name" value="OBJECT_NAME" />
+<Setting name="Executable#0_Parameter#0_Value" value="C:\ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp.exe" />
+<Setting name="Executable#0_Parameter#1_Name" value="MD5" />
+<Setting name="Executable#0_Parameter#1_Value" value="" />
+<Setting name="Executable#0_Parameter#2_Name" value="CERT_NAME" />
+<Setting name="Executable#0_Parameter#2_Value" value="" />
+<Setting name="Executable#0_ParameterCount" value="3" />
+<Setting name="Executable#1_ID" value="3a1b4600-fcad-48b1-8352-da2609e8151e" />
+<Setting name="Executable#1_IncludeStatus" value="exclude" />
+<Setting name="Executable#1_Name" value="Any signer text" />
+<Setting name="Executable#1_Notes" value="" />
+<Setting name="Executable#1_Parameter#0_Name" value="OBJECT_NAME" />
+<Setting name="Executable#1_Parameter#0_Value" value="" />
+<Setting name="Executable#1_Parameter#1_Name" value="MD5" />
+<Setting name="Executable#1_Parameter#1_Value" value="" />
+<Setting name="Executable#1_Parameter#2_Name" value="CERT_NAME" />
+<Setting name="Executable#1_Parameter#2_Value" value="Not a DN, any text; &quot;quoted&quot; &lt;x&gt; &amp; yzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz" />
+<Setting name="Executable#1_ParameterCount" value="3" />
+<Setting name="Executable#2_ID" value="42ba7c46-3734-4b66-a2c1-a0c1cb8614e8" />
+<Setting name="Executable#2_IncludeStatus" value="exclude" />
+<Setting name="Executable#2_Name" value="UNC and hash" />
+<Setting name="Executable#2_Notes" value="Notes é" />
+<Setting name="Executable#2_Parameter#0_Name" value="OBJECT_NAME" />
+<Setting name="Executable#2_Parameter#0_Value" value="\\srv\share\*.exe" />
+<Setting name="Executable#2_Parameter#1_Name" value="MD5" />
+<Setting name="Executable#2_Parameter#1_Value" value="D41D8CD98F00B204E9800998ECF8427E" />
+<Setting name="Executable#2_Parameter#2_Name" value="CERT_NAME" />
+<Setting name="Executable#2_Parameter#2_Value" value="**" />
+<Setting name="Executable#2_ParameterCount" value="3" />
+<Setting name="Executable#3_ID" value="99242c41-7d82-4a91-be2d-60b9b88c8a15" />
+<Setting name="Executable#3_IncludeStatus" value="exclude" />
+<Setting name="Executable#3_Name" value="Wildcards" />
+<Setting name="Executable#3_Notes" value="" />
+<Setting name="Executable#3_Parameter#0_Name" value="OBJECT_NAME" />
+<Setting name="Executable#3_Parameter#0_Value" value="**\a?.exe" />
+<Setting name="Executable#3_Parameter#1_Name" value="MD5" />
+<Setting name="Executable#3_Parameter#1_Value" value="" />
+<Setting name="Executable#3_Parameter#2_Name" value="CERT_NAME" />
+<Setting name="Executable#3_Parameter#2_Value" value="" />
+<Setting name="Executable#3_ParameterCount" value="3" />
+<Setting name="Executable#4_ID" value="cc2f0876-2567-47bd-ba99-a0936c9eba0f" />
+<Setting name="Executable#4_IncludeStatus" value="exclude" />
+<Setting name="Executable#4_Name" value="File name only" />
+<Setting name="Executable#4_Notes" value="" />
+<Setting name="Executable#4_Parameter#0_Name" value="OBJECT_NAME" />
+<Setting name="Executable#4_Parameter#0_Value" value="setup*.exe" />
+<Setting name="Executable#4_Parameter#1_Name" value="MD5" />
+<Setting name="Executable#4_Parameter#1_Value" value="" />
+<Setting name="Executable#4_Parameter#2_Name" value="CERT_NAME" />
+<Setting name="Executable#4_Parameter#2_Value" value="CN=Example Corp, O=Example Corp, C=US" />
+<Setting name="Executable#4_ParameterCount" value="3" />
+<Setting name="ExecutableCount" value="5" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (7134D4CF-57C4-4FB8-88CF-1F223EC94EE7)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_HIDDEN" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_HIDDEN" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (7B84144F-4DF3-4413-B48C-1D1CCCA5CD6D)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_READ_TARGETED_EXTENSIONS" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_READ_TARGETED_EXTENSIONS" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (7C428992-16F1-465C-8EA7-254CD04F8BB7)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_AEDEBUG" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_AEDEBUG" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (7C94F444-EC65-4675-B0B4-1EC2F5762495)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_STARTUP" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_STARTUP" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (93388664-9945-4FD6-8FE1-3857E107F30E)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_CACHED_PASSWORDS" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_CACHED_PASSWORDS" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (96D54B8F-3659-4683-8D31-1567E020E998)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_CREATE_EXE" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_CREATE_EXE" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (A1693394-2AEC-4A1D-8D85-4384909CC5E7)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_PROCESS_READMEMORY" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_PROCESS_READMEMORY" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (A2F2F87B-F1C3-40DC-BC1A-11EE72EA8D81)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_REMOVABLE" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_REMOVABLE" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (B85EB599-6063-43F7-94FC-D928061F3C84)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_CRITICAL_OS_EXE_DISABLEMENT" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_CRITICAL_OS_EXE_DISABLEMENT" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (B9339745-B770-4E62-8A8D-D61C0FD9F9AE)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_CREATE_VBSCRIPT" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_CREATE_VBSCRIPT" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (BDED0EE2-8634-4260-A762-1DD86261DB38)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_CREATE_NETWORK" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_CREATE_NETWORK" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (C8262668-01AA-4B69-9292-303353531820)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_SERVICES_LOCATION" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_SERVICES_LOCATION" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (CCBA8F3C-84C5-4769-83BB-22A2EBC5FCDC)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_APPCOMPAT_SHIMS" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_APPCOMPAT_SHIMS" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (CDB2EFD5-1C60-4659-ABB5-8037972AE9E4)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_ACCESSING_USER_COOKIES" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_ACCESSING_USER_COOKIES" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (DA4C6E42-BFB1-4D17-8FB2-00D11D046A3A)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_BATCH" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_BATCH" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (DBD8D961-FE19-4A3F-B13B-4F2AA8908F72)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_FIREWALL" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_FIREWALL" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (DCCD988D-480C-462F-A1C1-6BA576964593)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_APPINIT" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_APPINIT" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (DEE2E224-3E53-4157-B18C-9A5526D5D4A6)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_PROCESS_TERMINATE" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_PROCESS_TERMINATE" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (E2F4D639-3BED-49E8-8AF6-AFC290BC3C9E)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_WALLPAPER" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_WALLPAPER" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (E6A3F109-6144-44E6-99AB-7683210C18E0)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_WRITE_TARGETED_EXTENSIONS" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_WRITE_TARGETED_EXTENSIONS" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (F139A1E9-6BF3-43B3-A0BA-55EFFD12834A)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_CRITICAL_FILES_REGISTRY" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_CRITICAL_FILES_REGISTRY" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (F6F5E9AC-72D7-49B3-88A1-1F11AD7335AC)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_PROCESS_VM_OPERATION" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_PROCESS_VM_OPERATION" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (F92BC9DA-1C6A-4766-B9C1-4BA51AF7836E)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_CHILD_PROC_EXEC" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_CHILD_PROC_EXEC" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (FA778027-FEAE-46DC-88B2-1AA066FEF0FF)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_TASKS" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_TASKS" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ATP DAC Library::Settings (FF5030E9-4F8E-47A3-9B19-658DF3967A48)" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" typeid="TIE_DynamicApplicationContainment_Policies" param_int="0" param_str="">
+<Section name="DACRule">
+<Setting name="Block" value="0" />
+<Setting name="ExecutableCount" value="0" />
+<Setting name="Note" value="" />
+<Setting name="Report" value="1" />
+<Setting name="RuleID" value="DAC_BLOCK_MODIFY_FILE_EXTENSION_ASSOCIATION" />
+<Setting name="RuleName" value="IDS_DAC_RULE_DAC_BLOCK_MODIFY_FILE_EXTENSION_ASSOCIATION" />
+<Setting name="RuleType" value="Canned" />
+<Setting name="SubRuleCount" value="0" />
+</Section>
+</EPOPolicySettings>
+
+<EPOPolicyObject name="My Default" featureid="TIEClientMETA" categoryid="General" serverid="W2022EPO510" editflag="0" typeid="General">
+<description /><PolicySettings>My Default::Settings (F5C93E08-6976-4D6F-A3D4-1A8BACFF8435)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - ATP Options Console" featureid="TIEClientMETA" categoryid="General" serverid="W2022EPO510" editflag="0" typeid="General">
+<description /><PolicySettings>Claude - ATP Options Console::Settings (FF5530DB-519F-4CED-83E1-40C75AB60249)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - ATP Options Library" featureid="TIEClientMETA" categoryid="General" serverid="W2022EPO510" editflag="0" typeid="General">
+<description /><PolicySettings>Claude - ATP Options Library::Settings (FF5530DB-519F-4CED-83E1-40C75AB60249)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - ATP DAC Library" featureid="TIEClientMETA" categoryid="TIE_DynamicApplicationContainment_Policies" serverid="W2022EPO510" editflag="0" typeid="TIE_DynamicApplicationContainment_Policies">
+<description /><PolicySettings>Claude - ATP DAC Library::Settings (02E1366B-022C-4013-AC5B-E95415070685)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (03866322-9384-46C8-9D10-19649A68A99A)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (03A23FCC-755B-422B-B04B-2057BA5C9393)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (08C9B014-6583-467A-A834-0DBAF51E10D1)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (0B1AD0EF-00E5-4F19-8EF2-425C9AD9BE88)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (0C5BE797-A4E7-4013-A6A8-2027C7C39C9A)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (20230581-8748-4A34-B377-3550467687B8)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (21898E08-3191-4117-BD54-C5FC4DA468FF)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (27EF8E49-453F-48DC-97D4-B02E2985D243)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (33CA0537-F946-48FA-8398-47C1B6B74AFD)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (3B1086DD-FA52-4C43-B148-1F30453F3062)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (3C1C4407-30DD-4589-BAF3-888FAEF33756)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (4068ACA2-640B-472A-A4DF-D6757F4EE618)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (473CA6E0-EAD3-4909-9BE4-3965FC7099A1)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (4A0C8C5B-B5E3-416A-8B03-F3365384C3EC)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (51B0BAFC-2128-4BE8-905F-7CD0A80A2DB1)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (656FFA3A-BFC9-4E36-8298-E60262AB2316)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (6B511FDC-D7A7-430C-91BB-F5F62A122792)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (7134D4CF-57C4-4FB8-88CF-1F223EC94EE7)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (7B84144F-4DF3-4413-B48C-1D1CCCA5CD6D)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (7C428992-16F1-465C-8EA7-254CD04F8BB7)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (7C94F444-EC65-4675-B0B4-1EC2F5762495)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (93388664-9945-4FD6-8FE1-3857E107F30E)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (96D54B8F-3659-4683-8D31-1567E020E998)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (A1693394-2AEC-4A1D-8D85-4384909CC5E7)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (A2F2F87B-F1C3-40DC-BC1A-11EE72EA8D81)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (B85EB599-6063-43F7-94FC-D928061F3C84)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (B9339745-B770-4E62-8A8D-D61C0FD9F9AE)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (BDED0EE2-8634-4260-A762-1DD86261DB38)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (C8262668-01AA-4B69-9292-303353531820)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (CCBA8F3C-84C5-4769-83BB-22A2EBC5FCDC)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (CDB2EFD5-1C60-4659-ABB5-8037972AE9E4)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (DA4C6E42-BFB1-4D17-8FB2-00D11D046A3A)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (DBD8D961-FE19-4A3F-B13B-4F2AA8908F72)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (DCCD988D-480C-462F-A1C1-6BA576964593)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (DEE2E224-3E53-4157-B18C-9A5526D5D4A6)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (E2F4D639-3BED-49E8-8AF6-AFC290BC3C9E)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (E6A3F109-6144-44E6-99AB-7683210C18E0)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (F139A1E9-6BF3-43B3-A0BA-55EFFD12834A)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (F6F5E9AC-72D7-49B3-88A1-1F11AD7335AC)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (F92BC9DA-1C6A-4766-B9C1-4BA51AF7836E)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (FA778027-FEAE-46DC-88B2-1AA066FEF0FF)</PolicySettings>
+<PolicySettings>Claude - ATP DAC Library::Settings (FF5030E9-4F8E-47A3-9B19-658DF3967A48)</PolicySettings>
+</EPOPolicyObject>
+</EPOPolicySchema>

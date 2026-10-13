@@ -36,11 +36,78 @@ the passwords defined in the console - they must be defined again in the
 console after the import. The library never sets them.
 The trusted vendor Certificates list (Upload Client Certificate) is not
 supported (no certificate on the lab to learn its storage).
+
+Values accepted by the console (Endpoint Security Platform extension
+26.8.0.19750, checked on the lab page): number ranges in number_options();
+Log files location 256 characters, no * ? " | and only the macros
+LOG_PATH_MACROS (a path starting with / follows the Linux rule: no \\ * ?
+| & ; + "); proxy address 100 characters, an IP address or a host name /
+FQDN (validateServerIpOrFqdn); proxy port 1-65535; Self Protection process
+exclusions: a drive letter path or a file name, wildcards allowed, none of
+\\\\ / " < > | in a file name, no duplicate (validateExclusion).
 """
 
+import re
 import xml.etree.ElementTree as et
 
 from ...policies import Policy
+from ...validators import (check_int, check_length, has_valid_macros, is_orion_hostname,
+                           is_orion_ipv4, is_orion_ipv6)
+
+# Path macros of the ENS pages (g_szValidMacros of GeneralSettingsPolicy).
+LOG_PATH_MACROS = ['SYSTEM_DRIVE', 'SYSTEM_ROOT', 'SYSTEM_DIR', 'TEMP_DIR', 'PROGRAM_FILES_DIR',
+                   'PROGRAM_FILES_COMMON_DIR', 'SOFTWARE_INSTALLED_DIR']
+# IsValidDriveLetterPath / IsValidFilename of VSECommon.js, wildcards allowed.
+DRIVE_PATH = re.compile(r'^(((([a-zA-Z*?]:(\\(?!\\))))(([^\\/"<>|]+(\\(?!\\)))|([^\\/"<>|]))*))$')
+FILE_NAME = re.compile(r'^([^\\/"<>|]+)$')
+
+
+def check_log_location(location):
+    """
+    Raise ValueError if the console refuses a Log files location
+    (validateLogfilePath of the ENS Common page).
+    """
+    check_length('Log files location', location, 256, required=True)
+    if location.startswith('/'):
+        valid = not any(char in location for char in '\\*?|&;+"')
+    else:
+        valid = not any(char in location for char in '*?"|') and \
+            has_valid_macros(location, LOG_PATH_MACROS)
+    if not valid:
+        raise ValueError('Invalid log files location: {!r}'.format(location))
+    return location
+
+
+def check_proxy_address(address):
+    """
+    Raise ValueError if the console refuses a proxy server address
+    (validateServerIpOrFqdn of the ENS Common page): an IP address, a host
+    name, or a host name followed by a domain name.
+    """
+    check_length('Proxy server address', address, 100, required=True)
+    if address != address.strip(' '):
+        valid = False
+    elif is_orion_ipv4(address) or is_orion_ipv6(address):
+        valid = True
+    elif '.' not in address:
+        valid = is_orion_hostname(address)
+    else:
+        host, domain = address[:address.index('.')], address[address.index('.'):]
+        valid = is_orion_hostname(host) and is_orion_hostname(domain)
+    if not valid:
+        raise ValueError('Invalid proxy server address: {!r}'.format(address))
+    return address
+
+
+def check_sp_exclusion(process):
+    """
+    Raise ValueError if the console refuses a Self Protection process
+    exclusion (validateExclusion of the ENS Common page).
+    """
+    if not isinstance(process, str) or not process.strip() or \
+            not (DRIVE_PATH.search(process) or FILE_NAME.search(process)):
+        raise ValueError('Invalid Self Protection process exclusion: {!r}'.format(process))
+    return process
 
 
 class AACExclusion():
@@ -191,7 +258,7 @@ class ESCommonPolicyOptions(Policy):
         'debug_log_size': ('ClientLoggingOptions', 'maxClientDebugLogSizeMB',
                            'Limit size (MB) of each of the debug log files', 1, 999),
         'event_db_size': ('ClientLoggingOptions', 'maxClientEventLogSizeMB',
-                          'Limit the size (MB) of event DB', 1, 999),
+                          'Limit the size (MB) of event DB', 50, 999),
     }
 
     def __init__(self, policy_from_escommonpolicies=None):
@@ -268,9 +335,7 @@ class ESCommonPolicyOptions(Policy):
         """
         if name in self.__NUMBERS:
             section, setting, label, low, high = self.__NUMBERS[name]
-            if not low <= int(value) <= high:
-                raise ValueError('{}: enter a number between {} and {}.'.format(label, low, high))
-            return self.__set(section, setting, int(value))
+            return self.__set(section, setting, check_int(label, value, low, high))
         section, setting, _ = self.__CHECKBOXES[name]
         return self.__set(section, setting, self.__from_mode(value))
 
@@ -344,9 +409,12 @@ class ESCommonPolicyOptions(Policy):
         """
         Set the processes excluded from Self Protection.
         """
+        processes = [check_sp_exclusion(process) for process in processes]
+        if len({process.strip() for process in processes}) != len(processes):
+            raise ValueError('Self Protection process exclusions: duplicate item.')
         self.__section('SelfProtectionStatus')
         return self.set_indexed_list('SelfProtectionStatus', 'spProcessExclCount',
-                                     'spProcessExclusion_{}', [str(p) for p in processes])
+                                     'spProcessExclusion_{}', processes)
 
     sp_process_exclusions = property(get_sp_process_exclusions, set_sp_process_exclusions)
 
@@ -405,8 +473,7 @@ class ESCommonPolicyOptions(Policy):
         """
         Set the Log files location (256 characters max).
         """
-        if not location or len(location) > 256:
-            raise ValueError('The log files location is required (256 characters max).')
+        check_log_location(location)
         return self.__set('ClientLoggingOptions', 'clientLogFilesLocation', location)
 
     log_location = property(get_log_location, set_log_location)
@@ -519,11 +586,10 @@ class ESCommonPolicyOptions(Policy):
         if str(proxy_type) not in self.PROXY_TYPES:
             raise ValueError('The proxy type must be "0", "1" or "2".')
         if address is not None:
-            self.__set('ClientGTIProxy', 'gtiProxyServerAddress', address)
+            self.__set('ClientGTIProxy', 'gtiProxyServerAddress', check_proxy_address(address))
         if port is not None:
-            if not 1 <= int(port) <= 65535:
-                raise ValueError('The proxy port must be within 1-65535.')
-            self.__set('ClientGTIProxy', 'gtiProxyServerPort', int(port))
+            self.__set('ClientGTIProxy', 'gtiProxyServerPort',
+                       check_int('Proxy server port', port, 1, 65535))
         if exclusions is not None:
             self.__set('ClientGTIProxy', 'proxyServerExclusions', ';'.join(exclusions))
         if str(proxy_type) == '2' and not self.__get('ClientGTIProxy', 'gtiProxyServerAddress'):

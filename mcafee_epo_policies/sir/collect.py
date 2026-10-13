@@ -28,17 +28,42 @@ import datetime
 import uuid
 
 from ..policies import Policy
+from ..validators import check_int, check_length
 
 HIVES = ('[HKLM]\\', '[HKCU]\\', '[HKCR]\\', '[HKU]\\', '[HKCC]\\')
 
 
 def check_registry_path(path):
     """
-    Raise ValueError if the console would refuse the registry path.
+    Raise ValueError if the console would refuse the registry path (hive
+    prefix, any case but the console's, without " or ;).
     """
     if not str(path).startswith(HIVES):
         raise ValueError('A registry path must start with {}: {!r}'.format(
             ', '.join(HIVES), path))
+    check_characters(path)
+
+
+def check_characters(text):
+    """
+    Raise ValueError if the text holds a double quote or a semicolon
+    (charexist of the console pages).
+    """
+    if '"' in str(text) or ';' in str(text):
+        raise ValueError('Double quote (") and semicolon (;) are not allowed: {!r}'.format(text))
+    return text
+
+
+def check_unique(values, label):
+    """
+    Raise ValueError if a value is in the list twice (case ignored, as the
+    console Add buttons do).
+    """
+    seen = set()
+    for value in values:
+        if str(value).lower() in seen:
+            raise ValueError('{} already in the list: {!r}'.format(label, value))
+        seen.add(str(value).lower())
 
 
 class SIRPolicyCollectData(Policy):
@@ -154,12 +179,16 @@ class SIRPolicyCollectData(Policy):
 
     def set_registry_queries(self, paths):
         """
-        Set the registry values to query (1000 characters max each).
+        Set the registry values to query (1000 characters max each, 255 for
+        each \\ separated element, no duplicate - case ignored).
         """
         for path in paths:
             check_registry_path(path)
-            if len(path) > 1000:
-                raise ValueError('A registry path is limited to 1000 characters.')
+            check_length('Registry Key\\Value', path, 1000)
+            if any(len(element) > 255 for element in str(path).split('\\')):
+                raise ValueError('The Registry Key\\Value elements are limited to 255 '
+                                 'characters: {!r}'.format(path))
+        check_unique(paths, 'Registry Key\\Value')
         return self.__set_list('List', 'dwItemCount', 'Branch{}', paths)
 
     registry_queries = property(get_registry_queries, set_registry_queries)
@@ -175,9 +204,8 @@ class SIRPolicyCollectData(Policy):
         """
         Set the Hours between Property Collection (0-999).
         """
-        if not 0 <= int(hours) <= 999:
-            raise ValueError('The interval must be within 0-999 hours.')
-        return self.__set('Custom', 'dwHourlyInterval', int(hours))
+        hours = check_int('Hours between Property Collection', hours, 0, 999)
+        return self.__set('Custom', 'dwHourlyInterval', hours)
 
     collection_interval = property(get_collection_interval, set_collection_interval)
 
@@ -229,15 +257,27 @@ class SIRPolicyCollectData(Policy):
 
     # ------------------------------ Find File ------------------------------
     def __check_paths(self, paths, kind):
+        """
+        The checks of the Find File tab (console 1.0.x on the lab): trailing
+        blanks removed; a file starts with a FILE_PREFIXES item and does not
+        end with \\, a folder starts with a drive {A}\\ to {Z}\\; 240
+        characters, no " nor ;, no duplicate (case ignored).
+        """
+        paths = [str(path).rstrip() for path in paths]
+        prefixes = self.FILE_PREFIXES if kind == 'File' else self.FILE_PREFIXES[4:]
         for path in paths:
-            if not str(path).startswith(self.FILE_PREFIXES):
-                raise ValueError('Not a valid format of {} search (start with [SYSTEMDRIVE]\\, '
-                                 '[SystemRoot]\\, [PROGRAMFILES]\\, [COMMONPROGRAMFILES]\\ or '
-                                 '{{A}}\\ to {{Z}}\\): {!r}'.format(kind, path))
+            check_characters(path)
+            if not path.startswith(prefixes):
+                raise ValueError('Not a valid format of {} search (start with {}): {!r}'.format(
+                    kind, '[SYSTEMDRIVE]\\, [SystemRoot]\\, [PROGRAMFILES]\\, '
+                    '[COMMONPROGRAMFILES]\\ or {A}\\ to {Z}\\' if kind == 'File' else
+                    '{A}\\ to {Z}\\', path))
             if kind == 'File' and str(path).endswith('\\'):
                 raise ValueError('A file search cannot end with \\: {!r}'.format(path))
             if len(path) > 240:
                 raise ValueError('A {} search is limited to 240 characters.'.format(kind))
+        check_unique(paths, kind)
+        return paths
 
     def get_files(self):
         """
@@ -249,7 +289,7 @@ class SIRPolicyCollectData(Policy):
         """
         Set the files to search for.
         """
-        self.__check_paths(paths, 'File')
+        paths = self.__check_paths(paths, 'File')
         return self.__set_list('FindFile', 'FileCount', 'SearchPattern{}', paths)
 
     files = property(get_files, set_files)
@@ -264,7 +304,7 @@ class SIRPolicyCollectData(Policy):
         """
         Set the folder structures to search for (Folder Structure Discovery).
         """
-        self.__check_paths(paths, 'Folder')
+        paths = self.__check_paths(paths, 'Folder')
         return self.__set_list('FindFile', 'FolderCount', 'FolderPattern{}', paths)
 
     folders = property(get_folders, set_folders)
@@ -280,8 +320,7 @@ class SIRPolicyCollectData(Policy):
         """
         Set the Search Depth of the Folder Structure Discovery (0-9).
         """
-        if not 0 <= int(depth) <= 9:
-            raise ValueError('The search depth must be within 0-9.')
+        depth = check_int('Search Depth', depth, 0, 9)
         return self.__set('FindFile', 'dwSearchDepth', int(depth))
 
     search_depth = property(get_search_depth, set_search_depth)

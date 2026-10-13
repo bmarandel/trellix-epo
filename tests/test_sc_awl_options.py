@@ -59,10 +59,10 @@ def test_end_user_notifications_tab(win_policy):
     assert win_policy.get_message_show_in_dialog('EXECUTION_DENIED') == 'false'
     assert win_policy.get_message_show_in_dialog('WRITE_DENIED') == 'true'
 
-    win_policy.helpdesk_mail_to = 'a@b.c;d@e.f'
+    win_policy.helpdesk_mail_to = 'a@example.com;d@example.org'
     win_policy.helpdesk_epo_address = 'epo.lab:8443'
     win_policy.set_message('WRITE_DENIED', 'No write to {file_name}')
-    assert all(r['mailto'] == 'a@b.c;d@e.f' for r in win_policy.get_rules('event-cust-msg'))
+    assert all(r['mailto'] == 'a@example.com;d@example.org' for r in win_policy.get_rules('event-cust-msg'))
     assert win_policy.helpdesk_epo_address == 'epo.lab:8443'
     assert win_policy.get_rule('event-cust-msg', {'event_name': 'READ_DENIED'})['epo_url'] == (
         'https://epo.lab:8443/SOLIDCORE_META/showEvents.do?seqNo={seqno}'

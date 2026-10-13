@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='utf-8'?>
+<EPOPolicySchema>
+<EPOPolicyVerInfo vermjr="5" vermin="10" verrel="0" verbld="0" />
+<EPOPolicySettings name="My Default::Settings (50DE6428-5804-4985-8F42-B115F16987CD)" featureid="ENDP_FW_META_FW" categoryid="FW_StatusMode" typeid="FW_StatusMode" param_int="8" param_str="FW_StatusMode_OFF">
+<Section name="8">
+<Setting name="AdaptiveModeStatus" value="0" />
+<Setting name="AllowBridgedVmTraffic" value="0" />
+<Setting name="AllowDisableFirewall" value="0" />
+<Setting name="AllowDynamicRules" value="0" />
+<Setting name="AllowIntrusionAlerts" value="1" />
+<Setting name="AllowUnknownProtocol" value="0" />
+<Setting name="BlockAllUntrusted" value="0" />
+<Setting name="BootFw" value="0" />
+<Setting name="FWStatus" value="1" />
+<Setting name="FactoryRulesDisableStatus" value="0" />
+<Setting name="GTIConnectivity" value="0" />
+<Setting name="GTIEventStatus" value="0" />
+<Setting name="GTIIn" value="-100" />
+<Setting name="GTIIntrusion" value="0" />
+<Setting name="GTIOut" value="-100" />
+<Setting name="InspectFTP" value="1" />
+<Setting name="IpSpoof" value="0" />
+<Setting name="LogAllAllowed" value="0" />
+<Setting name="LogAllBlocked" value="1" />
+<Setting name="MandateUserComments" value="0" />
+<Setting name="MergeRules" value="1" />
+<Setting name="Name" value="FW_StatusMode_OFF" />
+<Setting name="RetainFirewallStatus" value="0" />
+<Setting name="TCPTimeout" value="30" />
+<Setting name="UntrustedExecutableObserveMode" value="0" />
+<Setting name="VCTimeout" value="30" />
+<Setting name="ViewState" value="0" />
+<Setting name="_BlockedDomains" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - ENS FW Options Test::Settings (871F9FEA-CE56-471C-9653-A40758836B42)" featureid="ENDP_FW_META_FW" categoryid="FW_StatusMode" typeid="FW_StatusMode" param_int="8" param_str="FW_StatusMode_OFF">
+<Section name="8">
+<Setting name="+AddressType#0" value="SingleIP" />
+<Setting name="+AddressType#1" value="Subnet" />
+<Setting name="+AddressType#2" value="LocalSubnet" />
+<Setting name="+AddressType#3" value="Range" />
+<Setting name="+AddressType#4" value="FQDN" />
+<Setting name="+AddressType#5" value="AnyIPv4" />
+<Setting name="+AddressType#6" value="AnyIPv6" />
+<Setting name="+AddressType#7" value="AnyLocalIP" />
+<Setting name="+AddressValue#0" value="10.0.0.1" />
+<Setting name="+AddressValue#1" value="10.10.0.0/16" />
+<Setting name="+AddressValue#2" value="0000:0000:0000:0000:0000:ffff:0000:0000" />
+<Setting name="+AddressValue#3" value="10.20.0.1-10.20.0.50" />
+<Setting name="+AddressValue#4" value="server.example.com" />
+<Setting name="+AddressValue#5" value="0000:0000:0000:0000:0000:ffff:0000:0000-0000:0000:0000:0000:0000:ffff:ffff:ffff" />
+<Setting name="+AddressValue#6" value="0000:0000:0000:0000:0000:0000:0000:0000-ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff" />
+<Setting name="+AddressValue#7" value="[local]" />
+<Setting name="+IsTrusted#0" value="1" />
+<Setting name="+IsTrusted#1" value="0" />
+<Setting name="+IsTrusted#2" value="1" />
+<Setting name="+IsTrusted#3" value="0" />
+<Setting name="+IsTrusted#4" value="1" />
+<Setting name="+IsTrusted#5" value="0" />
+<Setting name="+IsTrusted#6" value="1" />
+<Setting name="+IsTrusted#7" value="0" />
+<Setting name="+TrustedExeDesc#0" value="Claude description only" />
+<Setting name="+TrustedExeHash#0" value="" />
+<Setting name="+TrustedExeName#0" value="Claude Any Signer" />
+<Setting name="+TrustedExeNote#0" value="" />
+<Setting name="+TrustedExePath#0" value="" />
+<Setting name="+TrustedExeSignature#0" value="*" />
+<Setting name="AdaptiveModeStatus" value="0" />
+<Setting name="AllowBridgedVmTraffic" value="0" />
+<Setting name="AllowDisableFirewall" value="0" />
+<Setting name="AllowDynamicRules" value="0" />
+<Setting name="AllowIntrusionAlerts" value="1" />
+<Setting name="AllowUnknownProtocol" value="0" />
+<Setting name="BlockAllUntrusted" value="0" />
+<Setting name="BootFw" value="0" />
+<Setting name="CreationDate" value="2026-10-11T22:39:01.612+02:00" />
+<Setting name="CreatorID" value="admin" />
+<Setting name="FWStatus" value="1" />
+<Setting name="FactoryRulesDisableStatus" value="0" />
+<Setting name="GTIConnectivity" value="0" />
+<Setting name="GTIEventStatus" value="0" />
+<Setting name="GTIIn" value="-100" />
+<Setting name="GTIIntrusion" value="0" />
+<Setting name="GTIOut" value="-100" />
+<Setting name="InspectFTP" value="1" />
+<Setting name="IpSpoof" value="0" />
+<Setting name="LastModifierID" value="admin" />
+<Setting name="LastModifyDate" value="2026-10-11T22:41:48.150+02:00" />
+<Setting name="LogAllAllowed" value="0" />
+<Setting name="LogAllBlocked" value="1" />
+<Setting name="MandateUserComments" value="0" />
+<Setting name="MergeRules" value="1" />
+<Setting name="Name" value="FW_StatusMode_OFF" />
+<Setting name="RetainFirewallStatus" value="0" />
+<Setting name="TCPTimeout" value="30" />
+<Setting name="UntrustedExecutableObserveMode" value="0" />
+<Setting name="VCTimeout" value="30" />
+<Setting name="ViewState" value="1" />
+<Setting name="_AddressType" value="8" />
+<Setting name="_AddressValue" value="8" />
+<Setting name="_BlockedDomains" value="0" />
+<Setting name="_IsTrusted" value="8" />
+<Setting name="_TrustedExeDesc" value="1" />
+<Setting name="_TrustedExeHash" value="1" />
+<Setting name="_TrustedExeName" value="1" />
+<Setting name="_TrustedExeNote" value="1" />
+<Setting name="_TrustedExePath" value="1" />
+<Setting name="_TrustedExeSignature" value="1" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicyObject name="My Default" featureid="ENDP_FW_META_FW" categoryid="FW_StatusMode" serverid="W2022EPO510" editflag="0" typeid="FW_StatusMode">
+<description /><PolicySettings>My Default::Settings (50DE6428-5804-4985-8F42-B115F16987CD)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - ENS FW Options Test" featureid="ENDP_FW_META_FW" categoryid="FW_StatusMode" serverid="W2022EPO510" editflag="0" typeid="FW_StatusMode">
+<description /><PolicySettings>Claude - ENS FW Options Test::Settings (871F9FEA-CE56-471C-9653-A40758836B42)</PolicySettings>
+</EPOPolicyObject></EPOPolicySchema>

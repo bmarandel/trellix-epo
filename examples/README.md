@@ -28,7 +28,7 @@ policy out of a `Policies` collection, or from `Policy.load_from_file`).
 - **`access_protection.py`** - ENS Threat Prevention Access Protection: list
   the rules, create a user-defined rule (executables, user names, subrules),
   block a Trellix-defined rule and add an exclusion.
-- **`policy_documentation.py`** - ENS Threat Prevention / Firewall / Storage Protection, Trellix Agent and Solidcore: from a
+- **`policy_documentation.py`** - ENS, Trellix Agent, System Information Reporter, Solidcore and Trellix EDR with Forensics: from a
   full product export, write one Markdown document per policy (all ENS
   policy types) (console
   sections, settings tables, document control section for the review and
@@ -51,6 +51,22 @@ policy out of a `Policies` collection, or from `Policy.load_from_file`).
   `rule_group.xml` (for `scor.rulegroup.import`) and `policy.xml` (for
   `policy.importPolicy`, after the Rule Group). Takes three arguments - the
   Solidcore export, the policy name and the new Rule Group name.
+
+- **`edrf_best_practices.py`** - Trellix EDR with Forensics: from a full
+  export (`policy.export productId=XCLIENT_META`), copies a policy of each
+  type (General, Streaming, Detection, Investigation, Remediation - "My
+  Default" unless another name is given) as "<policy> - Best Practices" and
+  applies best practices (Self Protection, health reports, Low hash strategy,
+  Host Remediation, containment page - title, message, optional logo, the
+  HTML page shown on the device rebuilt as the console does with the
+  extension 50.3 -, VPN and ePO server reachable when contained, Event
+  streamer with events stored on disk, Sysmon events, a filter for a noisy
+  process and two TLS syslog servers with failover, from the Event Streamer
+  module user guide) and example exclusions (trusted backup/scanner tools, database
+  folders, a registry key, disk image extensions). The example values are
+  constants at the top of the script, to be replaced with those of your
+  environment. Writes one file with the five policies, ready to import.
+  Takes the export file, then optionally the policy name and the output file.
 
 ### Working directly against ePO (Solidcore)
 

@@ -13,6 +13,7 @@ with the count dwICAPClientCount.
 """
 
 from .common import ESSPPolicy
+from ...validators import check_int, is_sp_ipv4
 
 
 class ESSPPolicyICAP(ESSPPolicy):
@@ -68,10 +69,18 @@ class ESSPPolicyICAP(ESSPPolicy):
 
     def set_connection_list(self, addresses):
         """
-        Set the connection list: IP addresses of the ICAP clients.
+        Set the connection list: IP addresses of the ICAP clients (see
+        is_sp_ipv4; the console flags an invalid address and refuses a
+        duplicate).
         """
+        addresses = [str(address) for address in addresses]
+        for index, address in enumerate(addresses):
+            if not is_sp_ipv4(address):
+                raise ValueError('Invalid ICAP client address: {!r}'.format(address))
+            if address in addresses[:index]:
+                raise ValueError('Duplicate ICAP client address: {!r}'.format(address))
         return self.set_indexed_list('ICAPGeneral', 'dwICAPClientCount', 'szICAPClient_{}',
-                                     [str(address) for address in addresses])
+                                     addresses)
 
     connection_list = property(get_connection_list, set_connection_list)
 
@@ -97,9 +106,12 @@ class ESSPPolicyICAP(ESSPPolicy):
 
     def set_bind_address(self, address):
         """
-        Set the ICAP server Bind address.
+        Set the ICAP server Bind address (an IPv4 address, the first number
+        up to 223, see is_sp_ipv4; 0.0.0.0 = all the interfaces).
         """
-        return self._set('General', 'szBindAddress', address)
+        if not is_sp_ipv4(address) or len(str(address)) > 15:
+            raise ValueError('Invalid bind address: {!r}'.format(address))
+        return self._set('General', 'szBindAddress', str(address))
 
     bind_address = property(get_bind_address, set_bind_address)
 
@@ -114,9 +126,7 @@ class ESSPPolicyICAP(ESSPPolicy):
         """
         Set the ICAP server Port number (1-65535).
         """
-        if not 1 <= int(port) <= 65535:
-            raise ValueError('Wrong port number: {}'.format(port))
-        return self._set('General', 'dwPort', int(port))
+        return self._set('General', 'dwPort', check_int('Port', port, 1, 65535))
 
     port = property(get_port, set_port)
 

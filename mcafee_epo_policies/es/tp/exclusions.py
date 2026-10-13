@@ -7,6 +7,62 @@
 This module defines the class ExclusionList for On-Access and On-Demand policies.
 """
 
+from ...validators import (check_int, check_length, is_ens_path, is_ens_exclusion_file_type,
+                           is_ens_file_types)
+
+
+def check_file_type_list(extensions, label='Specified file types'):
+    """
+    Raise ValueError if the console refuses a list of file types of "What
+    to scan", as stored: comma separated extensions, ":::" for "All files
+    with no extension" (On-Access Scan, On-Demand Scan). The typed text
+    (without :::) has 3000 characters at most and follows is_ens_file_types.
+    """
+    typed = ','.join(item for item in str(extensions).split(',') if item != ':::')
+    check_length(label, typed, 3000)
+    if not is_ens_file_types(typed):
+        raise ValueError('{}: invalid file types {!r} (none of / " | < > \\ * :, not only '
+                         '?).'.format(label, typed))
+    return extensions
+
+
+def check_exclusion_path(path):
+    """
+    Raise ValueError if the console refuses the path of a scan exclusion
+    (IsValidExclusionPattern: 258 characters, a Linux or Mac path starting
+    with / or an ENS path, see mcafee_epo_policies.validators.is_ens_path).
+    """
+    check_length('Exclusion path', path, 258, required=True)
+    if not (path.startswith('/') or is_ens_path(path)):
+        raise ValueError('Invalid exclusion path: {!r}'.format(path))
+    return path
+
+
+def check_exclusion_rows(rows, notes_max=None):
+    """
+    Raise ValueError if the console refuses a row of an exclusion list as
+    stored [what, when, value, notes]: what '3' (path, see
+    check_exclusion_path), '4' (file type), '0' / '2' (minimum age in days,
+    1-9999); notes of notes_max characters at most (On-Demand Scan: 256, the
+    On-Access Scan dialog has no limit). Returns the rows.
+    """
+    for row in rows:
+        what, _, value, notes = (list(row) + ['', '', '', ''])[:4]
+        if what == '3':
+            check_exclusion_path(value)
+        elif what == '4':
+            check_length('Exclusion file type', value, 100, required=True)
+            if not is_ens_exclusion_file_type(value):
+                raise ValueError('Invalid exclusion file type: {!r}'.format(value))
+        elif what in ('0', '2'):
+            check_int('Minimum age in days', value, 1, 9999)
+        if notes_max is not None:
+            check_length('Exclusion notes', notes, notes_max)
+        if '|' in notes:
+            raise ValueError('Exclusion notes cannot contain "|": {!r}'.format(notes))
+    return rows
+
+
 class ExclusionList:
     """
     The ExclusionList class can be used to edit the list of exclusion.
@@ -144,7 +200,8 @@ class ExclusionList:
         """
         Add a folder exclusion
         """
-        if folder_path[len(folder_path)-1] != '\\':
+        check_exclusion_path(folder_path)
+        if folder_path[len(folder_path)-1] not in '\\/':
             raise ValueError('Path must be ended by "\\".')
         rights = self.__compute_rights__(on_write, on_read, with_subfolders)
         return self.__add_excl__('3', rights, folder_path, notes)
@@ -153,15 +210,20 @@ class ExclusionList:
         """
         Add a file name exclusion
         """
-        if file_name_path[len(file_name_path)-1] == '\\':
+        check_exclusion_path(file_name_path)
+        if file_name_path[len(file_name_path)-1] in '\\/':
             raise ValueError('Path must not be ended by "\\".')
         rights = self.__compute_rights__(on_write, on_read)
         return self.__add_excl__('3', rights, file_name_path, notes)
 
     def add_file_type(self, file_extension, on_write=True, on_read=True, notes=''):
         """
-        Add a file type exclusion
+        Add a file type exclusion (extension without dot, ':::' for files
+        without extension; 100 characters max)
         """
+        check_length('Exclusion file type', file_extension, 100, required=True)
+        if not is_ens_exclusion_file_type(file_extension):
+            raise ValueError('Invalid exclusion file type: {!r}'.format(file_extension))
         rights = self.__compute_rights__(on_write, on_read)
         return self.__add_excl__('4', rights, file_extension, notes)
 
@@ -169,8 +231,7 @@ class ExclusionList:
         """
         Add a file exclusion based on its last modified date
         """
-        if int_days < 1:
-            raise ValueError('Need one or more days.')
+        int_days = check_int('Minimum age in days', int_days, 1, 9999)
         rights = self.__compute_rights__(on_write, on_read)
         return self.__add_excl__('0', rights, str(int_days), notes)
 
@@ -178,8 +239,7 @@ class ExclusionList:
         """
         Add a file exclusiopn based on its created date
         """
-        if int_days < 1:
-            raise ValueError('Need one or more days.')
+        int_days = check_int('Minimum age in days', int_days, 1, 9999)
         rights = self.__compute_rights__(on_write, on_read)
         return self.__add_excl__('2', rights, str(int_days), notes)
 

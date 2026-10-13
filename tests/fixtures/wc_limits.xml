@@ -1,0 +1,396 @@
+<?xml version='1.0' encoding='utf-8'?>
+<EPOPolicySchema><EPOPolicyVerInfo vermjr="5" vermin="10" verrel="0" verbld="0" />
+<EPOPolicySettings name="Claude - WC Options Test::Settings (2786BA9E-4487-423E-867D-DBDABA431362)" featureid="ENDP_WP_1000" categoryid="EWC_General" typeid="EWC_General" param_int="0" param_str="">
+<Section name="ActionEnforcement">
+<Setting name="applyActionNonGTI" value="1" />
+<Setting name="bAllowAllPrivateUrls" value="1" />
+<Setting name="bAllowWarnAtDomainLevel" value="0" />
+<Setting name="bEnableHTMLiFrames" value="1" />
+<Setting name="bEnfFileDownloads" value="1" />
+<Setting name="bEnfIMEmailLinkChecking" value="1" />
+<Setting name="bEnfIMEmailLinkHookChecking" value="1" />
+<Setting name="bGatewayIPValidate" value="1" />
+<Setting name="bGatewayLandmarkValidate" value="1" />
+<Setting name="bGatewayPresenceValidate" value="0" />
+<Setting name="bGtiFailClose" value="0" />
+<Setting name="bPhishingBlock" value="1" />
+<Setting name="bSiteObserve" value="0" />
+<Setting name="bStandDown" value="1" />
+<Setting name="gtiRiskLevelToBlock" value="4" />
+<Setting name="szAgumentIP_0" value="192.168.56-68.1-5" />
+<Setting name="szAgumentIP_1" value="172.16.0.0/16" />
+<Setting name="szAgumentIP_2" value="2001-2003:db8::1" />
+<Setting name="szAgumentIP_3" value="fd00::/64" />
+<Setting name="szAgumentIP_4" value="10.9.9.9" />
+<Setting name="szGatewayIP_0" value="10.0.0.254" />
+<Setting name="szGatewayIP_1" value="fd00::1" />
+<Setting name="szGatewayIP_2" value="010.0.0.1" />
+<Setting name="szGatewayLandmark" value="intranet.example-corp.com" />
+<Setting name="szIntLandIP_0" value="10.1.1.1" />
+<Setting name="szIntLandIP_1" value="::ffff:10.1.1.2" />
+<Setting name="szPolicyStamp" value="1791841305435" />
+<Setting name="uiAgumentIPCount" value="5" />
+<Setting name="uiGatewayIPCount" value="3" />
+<Setting name="uiIntLandIPCount" value="2" />
+<Setting name="unverifiedOverride" value="0" />
+</Section>
+<Section name="EventLogging">
+<Setting name="bAllowedConfiguredBlockAllowList" value="1" />
+<Setting name="bGreenRatedSites" value="0" />
+<Setting name="bInformWebReporter" value="0" />
+<Setting name="bLogIFrameEvents" value="0" />
+<Setting name="elPassword" value="" />
+<Setting name="elURL" value="http://reporter.example.com:9121/wr/aaaaaaaaaaaaaa" />
+<Setting name="elUsername" value="UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU" />
+<Setting name="szPolicyStamp" value="1791841305435" />
+</Section>
+<Section name="SecureSearch">
+<Setting name="bEnableSecureSearch" value="0" />
+<Setting name="szPolicyStamp" value="0" />
+<Setting name="uiSecureResults" value="1" />
+<Setting name="uiSecureSearchEngine" value="0" />
+</Section>
+<Section name="WebProtection">
+<Setting name="bAllowIEInExtOffMode" value="0" />
+<Setting name="bDisableUserBrowserPlugin" value="1" />
+<Setting name="bEnableWebProtection" value="1" />
+<Setting name="bHideToolbar" value="0" />
+<Setting name="bStandDownMCPValidate" value="0" />
+<Setting name="szPolicyStamp" value="0" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - WC Block Allow Test::Settings (158D2723-7A4C-4817-AEC2-AE6FD3EF20F8)" featureid="ENDP_WP_1000" categoryid="EWC_BlockAndAllowList" typeid="EWC_BlockAndAllowList" param_int="0" param_str="">
+<Section name="BlockAndAllowList">
+<Setting name="Action0" value="1" />
+<Setting name="Action1" value="0" />
+<Setting name="Action2" value="1" />
+<Setting name="Action3" value="0" />
+<Setting name="Action4" value="1" />
+<Setting name="Action5" value="1" />
+<Setting name="Action6" value="0" />
+<Setting name="bPrecedenceOverProhibitLists" value="0" />
+<Setting name="bTrack" value="1" />
+<Setting name="szNote0" value="nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn" />
+<Setting name="szNote1" value="" />
+<Setting name="szNote2" value="query" />
+<Setting name="szNote3" value="idn" />
+<Setting name="szNote4" value="245" />
+<Setting name="szNote5" value="400" />
+<Setting name="szNote6" value="note" />
+<Setting name="szPolicyStamp" value="1791841305439" />
+<Setting name="szSite0" value="abc" />
+<Setting name="szSite1" value="tab here.example.com" />
+<Setting name="szSite2" value="www.example.com/path?x=1&amp;y=2" />
+<Setting name="szSite3" value="bücher.example" />
+<Setting name="szSite4" value="sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss" />
+<Setting name="szSite5" value="llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll" />
+<Setting name="szSite6" value="trimmed.example" />
+<Setting name="szUnicodeSite0" value="abc" />
+<Setting name="szUnicodeSite1" value="tab here.example.com" />
+<Setting name="szUnicodeSite2" value="www.example.com/path?x=1&amp;y=2" />
+<Setting name="szUnicodeSite3" value="bücher.example" />
+<Setting name="szUnicodeSite4" value="sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss" />
+<Setting name="szUnicodeSite5" value="llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll" />
+<Setting name="szUnicodeSite6" value="trimmed.example" />
+<Setting name="uiSiteCount" value="7" />
+<Setting name="uiSiteResourceFileDownload" value="98" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Claude - WC Messaging Test::Settings (885C23C7-224A-4391-B8DA-07CFB36C5D50)" featureid="ENDP_WP_1000" categoryid="EWC_EnforcementMessaging" typeid="EWC_EnforcementMessaging" param_int="0" param_str="">
+<Section name="EnforcementMessaging">
+<Setting name="localized" value="1" />
+<Setting name="szBlockContentDetail_de" value="Der Inhalt auf dieser Site verstößt gegen die Nutzungsrichtlinien." />
+<Setting name="szBlockContentDetail_en" value="The content on this site violates the acceptable usage policy." />
+<Setting name="szBlockContentDetail_es" value="El contenido de este sitio web infringe la directiva de uso aceptable." />
+<Setting name="szBlockContentDetail_fr" value="Le contenu de ce site enfreint la stratégie d'utilisation acceptable." />
+<Setting name="szBlockContentDetail_it" value="I contenuti di questo sito violano la policy sull'utilizzo accettabile." />
+<Setting name="szBlockContentDetail_iw" value="התוכן באתר זה מפר את מדיניות השימוש המקובל." />
+<Setting name="szBlockContentDetail_ja" value="このサイトのコンテンツは、許容範囲の使用ポリシーに違反しています。" />
+<Setting name="szBlockContentDetail_ko" value="이 사이트의 콘텐츠가 허용 가능한 사용 정책을 위반합니다." />
+<Setting name="szBlockContentDetail_nl" value="De inhoud op deze site schendt het beleid voor acceptabel gebruik." />
+<Setting name="szBlockContentDetail_pl" value="Zawartość tej witryny narusza akceptowalne zasady korzystania." />
+<Setting name="szBlockContentDetail_pt_BR" value="O conteúdo desse site viola a política de uso aceitável." />
+<Setting name="szBlockContentDetail_ru" value="Содержимое этого веб-сайта нарушает приемлемую политику использования." />
+<Setting name="szBlockContentDetail_sv" value="Innehållet på den här webbplatsen strider mot gängse principer om godtagbar användning." />
+<Setting name="szBlockContentDetail_zh_CN" value="此站点中的内容违反了可接受的使用策略。" />
+<Setting name="szBlockContentDetail_zh_TW" value="此網站上的內容違反使用原則。" />
+<Setting name="szBlockDetailZeroDay_de" value="Diese Site ist blockiert, weil Trellix GTI sie noch nicht verifiziert hat." />
+<Setting name="szBlockDetailZeroDay_en" value="This site is blocked because it is not yet verified by Trellix GTI." />
+<Setting name="szBlockDetailZeroDay_es" value="Este sitio está bloqueado porque Trellix GTI aún no lo ha verificado." />
+<Setting name="szBlockDetailZeroDay_fr" value="Ce site est bloqué car il n'a pas encore été vérifié par Trellix GTI." />
+<Setting name="szBlockDetailZeroDay_it" value="Questo sito è bloccato in quanto non è ancora stato verificato da Trellix GTI." />
+<Setting name="szBlockDetailZeroDay_iw" value="אתר זה חסום מכיוון שהוא לא אומת עדיין על-ידי Trellix GTI." />
+<Setting name="szBlockDetailZeroDay_ja" value="Trellix GTI で確認されていないため、このサイトはブロックされています。" />
+<Setting name="szBlockDetailZeroDay_ko" value="Trellix GTI에서 아직 확인되지 않아 이 사이트는 차단됩니다." />
+<Setting name="szBlockDetailZeroDay_nl" value="Deze site is geblokkeerd omdat de site nog niet geverifieerd is door Trellix GTI." />
+<Setting name="szBlockDetailZeroDay_pl" value="Ta witryna jest zablokowana, ponieważ nie została jeszcze zweryfikowana w usłudze Trellix GTI." />
+<Setting name="szBlockDetailZeroDay_pt_BR" value="Este site está bloqueado porque ainda não foi verificado pelo Trellix GTI." />
+<Setting name="szBlockDetailZeroDay_ru" value="Этот файл заблокирован, потому что он еще не проверен Trellix GTI." />
+<Setting name="szBlockDetailZeroDay_sv" value="Den här webbplatsen är inte verifierad av Trellix GTI än och har därför blockerats." />
+<Setting name="szBlockDetailZeroDay_zh_CN" value="该站点已被阻止，因为尚未经 Trellix GTI 验证。" />
+<Setting name="szBlockDetailZeroDay_zh_TW" value="因為 Trellix GTI 尚未驗證此網站，已封鎖此網站。" />
+<Setting name="szBlockDetail_de" value="Diese Website stellt ein inakzeptables Sicherheitsrisiko dar." />
+<Setting name="szBlockDetail_en" value="&lt;b&gt;Line 1&lt;/b&gt;&#10;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+<Setting name="szBlockDetail_es" value="Este sitio puede provocar un riesgo para la seguridad inaceptable." />
+<Setting name="szBlockDetail_fr" value="Ce site représente un risque de sécurité inacceptable." />
+<Setting name="szBlockDetail_it" value="Questo sito comporta un rischio inammissibile per la sicurezza." />
+<Setting name="szBlockDetail_iw" value="אתר זה מהווה סיכון אבטחה בלתי קביל." />
+<Setting name="szBlockDetail_ja" value="このサイトには容認できないセキュリティ リスクが存在します。" />
+<Setting name="szBlockDetail_ko" value="이 사이트에 허용되지 않는 보안 위험이 있습니다." />
+<Setting name="szBlockDetail_nl" value="Deze site vormt een niet-acceptabel beveiligingsrisico." />
+<Setting name="szBlockDetail_pl" value="Ta witryna stwarza niedopuszczalne ryzyko bezpieczeństwa." />
+<Setting name="szBlockDetail_pt_BR" value="Esse site apresenta um risco de segurança inaceitável." />
+<Setting name="szBlockDetail_ru" value="Этот веб-сайт представляет неприемлемый риск для безопасности." />
+<Setting name="szBlockDetail_sv" value="Den här webbplatsen innebär en oacceptabel säkerhetsrisk." />
+<Setting name="szBlockDetail_zh_CN" value="此网站上存在无法接受的安全风险。" />
+<Setting name="szBlockDetail_zh_TW" value="此網站存在無法接受的安全性風險。" />
+<Setting name="szBlockFileMessage_de" value="Diese Datei ist blockiert." />
+<Setting name="szBlockFileMessage_en" value="This file is blocked." />
+<Setting name="szBlockFileMessage_es" value="Este archivo está bloqueado." />
+<Setting name="szBlockFileMessage_fr" value="Ce fichier est bloqué." />
+<Setting name="szBlockFileMessage_it" value="Questo file è bloccato." />
+<Setting name="szBlockFileMessage_iw" value="קובץ זה חסום." />
+<Setting name="szBlockFileMessage_ja" value="このファイルはブロックされています。" />
+<Setting name="szBlockFileMessage_ko" value="이 파일은 차단됩니다." />
+<Setting name="szBlockFileMessage_nl" value="Dit bestand is geblokkeerd." />
+<Setting name="szBlockFileMessage_pl" value="Ten plik jest zablokowany." />
+<Setting name="szBlockFileMessage_pt_BR" value="O arquivo encontra-se bloqueado." />
+<Setting name="szBlockFileMessage_ru" value="Этот файл заблокирован." />
+<Setting name="szBlockFileMessage_sv" value="Den här filen är blockerad." />
+<Setting name="szBlockFileMessage_zh_CN" value="此文件已被阻止。" />
+<Setting name="szBlockFileMessage_zh_TW" value="此檔案已封鎖。" />
+<Setting name="szBlockGTIFailCloseDetail_de" value="Zugriff auf diese Website wird blockiert, weil der Server für Trellix GTI-Bewertungen nicht erreichbar ist." />
+<Setting name="szBlockGTIFailCloseDetail_en" value="Access to this website is blocked because Trellix GTI ratings server is not reachable." />
+<Setting name="szBlockGTIFailCloseDetail_es" value="El acceso a este sitio web está bloqueado porque no se ha podido acceder al servidor de calificaciones Trellix GTI." />
+<Setting name="szBlockGTIFailCloseDetail_fr" value="L'accès à ce site web est bloqué car le serveur d'évaluation Trellix GTI n'est pas accessible." />
+<Setting name="szBlockGTIFailCloseDetail_it" value="L'accesso a questo sito Web è bloccato in quanto il server delle classificazioni Trellix GTI non è raggiungibile." />
+<Setting name="szBlockGTIFailCloseDetail_iw" value="הגישה לאתר אינטרנט זה חסומה מכיוון שלא ניתן לגשת לשרת הדירוגים של Trellix GTI." />
+<Setting name="szBlockGTIFailCloseDetail_ja" value="Trellix GTI 評価サーバーに接続できないため、この Web サイトがブロックされます。" />
+<Setting name="szBlockGTIFailCloseDetail_ko" value="Trellix GTI 등급 서버에 접근할 수 없어 이 웹 사이트에 대한 액세스가 차단됩니다." />
+<Setting name="szBlockGTIFailCloseDetail_nl" value="Toegang tot deze website is geblokkeerd omdat de Trellix GTI-classificatieserver niet bereikbaar is." />
+<Setting name="szBlockGTIFailCloseDetail_pl" value="Dostęp do tej witryny sieci Web jest zablokowany, jeśli serwer ocen usługi Trellix GTI jest poza zasięgiem." />
+<Setting name="szBlockGTIFailCloseDetail_pt_BR" value="O acesso a esse site está bloqueado porque o servidor de classificação do Trellix GTI não está acessível." />
+<Setting name="szBlockGTIFailCloseDetail_ru" value="Доступ к этому сайту заблокирован, потому что сервер оценок параметров Trellix Global GTI недоступен." />
+<Setting name="szBlockGTIFailCloseDetail_sv" value="Åtkomst till den här webbplatsen är blockerad eftersom det inte går att nå servern för Trellix GTI-klassificering." />
+<Setting name="szBlockGTIFailCloseDetail_zh_CN" value="该网站已被阻止访问，因为 Trellix GTI 评级服务器无法访问。" />
+<Setting name="szBlockGTIFailCloseDetail_zh_TW" value="因為 Trellix GTI 分級伺服器無法連接，對此網站的存取已被封鎖。" />
+<Setting name="szBlockGTIFailClose_de" value="Diese Site ist blockiert." />
+<Setting name="szBlockGTIFailClose_en" value="This site is blocked." />
+<Setting name="szBlockGTIFailClose_es" value="Este sitio web está bloqueado." />
+<Setting name="szBlockGTIFailClose_fr" value="Ce site est bloqué." />
+<Setting name="szBlockGTIFailClose_it" value="Questo sito è bloccato." />
+<Setting name="szBlockGTIFailClose_iw" value="אתר זה חסום." />
+<Setting name="szBlockGTIFailClose_ja" value="このサイトはブロックされます。" />
+<Setting name="szBlockGTIFailClose_ko" value="이 사이트는 차단됩니다." />
+<Setting name="szBlockGTIFailClose_nl" value="Deze site is geblokkeerd." />
+<Setting name="szBlockGTIFailClose_pl" value="Ta witryna jest zablokowana." />
+<Setting name="szBlockGTIFailClose_pt_BR" value="Esse site está bloqueado." />
+<Setting name="szBlockGTIFailClose_ru" value="Этот веб-сайт заблокирован." />
+<Setting name="szBlockGTIFailClose_sv" value="Den här webbplatsen är blockerad." />
+<Setting name="szBlockGTIFailClose_zh_CN" value="该站点已被阻止。" />
+<Setting name="szBlockGTIFailClose_zh_TW" value="已封鎖此網站。" />
+<Setting name="szBlockZeroDay_de" value="Diese Site ist blockiert." />
+<Setting name="szBlockZeroDay_en" value="This site is blocked." />
+<Setting name="szBlockZeroDay_es" value="Este sitio web está bloqueado." />
+<Setting name="szBlockZeroDay_fr" value="Ce site est bloqué." />
+<Setting name="szBlockZeroDay_it" value="Questo sito è bloccato." />
+<Setting name="szBlockZeroDay_iw" value="אתר זה חסום." />
+<Setting name="szBlockZeroDay_ja" value="このサイトはブロックされます。" />
+<Setting name="szBlockZeroDay_ko" value="이 사이트는 차단됩니다." />
+<Setting name="szBlockZeroDay_nl" value="Deze site is geblokkeerd." />
+<Setting name="szBlockZeroDay_pl" value="Ta witryna jest zablokowana." />
+<Setting name="szBlockZeroDay_pt_BR" value="Esse site está bloqueado." />
+<Setting name="szBlockZeroDay_ru" value="Этот веб-сайт заблокирован." />
+<Setting name="szBlockZeroDay_sv" value="Den här webbplatsen är blockerad." />
+<Setting name="szBlockZeroDay_zh_CN" value="该站点已被阻止。" />
+<Setting name="szBlockZeroDay_zh_TW" value="已封鎖此網站。" />
+<Setting name="szBlock_de" value="Diese Site ist blockiert." />
+<Setting name="szBlock_en" value="BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" />
+<Setting name="szBlock_es" value="Este sitio web está bloqueado." />
+<Setting name="szBlock_fr" value="Ce site est bloqué." />
+<Setting name="szBlock_it" value="Questo sito è bloccato." />
+<Setting name="szBlock_iw" value="אתר זה חסום." />
+<Setting name="szBlock_ja" value="このサイトはブロックされます。" />
+<Setting name="szBlock_ko" value="이 사이트는 차단됩니다." />
+<Setting name="szBlock_nl" value="Deze site is geblokkeerd." />
+<Setting name="szBlock_pl" value="Ta witryna jest zablokowana." />
+<Setting name="szBlock_pt_BR" value="Esse site está bloqueado." />
+<Setting name="szBlock_ru" value="Этот веб-сайт заблокирован." />
+<Setting name="szBlock_sv" value="Den här webbplatsen är blockerad." />
+<Setting name="szBlock_zh_CN" value="该站点已被阻止。" />
+<Setting name="szBlock_zh_TW" value="已封鎖此網站。" />
+<Setting name="szListOnProhibitedDetail_de" value="Diese Website wurde von Ihrem Netzwerkadministrator als unangemessen eingestuft und den Zugriff blockiert." />
+<Setting name="szListOnProhibitedDetail_en" value="Your network administrator considers this website inappropriate and has blocked access." />
+<Setting name="szListOnProhibitedDetail_es" value="El administrador de su red considera este sitio web inapropiado y ha bloqueado el acceso." />
+<Setting name="szListOnProhibitedDetail_fr" value="Votre administrateur réseau considère ce site comme étant inapproprié et en a bloqué l'accès." />
+<Setting name="szListOnProhibitedDetail_it" value="L'amministratore di rete considera questo sito Web inappropriato e ha bloccato l'accesso." />
+<Setting name="szListOnProhibitedDetail_iw" value="מנהל המערכת ברשת שלך רואה אתר אינטרנט זה כבלתי הולם וחסם את הגישה אליו." />
+<Setting name="szListOnProhibitedDetail_ja" value="ネットワーク管理者がこの Web サイトを不適切なサイトと判断し、アクセスをブロックしています。" />
+<Setting name="szListOnProhibitedDetail_ko" value="네트워크 관리자가 이 웹 사이트를 적합하지 않다고 판단하여 액세스를 차단했습니다." />
+<Setting name="szListOnProhibitedDetail_nl" value="Uw netwerkbeheerder beschouwt deze website als ongepast en heeft toegang geblokkeerd." />
+<Setting name="szListOnProhibitedDetail_pl" value="Administrator sieci uznał tę witrynę sieci Web za niewłaściwą i zablokował dostęp do niej." />
+<Setting name="szListOnProhibitedDetail_pt_BR" value="O administrador de sua rede considera esse site impróprio e bloqueou o acesso." />
+<Setting name="szListOnProhibitedDetail_ru" value="Ваш администратор сети счел этот веб-сайт ненадлежащим и заблокировал к нему доступ." />
+<Setting name="szListOnProhibitedDetail_sv" value="Nätverksadministratören anser att den här webbplatsen är olämplig och har blockerat åtkomsten." />
+<Setting name="szListOnProhibitedDetail_zh_CN" value="您的网络管理员认为该网站有害并已阻止访问。" />
+<Setting name="szListOnProhibitedDetail_zh_TW" value="您的網路管理員認為此網站不適當，而且已封鎖存取。" />
+<Setting name="szListOnProhibited_de" value="Der Zugriff auf diese Seite ist verboten." />
+<Setting name="szListOnProhibited_en" value="Access to this page is prohibited." />
+<Setting name="szListOnProhibited_es" value="No se permite acceder a esta página." />
+<Setting name="szListOnProhibited_fr" value="L'accès à cette page est interdit." />
+<Setting name="szListOnProhibited_it" value="L'accesso a questa pagina è proibito." />
+<Setting name="szListOnProhibited_iw" value="הגישה לדף זה נאסרה." />
+<Setting name="szListOnProhibited_ja" value="このページへのアクセスは禁止されています。" />
+<Setting name="szListOnProhibited_ko" value="이 페이지에 액세스할 수 없습니다." />
+<Setting name="szListOnProhibited_nl" value="Toegang tot deze pagina is verboden." />
+<Setting name="szListOnProhibited_pl" value="Dostęp do tej strony jest zabroniony." />
+<Setting name="szListOnProhibited_pt_BR" value="O acesso a essa página foi proibido." />
+<Setting name="szListOnProhibited_ru" value="Доступ к этой странице запрещен." />
+<Setting name="szListOnProhibited_sv" value="Åtkomst till den här sidan är förbjuden." />
+<Setting name="szListOnProhibited_zh_CN" value="已禁止访问该页面。" />
+<Setting name="szListOnProhibited_zh_TW" value="已禁止存取此頁面。" />
+<Setting name="szLogoUrl_de" value="" />
+<Setting name="szLogoUrl_en" value="https://example.com/llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll.png" />
+<Setting name="szLogoUrl_es" value="" />
+<Setting name="szLogoUrl_fr" value="" />
+<Setting name="szLogoUrl_it" value="" />
+<Setting name="szLogoUrl_iw" value="" />
+<Setting name="szLogoUrl_ja" value="" />
+<Setting name="szLogoUrl_ko" value="" />
+<Setting name="szLogoUrl_nl" value="" />
+<Setting name="szLogoUrl_pl" value="" />
+<Setting name="szLogoUrl_pt_BR" value="" />
+<Setting name="szLogoUrl_ru" value="" />
+<Setting name="szLogoUrl_sv" value="" />
+<Setting name="szLogoUrl_zh_CN" value="" />
+<Setting name="szLogoUrl_zh_TW" value="" />
+<Setting name="szPolicyStamp" value="1791841305441" />
+<Setting name="szSiteResourceFileDownloadBlock_de" value="Dieser Datei-Download wurde blockiert." />
+<Setting name="szSiteResourceFileDownloadBlock_en" value="This file download has been blocked." />
+<Setting name="szSiteResourceFileDownloadBlock_es" value="Se ha bloqueado esta descarga de archivo." />
+<Setting name="szSiteResourceFileDownloadBlock_fr" value="Le téléchargement de ce fichier a été bloqué." />
+<Setting name="szSiteResourceFileDownloadBlock_it" value="Questo download di file è stato bloccato." />
+<Setting name="szSiteResourceFileDownloadBlock_iw" value="הורדת הקובץ נחסמה." />
+<Setting name="szSiteResourceFileDownloadBlock_ja" value="このファイルのダウンロードはブロックされました。" />
+<Setting name="szSiteResourceFileDownloadBlock_ko" value="이 파일의 다운로드가 차단되었습니다." />
+<Setting name="szSiteResourceFileDownloadBlock_nl" value="Deze bestandsdownload is geblokkeerd." />
+<Setting name="szSiteResourceFileDownloadBlock_pl" value="Pobieranie tego pliku zostało zablokowane." />
+<Setting name="szSiteResourceFileDownloadBlock_pt_BR" value="Esse download de arquivo foi bloqueado." />
+<Setting name="szSiteResourceFileDownloadBlock_ru" value="Загрузка этого файла заблокирована." />
+<Setting name="szSiteResourceFileDownloadBlock_sv" value="Filhämtningen har blockerats." />
+<Setting name="szSiteResourceFileDownloadBlock_zh_CN" value="该文件下载已被阻止。" />
+<Setting name="szSiteResourceFileDownloadBlock_zh_TW" value="已封鎖此檔案下載。" />
+<Setting name="szSiteResourceFileDownloadWarn_de" value="Gehen Sie mit diesem Datei-Download vorsichtig vor" />
+<Setting name="szSiteResourceFileDownloadWarn_en" value="Use caution with this file download." />
+<Setting name="szSiteResourceFileDownloadWarn_es" value="Tenga cuidado con la descarga de este archivo." />
+<Setting name="szSiteResourceFileDownloadWarn_fr" value="Soyez prudent lors du téléchargement de ce fichier" />
+<Setting name="szSiteResourceFileDownloadWarn_it" value="Prestare attenzione con questo download di file." />
+<Setting name="szSiteResourceFileDownloadWarn_iw" value="המשך בזהירות בהורדת קובץ זה." />
+<Setting name="szSiteResourceFileDownloadWarn_ja" value="このファイルのダウンロードには注意が必要です。" />
+<Setting name="szSiteResourceFileDownloadWarn_ko" value="주의가 필요한 다운로드입니다." />
+<Setting name="szSiteResourceFileDownloadWarn_nl" value="Wees voorzichtig met deze bestandsdownload." />
+<Setting name="szSiteResourceFileDownloadWarn_pl" value="Zachowaj ostrożność przy pobieraniu tego pliku." />
+<Setting name="szSiteResourceFileDownloadWarn_pt_BR" value="Tenha cuidado com esse download de arquivo." />
+<Setting name="szSiteResourceFileDownloadWarn_ru" value="Проявляйте осторожность при загрузке этого файла." />
+<Setting name="szSiteResourceFileDownloadWarn_sv" value="Var försiktig med den här filhämtningen." />
+<Setting name="szSiteResourceFileDownloadWarn_zh_CN" value="下载此文件时应小心谨慎。" />
+<Setting name="szSiteResourceFileDownloadWarn_zh_TW" value="下載此檔案時請小心。" />
+<Setting name="szSiteResourcePageBlock_de" value="Die Phishing-Seite ist blockiert." />
+<Setting name="szSiteResourcePageBlock_en" value="The phishing page is blocked." />
+<Setting name="szSiteResourcePageBlock_es" value="La página de phishing está bloqueada." />
+<Setting name="szSiteResourcePageBlock_fr" value="La page de phishing est bloquée." />
+<Setting name="szSiteResourcePageBlock_it" value="La pagina di phishing è bloccata." />
+<Setting name="szSiteResourcePageBlock_iw" value="דף דיוג זה חסום." />
+<Setting name="szSiteResourcePageBlock_ja" value="このフィッシング詐欺ページはブロックされています。" />
+<Setting name="szSiteResourcePageBlock_ko" value="피싱 페이지가 차단됩니다." />
+<Setting name="szSiteResourcePageBlock_nl" value="De phishingpagina is geblokkeerd." />
+<Setting name="szSiteResourcePageBlock_pl" value="Ta witryna służąca do wyłudzania informacji została zablokowana." />
+<Setting name="szSiteResourcePageBlock_pt_BR" value="A página de phishing está bloqueada." />
+<Setting name="szSiteResourcePageBlock_ru" value="Фишинговая страница заблокирована." />
+<Setting name="szSiteResourcePageBlock_sv" value="Nätfiskesidan är blockerad." />
+<Setting name="szSiteResourcePageBlock_zh_CN" value="该网络钓鱼页面被阻止。" />
+<Setting name="szSiteResourcePageBlock_zh_TW" value="已封鎖網路釣魚頁面。" />
+<Setting name="szWarnDetailZeroDay_de" value="Diese Site stellt ein Sicherheitsrisiko dar, weil Trellix GTI sie noch nicht verifiziert hat." />
+<Setting name="szWarnDetailZeroDay_en" value="This site poses a security risk because it is not yet verified by Trellix GTI." />
+<Setting name="szWarnDetailZeroDay_es" value="Este sitio supone un riesgo para la seguridad porque Trellix GTI aún no lo ha verificado." />
+<Setting name="szWarnDetailZeroDay_fr" value="Ce site pose un risque de sécurité car il n'a pas encore été vérifié par Trellix GTI." />
+<Setting name="szWarnDetailZeroDay_it" value="Questo sito costituisce un rischio per la sicurezza in quanto non è ancora stato verificato da Trellix GTI." />
+<Setting name="szWarnDetailZeroDay_iw" value="אתר זה מהווה סיכון אבטחה מכיוון שהוא לא אומת עדיין על-ידי Trellix GTI." />
+<Setting name="szWarnDetailZeroDay_ja" value="Trellix GTI で確認されていないため、このサイトにはセキュリティ リスクが存在する可能性があります。" />
+<Setting name="szWarnDetailZeroDay_ko" value="Trellix GTI에서 아직 확인되지 않았으므로 보안 위험이 있는 사이트입니다." />
+<Setting name="szWarnDetailZeroDay_nl" value="Deze site vormt een beveiligingsrisico omdat de site nog niet geverifieerd is door Trellix GTI." />
+<Setting name="szWarnDetailZeroDay_pl" value="Ta witryna niesie ryzyko bezpieczeństwa, ponieważ nie została jeszcze zweryfikowana w usłudze Trellix GTI." />
+<Setting name="szWarnDetailZeroDay_pt_BR" value="Esse site apresenta um risco de segurança porque ainda não foi verificado pelo Trellix GTI." />
+<Setting name="szWarnDetailZeroDay_ru" value="Этот веб-сайт представляет риск для безопасности, потому что он еще не проверен Trellix GTI." />
+<Setting name="szWarnDetailZeroDay_sv" value="Den här webbplatsen har inte verifierats av Trellix GTI än och utgör därför en säkerhetsrisk." />
+<Setting name="szWarnDetailZeroDay_zh_CN" value="该站点存在安全风险，因为尚未经 Trellix GTI 验证。" />
+<Setting name="szWarnDetailZeroDay_zh_TW" value="因為 Trellix GTI 尚未驗證此網站，此網站可能有安全性風險。" />
+<Setting name="szWarnDetail_de" value="Diese Site stellt ein Sicherheitsrisiko dar." />
+<Setting name="szWarnDetail_en" value="A security risk is posed by this site." />
+<Setting name="szWarnDetail_es" value="Este sitio web supone un riesgo para la seguridad." />
+<Setting name="szWarnDetail_fr" value="Ce site représente un risque de sécurité." />
+<Setting name="szWarnDetail_it" value="Questo sito comporta un rischio per la sicurezza." />
+<Setting name="szWarnDetail_iw" value="אתר זה מהווה סיכון אבטחה." />
+<Setting name="szWarnDetail_ja" value="このサイトにはセキュリティ リスクが存在します。" />
+<Setting name="szWarnDetail_ko" value="보안 위험이 있는 사이트입니다." />
+<Setting name="szWarnDetail_nl" value="Deze site vormt een beveiligingsrisico." />
+<Setting name="szWarnDetail_pl" value="Ta witryna stwarza ryzyko bezpieczeństwa." />
+<Setting name="szWarnDetail_pt_BR" value="Esse site apresenta um risco de segurança." />
+<Setting name="szWarnDetail_ru" value="Этот веб-сайт представляет риск для безопасности." />
+<Setting name="szWarnDetail_sv" value="Den här webbplatsen utgör en säkerhetsrisk." />
+<Setting name="szWarnDetail_zh_CN" value="此站点构成安全风险。" />
+<Setting name="szWarnDetail_zh_TW" value="此網站存在安全性風險。" />
+<Setting name="szWarnFileMessage_de" value="Gehen Sie bei dieser Datei vorsichtig vor." />
+<Setting name="szWarnFileMessage_en" value="Use caution with this file." />
+<Setting name="szWarnFileMessage_es" value="Use este archivo con precaución." />
+<Setting name="szWarnFileMessage_fr" value="Soyez prudent avec ce fichier." />
+<Setting name="szWarnFileMessage_it" value="Prestare attenzione con questo file." />
+<Setting name="szWarnFileMessage_iw" value="היה זהיר בשימוש בקובץ זה." />
+<Setting name="szWarnFileMessage_ja" value="このファイルには注意が必要です。" />
+<Setting name="szWarnFileMessage_ko" value="주의가 필요한 파일입니다." />
+<Setting name="szWarnFileMessage_nl" value="Wees voorzichtig met dit bestand." />
+<Setting name="szWarnFileMessage_pl" value="Zachowaj ostrożność podczas korzystania z tego pliku." />
+<Setting name="szWarnFileMessage_pt_BR" value="Tenha cuidado com esse arquivo." />
+<Setting name="szWarnFileMessage_ru" value="Проявляйте осторожность с загрузкой этого файла." />
+<Setting name="szWarnFileMessage_sv" value="Var försiktig med den här filen." />
+<Setting name="szWarnFileMessage_zh_CN" value="使用此文件时应小心谨慎。" />
+<Setting name="szWarnFileMessage_zh_TW" value="使用此檔案時請小心。" />
+<Setting name="szWarnZeroDay_de" value="Gehen Sie auf dieser Website vorsichtig vor." />
+<Setting name="szWarnZeroDay_en" value="Use caution with this site." />
+<Setting name="szWarnZeroDay_es" value="Tenga cuidado con este sitio." />
+<Setting name="szWarnZeroDay_fr" value="Soyez prudent sur ce site." />
+<Setting name="szWarnZeroDay_it" value="Prestare attenzione con questo sito." />
+<Setting name="szWarnZeroDay_iw" value="היה זהיר באתר זה." />
+<Setting name="szWarnZeroDay_ja" value="このサイトには注意が必要です。" />
+<Setting name="szWarnZeroDay_ko" value="주의가 필요한 사이트입니다." />
+<Setting name="szWarnZeroDay_nl" value="Wees voorzichtig op deze site." />
+<Setting name="szWarnZeroDay_pl" value="Zachowaj ostrożność podczas korzystania z tej witryny." />
+<Setting name="szWarnZeroDay_pt_BR" value="Tenha cuidado nesse site." />
+<Setting name="szWarnZeroDay_ru" value="Проявляйте осторожность при посещении этого сайта" />
+<Setting name="szWarnZeroDay_sv" value="Var försiktig med den här webbplatsen." />
+<Setting name="szWarnZeroDay_zh_CN" value="访问此站点时应小心谨慎。" />
+<Setting name="szWarnZeroDay_zh_TW" value="使用此網站時請小心。" />
+<Setting name="szWarn_de" value="Gehen Sie auf dieser Webseite vorsichtig vor." />
+<Setting name="szWarn_en" value="Use caution on this site." />
+<Setting name="szWarn_es" value="Tenga cuidado en este sitio web." />
+<Setting name="szWarn_fr" value="Soyez prudent sur ce site." />
+<Setting name="szWarn_it" value="Prestare attenzione all'interno di questo sito." />
+<Setting name="szWarn_iw" value="היה זהיר באתר זה." />
+<Setting name="szWarn_ja" value="このサイトには注意が必要です。" />
+<Setting name="szWarn_ko" value="주의가 필요한 사이트입니다." />
+<Setting name="szWarn_nl" value="Wees voorzichtig op deze site." />
+<Setting name="szWarn_pl" value="Zachowaj ostrożność podczas korzystania z tej witryny." />
+<Setting name="szWarn_pt_BR" value="Tenha cuidado nesse site." />
+<Setting name="szWarn_ru" value="Проявляйте осторожность при посещении этого сайта" />
+<Setting name="szWarn_sv" value="Var försiktig på den här webbplatsen." />
+<Setting name="szWarn_zh_CN" value="访问此站点时应小心谨慎。" />
+<Setting name="szWarn_zh_TW" value="使用此網站時請小心。" />
+</Section>
+</EPOPolicySettings>
+<EPOPolicyObject name="Claude - WC Options Test" featureid="ENDP_WP_1000" categoryid="EWC_General" serverid="W2022EPO510" editflag="0" typeid="EWC_General">
+<description /><PolicySettings>Claude - WC Options Test::Settings (2786BA9E-4487-423E-867D-DBDABA431362)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - WC Block Allow Test" featureid="ENDP_WP_1000" categoryid="EWC_BlockAndAllowList" serverid="W2022EPO510" editflag="0" typeid="EWC_BlockAndAllowList">
+<description /><PolicySettings>Claude - WC Block Allow Test::Settings (158D2723-7A4C-4817-AEC2-AE6FD3EF20F8)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Claude - WC Messaging Test" featureid="ENDP_WP_1000" categoryid="EWC_EnforcementMessaging" serverid="W2022EPO510" editflag="0" typeid="EWC_EnforcementMessaging">
+<description /><PolicySettings>Claude - WC Messaging Test::Settings (885C23C7-224A-4391-B8DA-07CFB36C5D50)</PolicySettings>
+</EPOPolicyObject></EPOPolicySchema>

@@ -12,6 +12,8 @@ import re
 import uuid
 from ..policies import Policy
 from .scpolicies import SCPolicy
+from ..validators import (check_int, check_length, is_sc_email_list, is_sc_website,
+                          is_sc_directory, is_sc_execution_path, is_sc_file_name)
 from .rules import SCExclusionRules, SCUpdaterRules
 
 class SCAWLPolicyOptions(SCPolicy):
@@ -73,6 +75,7 @@ class SCAWLPolicyOptions(SCPolicy):
         """
         Set the Self-Approval Text
         """
+        value = check_length('Self-Approval Text', str(value).replace('\r\n', '\n'), 1500)
         return self.update_rules('sadlg', None, {'banner_msg': value}) > 0
 
     self_approval_text = property(get_self_approval_text, set_self_approval_text)
@@ -86,10 +89,9 @@ class SCAWLPolicyOptions(SCPolicy):
 
     def set_self_approval_timeout(self, value):
         """
-        Set the Self-Approval Dialog Timeout (seconds, 180 max)
+        Set the Self-Approval Dialog Timeout (seconds, 1-180)
         """
-        if int(value) > 180:
-            raise ValueError('Dialog Timeout above 180 seconds is not accepted.')
+        value = check_int('Dialog Timeout (secs)', value, 1, 180)
         return self.update_rules('sadlg', None, {'timeout': str(value)}) > 0
 
     self_approval_timeout = property(get_self_approval_timeout, set_self_approval_timeout)
@@ -166,6 +168,9 @@ class SCAWLPolicyOptions(SCPolicy):
         """
         Set Helpdesk Information - Mail to
         """
+        check_length('Mail to', value, 100, required=True)
+        if not is_sc_email_list(value):
+            raise ValueError('Invalid Mail to (see is_sc_email_list): {!r}'.format(value))
         return self.__set_message_setting('mailto', value)
 
     helpdesk_mail_to = property(get_helpdesk_mail_to, set_helpdesk_mail_to)
@@ -181,6 +186,7 @@ class SCAWLPolicyOptions(SCPolicy):
         """
         Set Helpdesk Information - Mail Subject
         """
+        check_length('Mail Subject', value, 100, required=True)
         return self.__set_message_setting('subject', value)
 
     helpdesk_mail_subject = property(get_helpdesk_mail_subject, set_helpdesk_mail_subject)
@@ -196,6 +202,9 @@ class SCAWLPolicyOptions(SCPolicy):
         """
         Set Helpdesk Information - Link to Website
         """
+        check_length('Link to Website', value, 100, required=True)
+        if not is_sc_website(value):
+            raise ValueError('Invalid Link to Website (see is_sc_website): {!r}'.format(value))
         return self.__set_message_setting('website', value)
 
     helpdesk_website = property(get_helpdesk_website, set_helpdesk_website)
@@ -214,6 +223,7 @@ class SCAWLPolicyOptions(SCPolicy):
         """
         Set Helpdesk Information - Trellix ePO IP Address and Port
         """
+        check_length('Trellix ePO IP Address and Port', value, 100, required=True)
         success = False
         for rule in self.get_rules('event-cust-msg'):
             epo_url = re.sub(r'^https://[^/]*/', 'https://{}/'.format(value), rule['epo_url'])
@@ -460,7 +470,8 @@ class SCAWLPolicyOptions(SCPolicy):
         """
         Set Pull Complete Inventory Interval (days)
         """
-        return self.set_config('PullInvTimeout', str(int(days) * 86400))
+        days = check_int('Pull Complete Inventory Interval (days)', days, 1, 180)
+        return self.set_config('PullInvTimeout', str(days * 86400))
 
     pull_inventory_interval = property(get_pull_inventory_interval, set_pull_inventory_interval)
 
@@ -476,7 +487,8 @@ class SCAWLPolicyOptions(SCPolicy):
         """
         Set Receive Inventory Updates Interval (hours)
         """
-        return self.set_config('InvDiffTimeout', str(int(hours) * 3600))
+        hours = check_int('Receive Inventory Updates Interval (hours)', hours, 1, 180)
+        return self.set_config('InvDiffTimeout', str(hours * 3600))
 
     inventory_updates_interval = property(get_inventory_updates_interval,
                                           set_inventory_updates_interval)
@@ -629,9 +641,10 @@ class SCAWLPolicyOptions(SCPolicy):
 
     def set_atd_file_size_limit(self, value):
         """
-        Set the size limit (MB) of files sent to ATD
+        Set the size limit (MB) of files sent to ATD (1-10)
         """
-        return self.set_config('ATDFileSizeLimit', value)
+        return self.set_config('ATDFileSizeLimit',
+                               str(check_int('ATD file size limit (MB)', value, 1, 10)))
 
     atd_file_size_limit = property(get_atd_file_size_limit, set_atd_file_size_limit)
 
@@ -824,9 +837,11 @@ class SCAWLRules(SCExclusionRules, SCUpdaterRules):
 
     def add_installer(self, checksum, label, name='', version='', vendor=''):
         """
-        Add an installer by its SHA-1 or SHA-256 checksum.
+        Add an installer by its SHA-1 or SHA-256 checksum. The label takes
+        1024 characters (server check).
         """
         key = self._checksum_key(checksum)
+        label = check_length('Installer Label', str(label).strip(), 1024, required=True)
         return self.add_rule({'type': 'installer', key: checksum.lower(), 'tag': label,
                               'ruletype': 'checksum', 'vendor': vendor,
                               'version': '{}\\{}'.format(name, version)})
@@ -849,7 +864,12 @@ class SCAWLRules(SCExclusionRules, SCUpdaterRules):
     def add_trusted_directory(self, path, include=True, updater=False):
         """
         Add a trusted directory (Action Include or Exclude, Updater or not).
+        As in the console, the path is required and trimmed, 255 characters
+        (server check), checked on Windows by is_sc_directory.
         """
+        path = check_length('Path', str(path).strip(), 255, required=True)
+        if not is_sc_directory(path, 'UNIX' if self.is_unix() else 'WIN'):
+            raise ValueError('Invalid trusted directory (see is_sc_directory): {!r}'.format(path))
         return self.add_rule({'type': 'trusted', 'path': path,
                               'action': 'Include' if include else 'Exclude',
                               'updater': self._bool(updater)})
@@ -889,8 +909,12 @@ class SCAWLRules(SCExclusionRules, SCUpdaterRules):
     def add_executable_file(self, rule_name, value, ban=False):
         """
         Add an executable file rule. value is a SHA-1 or SHA-256 checksum, or else
-        a file name (File Name rule type, deprecated in the console).
+        a file name (File Name rule type, deprecated in the console). The
+        rule name and the value are required and trimmed, 255 characters
+        (server check).
         """
+        rule_name = check_length('Rule Name', str(rule_name).strip(), 255, required=True)
+        value = check_length('Value', str(value).strip(), 255, required=True)
         try:
             key = self._checksum_key(value)
         except ValueError:
@@ -1018,6 +1042,12 @@ class SCAWLRules(SCExclusionRules, SCUpdaterRules):
                             e.g. [('command_line', 'matches', '.*-enc.*')].
         :param: description: Rule Description.
         """
+        process_name = check_length('Process Name', str(process_name).strip(), 260, required=True)
+        if not is_sc_file_name(process_name):
+            raise ValueError('Invalid process name (see is_sc_file_name): {!r}'.format(process_name))
+        check_length('Rule Description', description or '', 260)
+        if action != 'block_interactive':
+            self.__check_execution_conditions(conditions)
         if action == 'block_interactive':
             return self.add_rule({'type': 'attr', 'file': process_name,
                                   'block_interactive': 'true'})
@@ -1027,6 +1057,30 @@ class SCAWLRules(SCExclusionRules, SCUpdaterRules):
                 'rule-description': description}
         rule.update(self.make_conditions(conditions))
         return self.add_rule(rule)
+
+    @staticmethod
+    def __check_execution_conditions(conditions):
+        """
+        The checks of the Execution Control dialog: at least one attribute,
+        none empty but a command line with 'noArgSpecified'; the path is
+        checked by is_sc_execution_path, the parent process name by
+        is_sc_file_name.
+        """
+        if not conditions:
+            raise ValueError('An Execution Control rule needs at least one attribute (path, '
+                             'command line, parent process name or user name).')
+        for condition in conditions:
+            if isinstance(condition, dict):
+                condition = (condition['condition'], condition['match'], condition['pattern'])
+            name, match, pattern = condition[0], condition[1], str(condition[2] or '')
+            if name == 'command_line' and match == 'noArgSpecified':
+                continue
+            if not pattern.strip():
+                raise ValueError('Applicable fields cannot be empty: {}'.format(name))
+            if name == 'path' and not is_sc_execution_path(pattern):
+                raise ValueError('Invalid path (see is_sc_execution_path): {!r}'.format(pattern))
+            if name == 'parent_process_name' and not is_sc_file_name(pattern):
+                raise ValueError('Invalid parent process name: {!r}'.format(pattern))
 
     def remove_execution_control_rules(self, process_name):
         """

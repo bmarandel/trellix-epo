@@ -23,7 +23,11 @@ Storage learnt from a test policy changed in the ePO 5.10 console:
   enable/disable it. It is never written by the Markdown export.
 """
 
+import re
+
 from .common import ESSPPolicy
+from ...validators import (check_int, check_length, is_sp_exclusion_file_type,
+                           is_sp_exclusion_pattern, is_sp_filer)
 
 
 class SPExclusion():
@@ -69,14 +73,33 @@ class SPExclusion():
         return cls(access_type, int(days))
 
     def check(self):
+        """
+        Raise ValueError if the console would refuse the exclusion (Add/Edit
+        Exclusion Item dialog, validateExclusion of Common.js): pattern of
+        100 characters (see is_sp_exclusion_pattern), "Also exclude
+        subfolders" only for a pattern ending with \\; file type of 10
+        characters (see is_sp_exclusion_file_type, ':::' = no extension);
+        minimum age of 1-9999 days (digits only).
+        """
         if self.kind not in [self.PATTERN, self.FILE_TYPE] + list(self.ACCESS_TYPES):
             raise ValueError('Unknown exclusion type: {}'.format(self.kind))
-        if not self.value:
-            raise ValueError('An exclusion needs a value.')
-        if self.kind in self.ACCESS_TYPES and not self.value.isdigit():
-            raise ValueError('The minimum age must be a number of days: {}'.format(self.value))
         if '|' in self.value:
             raise ValueError('An exclusion cannot contain "|": {}'.format(self.value))
+        if self.kind == self.PATTERN:
+            check_length('Pattern', self.value, 100, required=True)
+            if not is_sp_exclusion_pattern(self.value):
+                raise ValueError('Invalid exclusion pattern: {!r}'.format(self.value))
+            if self.subfolders and not self.value.endswith('\\'):
+                raise ValueError('Also exclude subfolders needs a pattern ending with \\: '
+                                 '{!r}'.format(self.value))
+        elif self.kind == self.FILE_TYPE:
+            if not is_sp_exclusion_file_type(self.value):
+                raise ValueError('Invalid exclusion file type: {!r}'.format(self.value))
+        else:
+            if not re.fullmatch(r'[0-9]+', self.value):
+                raise ValueError('The minimum age must be a number of days: {}'.format(
+                    self.value))
+            check_int('Minimum age', self.value, 1, 9999)
 
     @classmethod
     def from_value(cls, value):
@@ -132,10 +155,16 @@ class ESSPPolicyNetApp(ESSPPolicy):
 
     def set_filer_list(self, filers):
         """
-        Set the filers this scan server protects (names or IP addresses).
+        Set the filers this scan server protects: names of letters and
+        digits or IP addresses (see is_sp_filer), no duplicate.
         """
-        return self.set_indexed_list('NetAppGeneral', 'dwFilerCount', 'szFiler_{}',
-                                     [str(filer) for filer in filers])
+        filers = [str(filer) for filer in filers]
+        for index, filer in enumerate(filers):
+            if not is_sp_filer(filer):
+                raise ValueError('Invalid filer: {!r}'.format(filer))
+            if filer in filers[:index]:
+                raise ValueError('Duplicate filer: {!r}'.format(filer))
+        return self.set_indexed_list('NetAppGeneral', 'dwFilerCount', 'szFiler_{}', filers)
 
     filer_list = property(get_filer_list, set_filer_list)
 

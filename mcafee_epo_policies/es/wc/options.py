@@ -17,6 +17,8 @@ by the library, never set nor written in the Markdown export.
 """
 
 from .common import ESWCPolicy
+from ...validators import (check_length, is_wc_domain_name, is_wc_gateway_ip_list,
+                           is_wc_ip_list, is_wc_reporter_url)
 
 
 class ESWCPolicyOptions(ESWCPolicy):
@@ -127,12 +129,24 @@ class ESWCPolicyOptions(ESWCPolicy):
         return self._get_list('ActionEnforcement', count, template)
 
     def __set_ips(self, name, addresses):
+        """
+        The console textarea holds the items joined by commas (less than
+        16000 characters); the server splits it on commas and trims each
+        item. Gateway and landmark items are IPv4 or IPv6 addresses
+        (is_wc_gateway_ip_list), excluded items are addresses, subnets or
+        ranges (is_wc_ip_list).
+        """
         count, template = self.__LISTS[name]
-        for address in addresses:
-            if not str(address).strip() or ' ' in str(address).strip() or ',' in str(address):
-                raise ValueError('One IP address or range per item: {!r}'.format(address))
-        return self._set_list('ActionEnforcement', count, template,
-                              [str(address).strip() for address in addresses])
+        items = [str(address).strip() for address in addresses]
+        check = is_wc_ip_list if name == 'excluded_ips' else is_wc_gateway_ip_list
+        for item in items:
+            if not item or ',' in item or not check(item):
+                raise ValueError('Invalid IP address{}: {!r}'.format(
+                    ', subnet or range' if name == 'excluded_ips' else '', item))
+        if not check(','.join(items)):
+            raise ValueError('The IP addresses take {} characters at most once joined by '
+                             'commas.'.format(15999))
+        return self._set_list('ActionEnforcement', count, template, items)
 
     def get_gateway_ips(self):
         """
@@ -156,9 +170,14 @@ class ESWCPolicyOptions(ESWCPolicy):
 
     def set_landmark_dns(self, name):
         """
-        Set the DNS name for internal landmark.
+        Set the DNS name for internal landmark (255 characters, labels of
+        letters, digits and - starting with a letter, see is_wc_domain_name;
+        '' or None = no name).
         """
-        return self._set('ActionEnforcement', 'szGatewayLandmark', name or '')
+        name = check_length('DNS name for internal landmark', name or '', 255)
+        if name and not is_wc_domain_name(name):
+            raise ValueError('Invalid DNS name for internal landmark: {!r}'.format(name))
+        return self._set('ActionEnforcement', 'szGatewayLandmark', name)
 
     landmark_dns = property(get_landmark_dns, set_landmark_dns)
 
@@ -191,10 +210,16 @@ class ESWCPolicyOptions(ESWCPolicy):
     def set_web_reporter(self, enabled, url=None, user=None):
         """
         Set the Web Reporter configuration (None = keep the current value).
-        The console requires a URL (with a trailing forward slash), a user
-        name and a password: the password can only be defined in the ePO
+        The console requires a URL (50 characters, see is_wc_reporter_url), a
+        user name (50 characters) and a password: the password can only be defined in the ePO
         console, the library keeps it as is.
         """
+        if url is not None:
+            check_length('Web Reporter URL', url, 50)
+            if url and not is_wc_reporter_url(url):
+                raise ValueError('Invalid Web Reporter URL: {!r}'.format(url))
+        if user is not None:
+            check_length('Web Reporter user name', user, 50)
         if url is not None:
             self._set('EventLogging', 'elURL', url)
         if user is not None:
@@ -257,7 +282,9 @@ class ESWCPolicyOptions(ESWCPolicy):
     def set_excluded_ips(self, addresses):
         """
         Set the IP addresses or ranges to exclude from Web Control rating or
-        blocking (one address, range or subnet per item).
+        blocking: one IPv4 or IPv6 address, CIDR subnet or range per item,
+        ranges written per octet or group (192.168.56-68.1-5,
+        2001-2003:db8::1; 10.0.0.1-10.0.0.9 is refused by the console).
         """
         return self.__set_ips('excluded_ips', addresses)
 

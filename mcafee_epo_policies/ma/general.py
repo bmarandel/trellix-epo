@@ -8,9 +8,94 @@ This module defines the class McAfeeAgentPolicyGeneral.
 """
 
 import os
+import re
 import xml.etree.ElementTree as et
 from ..policies import Policy
+from ..validators import (check_int, check_length, has_valid_macros, is_orion_ipv4,
+                          is_orion_ipv6)
 from .markdown import MD_PRODUCT, first_value, minutes, labelled
+
+# Path macros of the agent console (shared.js of the extension EPOAGENTMETA).
+PATH_MACROS = ['SYSTEM_DRIVE', 'SYSTEM_ROOT', 'SYSTEM_DIR', 'TEMP_DIR', 'PROGRAM_FILES_DIR',
+               'PROGRAM_FILES_COMMON_DIR', 'SOFTWARE_INSTALLED_DIR', 'COMPUTER_NAME', 'USER_NAME',
+               'DOMAIN_NAME']
+
+
+def _valid_path_macros(path):
+    """
+    ContainsValidPathMacros of the console: valid macros, at most one of the
+    folder macros, at the start of the path.
+    """
+    if not has_valid_macros(path, PATH_MACROS):
+        return False
+    found = [path.find(macro) for macro in PATH_MACROS[:6] if path.find(macro) != -1]
+    return len(found) <= 1 and all(index <= 1 for index in found)
+
+
+def _blank(text):
+    """
+    IsBlank of the console: a non-empty text made of spaces only.
+    """
+    return len(text) > 0 and text.strip(' ') == ''
+
+
+def check_repository_path(label, path, windows=True, skip_empty=False):
+    """
+    Raise ValueError if the console refuses a SuperAgent or peer-to-peer
+    repository path: 100 characters max; Windows: a drive letter or a path
+    macro (<SYSTEM_DRIVE>\\...), two folders at least, none of " ; ? * | /;
+    Unix: /folder/folder..., none of " ; ? * | \\ ! @ # & < > : ~ - ' , . (the
+    console checks of the extension EPOAGENTMETA 5.8). "DEFAULT" and, where
+    the console allows it, an empty path are accepted.
+    """
+    check_length(label, path, 100)
+    if path == 'DEFAULT' or (skip_empty and path == ''):
+        return path
+    if windows:
+        valid = (path[:1] == '<' or (path[:1].isascii() and path[:1].isalpha() and
+                                     path.find(':\\') == 1)) and \
+            '\\\\' not in path and _valid_path_macros(path) and \
+            not any(char in path for char in '";?*|/') and \
+            not (len(path) > 2 and path.endswith(':\\'))
+        elements = path.split('\\')
+    else:
+        valid = path[:1] == '/' and '//' not in path and _valid_path_macros(path) and \
+            not any(char in path for char in '";?*|\\!@#&<>:~-\',.')
+        elements = path.split('/')
+    valid = valid and len(elements) >= 3 and elements[2] != '' and \
+        not any(_blank(element) for element in elements)
+    if not valid:
+        raise ValueError('{}: invalid path {!r} (see check_repository_path).'.format(label, path))
+    return path
+
+
+RELAY_ADDRESS_TYPES = ['DNS Name', 'IPv4', 'IPv6']
+
+
+def check_relay_server(address_type, address, port):
+    """
+    Raise ValueError if the console refuses a relay server of the Relay
+    Client options (extension EPOAGENTMETA 5.8): DNS Name without any of
+    : \\ " ` ! @ # $ % ^ & * = ; , < > ? |, IPv4 (dotted, spaces around
+    ignored), IPv6 (brackets allowed, no zone index), 254 characters max; a
+    port of 1 to 65535. Returns the port as the console stores it (leading
+    zeros removed).
+    """
+    if address_type not in RELAY_ADDRESS_TYPES:
+        raise ValueError('Relay address type must be within {}.'.format(RELAY_ADDRESS_TYPES))
+    check_length('Relay server address', address, 254, required=True)
+    if address_type == 'DNS Name':
+        valid = not any(char in address for char in ':\\"`!@#$%^&*=;,<>?|')
+    elif address_type == 'IPv4':
+        valid = is_orion_ipv4(address)
+    else:
+        bare = address[1:-1] if address.startswith('[') and address.endswith(']') else address
+        valid = is_orion_ipv6(bare)
+    if not valid:
+        raise ValueError('Invalid {} relay server address: {!r}'.format(address_type, address))
+    if not re.fullmatch(r'\d+', str(port)):
+        raise ValueError('Relay server port: enter a number between 1 and 65535: {!r}'.format(port))
+    return str(check_int('Relay server port', int(port), 1, 65535))
 
 class McAfeeAgentPolicyGeneral(Policy):
     """
@@ -72,8 +157,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Policy enforcement interval (minutes)
         """
-        if int_minutes < 5:
-            raise ValueError('Interval below 5 minutes is not possible.')
+        int_minutes = check_int('Policy enforcement interval (minutes)', int_minutes, 5, 10080)
         self.set_setting_value('PolicyService', 'PolicyEnforcementTimeout', str(int_minutes), True)
         return self.set_setting_value('General', 'PolicyEnforcementInterval', str(int_minutes*60))
 
@@ -238,6 +322,25 @@ class McAfeeAgentPolicyGeneral(Policy):
 
     test_cert_authentication = property(get_test_cert_authentication)
 
+    #   IP reporting mode (extension 5.8.6): '2' Default, '1' IPv4, '0' IPv6
+    def get_ip_reporting_mode(self):
+        """
+        Get IP reporting mode: '2' (Default), '1' (IPv4) or '0' (IPv6); '2'
+        when the setting is missing (extension older than 5.8.6).
+        """
+        return self.get_setting_value('General', 'IPVersionPreference') or '2'
+
+    def set_ip_reporting_mode(self, mode):
+        """
+        Set IP reporting mode: '2' (Default), '1' (IPv4) or '0' (IPv6).
+        """
+        if str(mode) not in self.IP_REPORTING_MODES:
+            raise ValueError('IP reporting mode must be within {}.'.format(
+                list(self.IP_REPORTING_MODES)))
+        return self.set_setting_value('General', 'IPVersionPreference', str(mode), True)
+
+    ip_reporting_mode = property(get_ip_reporting_mode, set_ip_reporting_mode)
+
     # ------------------------------ GENERAL TAB ------------------------------
     # Reboot options after product deployment (Windows only):
     #    Prompt user when a reboot is required
@@ -270,6 +373,10 @@ class McAfeeAgentPolicyGeneral(Policy):
             -1  :to disable automatic reboot
             1-n :seconds to wait after before automatic reboot
         """
+        if str(int_seconds).strip() != '-1':
+            int_seconds = check_int('Force automatic reboot after (seconds)', int_seconds, 1, 10000)
+        # The console writes both settings (checked on the lab, extension 5.8.6).
+        self.set_setting_value('UpdaterService', 'RebootTimeout', str(int_seconds))
         return self.set_setting_value('General', 'RebootTimeOut', str(int_seconds))
 
     auto_reboot_after = property(get_auto_reboot_after, set_auto_reboot_after)
@@ -305,8 +412,8 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Agent-to-server communication interval (minutes)
         """
-        if int_minutes < 5:
-            raise ValueError('Interval below 5 minutes is not possible.')
+        int_minutes = check_int('Agent-to-server communication interval (minutes)', int_minutes,
+                                5, 2880)
         self.set_setting_value('PropertyService', 'PropertyCollectionTimeout', str(int_minutes))
         return self.set_setting_value('Network', 'CheckNetworkMessageInterval', str(int_minutes*60))
 
@@ -327,6 +434,8 @@ class McAfeeAgentPolicyGeneral(Policy):
         Set Initiate agent-to-server communication within 10 minutes
             after startup if policies are older than (days)
         """
+        int_days = check_int('Initiate agent-to-server communication if policies are older than '
+                             '(days)', int_days, 1, 360)
         self.set_setting_value('PropertyService', 'PropertyCollectionIfDelayByDays', str(int_days))
         return self.set_setting_value('Network', 'AsciDoWhen', str(int_days))
 
@@ -400,6 +509,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Repository path (Windows)
         """
+        check_repository_path('Repository path (Windows)', path)
         self.set_setting_value('HttpServerService', 'VirtualDirectory', path)
         return self.set_setting_value('AgentListenServer', 'VirtualDirectory', path)
 
@@ -417,6 +527,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Repository path (Unix)
         """
+        check_repository_path('Repository path (Unix)', path, windows=False)
         self.set_setting_value('HttpServerService', 'VirtualDirectoryUnix', path)
         return self.set_setting_value('AgentListenServer', 'VirtualDirectoryUnix', path)
 
@@ -453,6 +564,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Interval to flush cache (minutes)
         """
+        int_minutes = check_int('Interval to flush cache (minutes)', int_minutes, 0, 300)
         self.set_setting_value('HttpServerService', 'RepositorySyncInterval', str(int_minutes))
         return self.set_setting_value(
             'AgentListenServer', 'NewRepositoryContentInterval', str(int_minutes))
@@ -471,6 +583,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Max disk quota (GB):
         """
+        int_gigabytes = check_int('Max disk quota (GB)', int_gigabytes, 1, 250)
         self.set_setting_value('HttpServerService', 'DiskQuota', str(int_gigabytes))
         return self.set_setting_value('AgentListenServer', 'LCDiskQuota', str(int_gigabytes))
 
@@ -488,6 +601,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Purge Interval (Days)
         """
+        int_days = check_int('Purge Interval (Days)', int_days, 1, 90)
         self.set_setting_value('HttpServerService', 'ContentLongevity', str(int_days))
         return self.set_setting_value('AgentListenServer', 'ContentLongevity', str(int_days))
 
@@ -535,12 +649,20 @@ class McAfeeAgentPolicyGeneral(Policy):
 
     def set_relay_server_list(self, table):
         """
-        Set the Relay Server list
+        Set the Relay Server list: a list of dicts {'relayselect': 'DNS Name',
+        'IPv4' or 'IPv6', 'relayip': address, 'relayport': port}, checked as
+        in the console (see check_relay_server).
         """
         if not table:
             return False
-        keys = table[0].keys()
-        return self.set_indexed_table('RelayService', 'RelayServerCount', keys, table, start=1)
+        keys = ['relayselect', 'relayip', 'relayport']
+        rows = []
+        for row in table:
+            if sorted(row) != sorted(keys):
+                raise ValueError('A relay server is a dict with the keys {}: {!r}'.format(keys, row))
+            rows.append(dict(row, relayport=check_relay_server(row['relayselect'], row['relayip'],
+                                                                row['relayport'])))
+        return self.set_indexed_table('RelayService', 'RelayServerCount', keys, rows, start=1)
 
     relay_server_list = property(get_relay_server_list, set_relay_server_list)
 
@@ -574,6 +696,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Service Manager port (RelayServer)
         """
+        int_port = check_int('Service Manager port', int_port, 1, 65535)
         self.set_setting_value('RelayService', 'RelayServerPort', str(int_port))
         return self.set_setting_value('AgentListenServer', 'AgtServiceMgrPort', str(int_port))
 
@@ -633,8 +756,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set  Interval between uploads (minutes)
         """
-        if int_minutes < 1:
-            raise ValueError('Interval must be greater than 1 minute.')
+        int_minutes = check_int('Interval between uploads (minutes)', int_minutes, 1, 60)
         self.set_setting_value('AgentEvents', 'AgPlcyEventTriggerDelayMins',
                                str(int_minutes), force)
         return self.set_setting_value('EventService', 'EventUploadTimeout', str(int_minutes), force)
@@ -654,8 +776,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Maximum number of events per upload:
         """
-        if int_events < 1:
-            raise ValueError('Number of events must be greater than 1.')
+        int_events = check_int('Maximum number of events per upload', int_events, 1, 1000)
         self.set_setting_value('AgentEvents', 'AgPlcyMaxEventsPerTrigger', str(int_events), force)
         return self.set_setting_value('EventService', 'EventUploadThreshold',
                                       str(int_events), force)
@@ -712,8 +833,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Log file size limit (MB)
         """
-        if int_megabytes < 1:
-            raise ValueError('Number of megabytes must be greater than 0.')
+        int_megabytes = check_int('Log file size limit (MB)', int_megabytes, 2, 100)
         self.set_setting_value('AgentLogging', 'LogSizeLimit', str(int_megabytes), force)
         return self.set_setting_value('LoggerService', 'LogSizeLimit', str(int_megabytes), force)
 
@@ -732,8 +852,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Roll over count
         """
-        if int_count < 1:
-            raise ValueError('Number of files count must be greater than 0.')
+        int_count = check_int('Roll over count', int_count, 1, 10)
         self.set_setting_value('AgentLogging', 'LogMaxRollover', str(int_count), force)
         return self.set_setting_value('LoggerService', 'LogMaxRollover', str(int_count), force)
 
@@ -771,8 +890,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Limit in lines
         """
-        if int_lines < 1:
-            raise ValueError('Number of lines must be greater than 0.')
+        int_lines = check_int('Limit in lines', int_lines, 1, 5000)
         self.set_setting_value('AgentLogging', 'nLogSizeLimit', str(int_lines), force)
         return self.set_setting_value('LoggerService', 'LogRecordsSize', str(int_lines), force)
 
@@ -810,6 +928,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Product update log file
         """
+        check_length('Product update log file', path, 254)
         self.set_setting_value('UpdateOptions', 'szLogFileName', path, force)
         return self.set_setting_value('UpdaterService', 'UpdateLogFileName', path, force)
 
@@ -829,6 +948,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Enter an executable to run after an update completes
         """
+        check_length('Executable to run after an update', path, 254)
         self.set_setting_value('UpdateOptions', 'szRunAfterUpdateEXE', path, force)
         return self.set_setting_value('UpdaterService', 'ExeNameToRunAfterUpdate', path, force)
 
@@ -951,6 +1071,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Repository path (Windows)
         """
+        check_repository_path('Repository path (Windows)', path, skip_empty=True)
         return self.set_setting_value('P2pService', 'P2pRepoPath', path)
 
     p2p_repo_path = property(get_p2p_repo_path, set_p2p_repo_path)
@@ -966,6 +1087,8 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Repository path (Unix)
         """
+        check_repository_path('Repository path (Unix)', path, windows=False,
+                              skip_empty=True)
         return self.set_setting_value('P2pService', 'P2pRepoPathUnix', path)
 
     p2p_repo_path_unix = property(get_p2p_repo_path_unix, set_p2p_repo_path_unix)
@@ -981,6 +1104,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Max disk quota (MB)
         """
+        int_in_megabytes = check_int('Max disk quota (MB)', int_in_megabytes, 100, 5000)
         return self.set_setting_value('P2pService', 'DiskQuota', str(int_in_megabytes))
 
     p2p_disk_quota = property(get_p2p_disk_quota, set_p2p_disk_quota)
@@ -996,6 +1120,7 @@ class McAfeeAgentPolicyGeneral(Policy):
         """
         Set Purge Interval (Days)
         """
+        int_in_days = check_int('Purge Interval (Days)', int_in_days, 1, 90)
         return self.set_setting_value('P2pService', 'ContentLongevity', str(int_in_days))
 
     p2p_purge_interval = property(get_p2p_purge_interval, set_p2p_purge_interval)

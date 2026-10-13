@@ -96,7 +96,7 @@ def test_collect_write():
     policy.start_datetime = datetime.datetime(2026, 11, 1, 6, 30, 45)
     policy.debug_logging = '1'
     policy.files = ['{D}\\Data\\app.exe']
-    policy.folders = ['[SYSTEMDRIVE]\\Data']
+    policy.folders = ['{E}\\Data']
     policy.search_depth = 2
     get = policy.get_setting_value
     assert (get('SpecialEnvironment', 'CustomEnvVar'), get('List', 'Branch0'),
@@ -106,12 +106,13 @@ def test_collect_write():
             get('FindFile', 'FolderPattern0'), get('FindFile', 'FolderCount'),
             get('FindFile', 'dwSearchDepth')) == (
         'MYVAR', '[HKLM]\\SOFTWARE\\Example\\Version', '1', '24', '1', '2026-11-01 06:30:00',
-        '1', '{D}\\Data\\app.exe', '[SYSTEMDRIVE]\\Data', '1', '2')
+        '1', '{D}\\Data\\app.exe', '{E}\\Data', '1', '2')
     # Values refused by the console ("Not a valid format of ...").
     for bad in [lambda: policy.set_files(['C:\\Tools\\app.exe']),
                 lambda: policy.set_files(['[PROGRAMFILES]\\Tools\\']),
                 lambda: policy.set_files(['[ProgramFiles]\\Tools\\app.exe']),
                 lambda: policy.set_folders(['C:\\Data']),
+                lambda: policy.set_folders(['[SYSTEMDRIVE]\\Data']),
                 lambda: policy.set_registry_queries(['HKLM\\SOFTWARE\\Example']),
                 lambda: policy.set_search_depth(10),
                 lambda: policy.set_collect('usb', 'yes')]:
