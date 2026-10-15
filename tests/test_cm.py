@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import ESCommonPolicies, ESCommonPolicyOptions, AACExclusion
+from trellix_epo import ESCommonPolicies, ESCommonPolicyOptions, AACExclusion
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'common_policies.xml'
 

@@ -7,7 +7,7 @@
 """
 policy_documentation.py
 
-Example for the mcafee_epo_policies package: write one Markdown document per
+Example for the trellix_epo package: write one Markdown document per
 policy of an ENS (Common, Threat Prevention, Firewall, Storage Protection,
 Adaptive Threat Protection, Web Control), Trellix Agent, System Information Reporter,
 Solidcore or Trellix EDR with Forensics export, to keep a
@@ -25,12 +25,12 @@ import os
 import re
 import sys
 
-from mcafee_epo_policies import (ESTPPolicies, ESFWPolicies, ESTPPolicyOnAccessScan,
+from trellix_epo import (ESTPPolicies, ESFWPolicies, ESTPPolicyOnAccessScan,
                                  ESTPPolicyOnDemandScan, ESTPPolicyExploitPrevention,
                                  ESTPPolicyOptions, ESTPPolicyAccessProtection, ESFWPolicyRules,
-                                 ESFWPolicyOptions, McAfeeAgentPolicies, McAfeeAgentPolicyGeneral,
-                                 McAfeeAgentPolicyRepository, McAfeeAgentPolicyTroubleshooting,
-                                 McAfeeAgentPolicyCustomProps, McAfeeAgentPolicyTelemetry,
+                                 ESFWPolicyOptions, TAPolicies, TAPolicyGeneral,
+                                 TAPolicyRepository, TAPolicyTroubleshooting,
+                                 TAPolicyCustomProps, TAPolicyTelemetry,
                                  ESSPPolicies, ESSPPolicyICAP, ESSPPolicyNetApp, SCPolicies,
                                  SCGENPolicyConfiguration, SCGENPolicyExceptionRules,
                                  SCAWLPolicyOptions, SCAWLPolicyRules, SCCCPolicyRules,
@@ -54,12 +54,12 @@ PRODUCTS = {
     'ENDP_FW_META_FW': (ESFWPolicies, {
         'FireCore_FW_Rules': ESFWPolicyRules,
         'FW_StatusMode': ESFWPolicyOptions}),
-    'EPOAGENTMETA': (McAfeeAgentPolicies, {
-        'General': McAfeeAgentPolicyGeneral,
-        'Repository': McAfeeAgentPolicyRepository,
-        'Troubleshooting': McAfeeAgentPolicyTroubleshooting,
-        'CustomProps': McAfeeAgentPolicyCustomProps,
-        'Telemetry': McAfeeAgentPolicyTelemetry}),
+    'EPOAGENTMETA': (TAPolicies, {
+        'General': TAPolicyGeneral,
+        'Repository': TAPolicyRepository,
+        'Troubleshooting': TAPolicyTroubleshooting,
+        'CustomProps': TAPolicyCustomProps,
+        'Telemetry': TAPolicyTelemetry}),
     'VSESTOMD1300': (ESSPPolicies, {
         'VSES1000_Icap_Policies': ESSPPolicyICAP,
         'VSES1000_Netapp_Policies': ESSPPolicyNetApp}),

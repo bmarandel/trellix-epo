@@ -20,7 +20,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import ESSPPolicies, ESSPPolicyICAP, ESSPPolicyNetApp, SPExclusion
+from trellix_epo import ESSPPolicies, ESSPPolicyICAP, ESSPPolicyNetApp, SPExclusion
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'enssp_policies.xml'
 

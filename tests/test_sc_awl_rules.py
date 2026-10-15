@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import SCAWLPolicyRules, SCException as exc
+from trellix_epo import SCAWLPolicyRules, SCException as exc
 
 FIXTURES = Path(__file__).parent / 'fixtures'
 SHA1 = 'da39a3ee5e6b4b0d3255bfef95601890afd80709'

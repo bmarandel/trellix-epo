@@ -20,9 +20,9 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import (ESTPPolicyExploitPrevention, EPExclusion, EPExecutable,
+from trellix_epo import (ESTPPolicyExploitPrevention, EPExclusion, EPExecutable,
                                  EPAppRule, APExecutable)
-from mcafee_epo_policies.validators import is_ep_ip_list, is_ep_file_paths, is_linux_path
+from trellix_epo.validators import is_ep_ip_list, is_ep_file_paths, is_linux_path
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'ep_limits.xml'
 LONG_RULE_LINES = ['\t\tInclude OBJECT_NAME { -v "C:\\\\ClaudeLongRuleTest\\\\folder' +

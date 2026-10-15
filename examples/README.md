@@ -1,6 +1,6 @@
 # Examples
 
-Short, runnable scripts showing how to use `mcafee_epo_policies` against a
+Short, runnable scripts showing how to use `trellix_epo` against a
 real policy exported from the ePO Policy Catalog. Each script expects its
 own single-policy XML export (the same shape you get from extracting one
 policy out of a `Policies` collection, or from `Policy.load_from_file`).
@@ -68,12 +68,12 @@ policy out of a `Policies` collection, or from `Policy.load_from_file`).
   environment. Writes one file with the five policies, ready to import.
   Takes the export file, then optionally the policy name and the output file.
 
-### Working directly against ePO (Solidcore)
+### Working directly against ePO (Solidcore, tags)
 
-These scripts export and import policies and Rule Groups with the ePO API,
-through the "mcafee-epo" client (`pip install mcafee-epo`, or
-`pip install mcafee_epo_policies[examples]`) and the shared helper
-`epo_solidcore.py`. Set the connection with `--url`/`--user` or the
+These scripts export and import policies, Rule Groups and tags with the ePO Web
+API client of the library (`EPOClient`, no other package needed) and the
+shared helper `epo_connection.py` (command line options and connection).
+Set the connection with `--url`/`--user` or the
 `EPO_URL`/`EPO_USER`/`EPO_PASSWORD` environment variables (the password is
 asked if not set); `--insecure` skips the server certificate check (lab
 servers), `--dry-run` only writes the XML files. They can be run again: they
@@ -97,6 +97,22 @@ update what the previous run created.
   write-protects the name resolution files and the Run/RunOnce registry
   keys. Read-Protect is deliberately not used: it is disabled by default
   because of its impact on the system performance.
+- **`tags_off_low_space.py`** - creates the "Policy Management" tag group
+  and two tags in it: "OFF", a manual tag set by hand on the systems that
+  must get the OFF policies, and "Low-Space", a criteria tag for the
+  systems with less than 2 GB free on the C drive ("Free C Drive Space" of
+  the Computer Properties, on systems that have a C drive: the others
+  report 0 MB free), evaluated on each agent-server communication.
+  `--run-criteria` evaluates it on all the systems at once; `--dry-run`
+  writes the tag import file only. An existing "OFF" tag keeps its notes
+  and systems.
+- **`assignment_rule_suspicious.py`** - writes a Policy Assignment Rule file
+  to import in the console (the Web API has no command for these rules):
+  every system with the "Suspicious" tag (set by the helpdesk) gets an ENS
+  Threat Prevention On-Access Scan policy (`--oas`) and Exploit Prevention
+  policies (`--ep`, repeatable). `--check` checks the tag, group and policy
+  names on the server first (an unknown tag would be dropped by the import,
+  and the rule would apply to every system).
 
 Run any script with `-h`-style usage by calling it without arguments, e.g.:
 

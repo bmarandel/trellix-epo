@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import SCGENPolicyExceptionRules, SCException as exc
+from trellix_epo import SCGENPolicyExceptionRules, SCException as exc
 
 FIXTURES = Path(__file__).parent / 'fixtures'
 

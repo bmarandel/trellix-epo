@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import ESTPPolicyOnAccessScan, OASProcessList, OASExclusionList
+from trellix_epo import ESTPPolicyOnAccessScan, OASProcessList, OASExclusionList
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'oas_policy.xml'
 
@@ -89,7 +89,7 @@ def test_exclusion_list_workflow(oas_policy):
 # ------------------------------ Values accepted by the console ------------------------------
 # Results of the page validators (Threat Prevention 26.8.0.16045) run on the lab:
 # isValidPath, IsValidExclusionFileType, validateFileTypes, validateProcessItem.
-from mcafee_epo_policies.validators import (is_ens_path, is_ens_exclusion_file_type,
+from trellix_epo.validators import (is_ens_path, is_ens_exclusion_file_type,
                                             is_ens_file_types, is_ens_process_name)
 
 ENS_PATHS = [('C:\\Temp\\', True), ('C:\\Temp\\a.exe', True), ('a.exe', True),

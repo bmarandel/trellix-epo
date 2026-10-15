@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<epo:EPOPolicySchema xmlns:epo="mcafee-epo-policy" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<EPOPolicyVerInfo vermjr="5" vermin="10" verrel="0" verbld="0"/>
+<EPOPolicySettings name="My Default::Settings (0CFC6E78-B9FA-4E8C-B5A3-9CD6B024381A)" featureid="EPOAGENTMETA" categoryid="General" typeid="General" param_int="0" param_str="">
+<Section name="AHService">
+<Setting name="CipherSuiteList5Openssl" value="ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:AES128-SHA"/>
+<Setting name="CipherSuiteList5RSA" value="ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:EDH-RSA-AES256-SHA256:EDH-RSA-AES128-SHA256:EDH-RSA-AES256-SHA:AES128-SHA"/>
+<Setting name="CipherSuiteListTA587" value="ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384"/>
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="TLS13CipherSuiteListOpenssl" value="TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256"/>
+</Section>
+<Section name="AgentEvents">
+<Setting name="AgPlcyEnableEventTrigger" value="1"/>
+<Setting name="AgPlcyEventTriggerDelayMins" value="5"/>
+<Setting name="AgPlcyEventTriggerThreshold" value="3"/>
+<Setting name="AgPlcyMaxEventsPerTrigger" value="10"/>
+<Setting name="AgPlcySendNonPriorityEventsAlso" value="1"/>
+</Section>
+<Section name="AgentListenServer">
+<Setting name="AgentPingPort" value="8081"/>
+<Setting name="AgtServiceMgrPort" value="8083"/>
+<Setting name="ContentLongevity" value="30"/>
+<Setting name="IsRelayClientEnabled" value="0"/>
+<Setting name="LCDiskQuota" value="1"/>
+<Setting name="NewRepositoryContentInterval" value="30"/>
+<Setting name="VirtualDirectory" value=""/>
+<Setting name="bEnableAgentPing" value="1"/>
+<Setting name="bEnableBroadcastPing" value="1"/>
+<Setting name="bEnableLazyCaching" value="1"/>
+<Setting name="bEnableRelayService" value="0"/>
+<Setting name="bEnableSuperAgent" value="0"/>
+<Setting name="bEnableSuperAgentRepository" value="0"/>
+<Setting name="bListenToEPOServerOnly" value="1"/>
+</Section>
+<Section name="AgentLogging">
+<Setting name="IsApplicationLogEnabled" value="1"/>
+<Setting name="LogMaxRollover" value="5"/>
+<Setting name="LogSizeLimit" value="10"/>
+<Setting name="bEnableGeneralLog" value="1"/>
+<Setting name="bEnableLog" value="1"/>
+<Setting name="bEnableRemoteLog" value="0"/>
+<Setting name="bLimitLogSize" value="1"/>
+<Setting name="bVerbose" value="0"/>
+<Setting name="nGeneralRollOver" value="5"/>
+<Setting name="nLogSizeGeneralLimit" value="2"/>
+<Setting name="nLogSizeLimit" value="200"/>
+</Section>
+<Section name="BranchSelection">
+<Setting name="BranchType_0" value="Current"/>
+<Setting name="BranchType_1" value="Current"/>
+<Setting name="BranchType_10" value="Current"/>
+<Setting name="BranchType_11" value="Current"/>
+<Setting name="BranchType_12" value="Current"/>
+<Setting name="BranchType_13" value="Current"/>
+<Setting name="BranchType_14" value="Current"/>
+<Setting name="BranchType_15" value="Current"/>
+<Setting name="BranchType_16" value="Current"/>
+<Setting name="BranchType_17" value="Current"/>
+<Setting name="BranchType_2" value="Current"/>
+<Setting name="BranchType_3" value="Current"/>
+<Setting name="BranchType_4" value="Current"/>
+<Setting name="BranchType_5" value="Current"/>
+<Setting name="BranchType_6" value="Current"/>
+<Setting name="BranchType_7" value="Current"/>
+<Setting name="BranchType_8" value="Current"/>
+<Setting name="BranchType_9" value="Current"/>
+<Setting name="NumberOfItems" value="18"/>
+<Setting name="OneClickEnabled_0" value="1"/>
+<Setting name="OneClickEnabled_1" value="1"/>
+<Setting name="OneClickEnabled_10" value="1"/>
+<Setting name="OneClickEnabled_11" value="1"/>
+<Setting name="OneClickEnabled_12" value="1"/>
+<Setting name="OneClickEnabled_13" value="1"/>
+<Setting name="OneClickEnabled_14" value="1"/>
+<Setting name="OneClickEnabled_15" value="1"/>
+<Setting name="OneClickEnabled_16" value="1"/>
+<Setting name="OneClickEnabled_17" value="1"/>
+<Setting name="OneClickEnabled_2" value="1"/>
+<Setting name="OneClickEnabled_3" value="1"/>
+<Setting name="OneClickEnabled_4" value="1"/>
+<Setting name="OneClickEnabled_5" value="1"/>
+<Setting name="OneClickEnabled_6" value="1"/>
+<Setting name="OneClickEnabled_7" value="1"/>
+<Setting name="OneClickEnabled_8" value="1"/>
+<Setting name="OneClickEnabled_9" value="1"/>
+<Setting name="SoftwareID_0" value="ENDPCNT_1000_LYNX"/>
+<Setting name="SoftwareID_1" value="VSCANDAT1000"/>
+<Setting name="SoftwareID_10" value="MED_DAT_1000"/>
+<Setting name="SoftwareID_11" value="AMCORDAT2000"/>
+<Setting name="SoftwareID_12" value="EPOAGENT3000META"/>
+<Setting name="SoftwareID_13" value="EPOAGENT5000META"/>
+<Setting name="SoftwareID_14" value="MAR_CONTENT_1000"/>
+<Setting name="SoftwareID_15" value="JTICLIENTMETA"/>
+<Setting name="SoftwareID_16" value="ENDP_GS_1070LYNX"/>
+<Setting name="SoftwareID_17" value="SOLIDCOR_KMOD_5000_LNX"/>
+<Setting name="SoftwareID_2" value="MSCANENG1000"/>
+<Setting name="SoftwareID_3" value="MVEDR_R_3000"/>
+<Setting name="SoftwareID_4" value="VSCANENG1000"/>
+<Setting name="SoftwareID_5" value="MVEDR_R_3000LYNX"/>
+<Setting name="SoftwareID_6" value="LV2SNENG1000"/>
+<Setting name="SoftwareID_7" value="ENDPCNT_1000"/>
+<Setting name="SoftwareID_8" value="MVEDR_R_3000MACX"/>
+<Setting name="SoftwareID_9" value="MVEDR_R_3000WINX"/>
+</Section>
+<Section name="CompatService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+</Section>
+<Section name="CryptoService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+</Section>
+<Section name="DatachannelService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="MaxItems" value="64"/>
+</Section>
+<Section name="Deployment">
+<Setting name="EnableCompatibilityCheck" value="1"/>
+</Section>
+<Section name="EventService">
+<Setting name="EventFilterVersion" value="0"/>
+<Setting name="EventFilteredList" value="0"/>
+<Setting name="EventIsEnabledPriorityForward" value="1"/>
+<Setting name="EventPriorityLevel" value="3"/>
+<Setting name="EventUploadThreshold" value="10"/>
+<Setting name="EventUploadTimeout" value="5"/>
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="NonPriorityEventsAlso" value="1"/>
+</Section>
+<Section name="General">
+<Setting name="ExtensionVersion" value="5.0.0"/>
+<Setting name="ForceInstall" value="0"/>
+<Setting name="IPVersionPreference" value="2"/>
+<Setting name="IsCloud" value="0"/>
+<Setting name="IsHealthcheckEnabled" value="1"/>
+<Setting name="IsSelfProtectionEnabled" value="1"/>
+<Setting name="IsTestCertAuthenticationEnabled" value="0"/>
+<Setting name="PolicyEnforcementInterval" value="3600"/>
+<Setting name="RebootTimeOut" value="-1"/>
+<Setting name="ReduceProcessPriority" value="1"/>
+<Setting name="ServerId" value="8A3F542A-70ED-403F-93DA-2B963B358A03"/>
+<Setting name="ShowAgentUI" value="1"/>
+<Setting name="ShowRebootUI" value="1"/>
+<Setting name="bAllowMcTrayRDP" value="0"/>
+<Setting name="bAllowUpdateSecurity" value="1"/>
+<Setting name="bCollectFullProps" value="1"/>
+<Setting name="bEnableAboutBox" value="1"/>
+</Section>
+<Section name="HttpServerService">
+<Setting name="ContentLongevity" value="30"/>
+<Setting name="DiskQuota" value="1"/>
+<Setting name="HttpServerPort" value="8081"/>
+<Setting name="IsAgentPingEnabled" value="1"/>
+<Setting name="IsDataChannelPingEnabled" value="1"/>
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="IsLazyCachingEnabled" value="1"/>
+<Setting name="IsListenToEPOServerOnly" value="1"/>
+<Setting name="IsSuperAgentEnabled" value="0"/>
+<Setting name="IsSuperAgentRepositoryEnabled" value="0"/>
+<Setting name="RepositorySyncInterval" value="30"/>
+<Setting name="SAConcurrentConnectionsLimit" value="1024"/>
+<Setting name="VirtualDirectory" value="DEFAULT"/>
+<Setting name="VirtualDirectoryUnix" value="DEFAULT"/>
+</Section>
+<Section name="LoggerService">
+<Setting name="IsApplicationLogEnabled" value="1"/>
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="IsLogRecordingEnabled" value="1"/>
+<Setting name="IsRemoteLogEnabled" value="0"/>
+<Setting name="LogEnableRollover" value="1"/>
+<Setting name="LogFilterPattern" value="*.Info"/>
+<Setting name="LogFormatPattern" value="%d %+t %p(%P.%T) %f.%s: %m"/>
+<Setting name="LogMaxRollover" value="5"/>
+<Setting name="LogRecordsSize" value="200"/>
+<Setting name="LogSizeLimit" value="10"/>
+<Setting name="bEnableGeneralLog" value="1"/>
+<Setting name="bVerbose" value="0"/>
+</Section>
+<Section name="Network">
+<Setting name="AsciDoWhen" value="1"/>
+<Setting name="CheckNetworkMessageInterval" value="3600"/>
+<Setting name="bAgentASCI" value="1"/>
+</Section>
+<Section name="P2pService">
+<Setting name="ConcurrentConnectionsLimit" value="10"/>
+<Setting name="ContentLongevity" value="30"/>
+<Setting name="DiskQuota" value="512"/>
+<Setting name="EnableClient" value="1"/>
+<Setting name="EnableServing" value="1"/>
+<Setting name="HitCount" value="1"/>
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="P2pRepoPath" value="DEFAULT"/>
+<Setting name="P2pRepoPathUnix" value="DEFAULT"/>
+<Setting name="PurgeMethod" value="1"/>
+</Section>
+<Section name="PolicyService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="PolicyEnforcementTimeout" value="60"/>
+</Section>
+<Section name="PropertyService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="PropertyCollectFullProps" value="1"/>
+<Setting name="PropertyCollectSessionTimeout" value="1"/>
+<Setting name="PropertyCollectionIfDelayByDays" value="1"/>
+<Setting name="PropertyCollectionTimeout" value="60"/>
+</Section>
+<Section name="RelayService">
+<Setting name="ConcurrentConnectionsLimit" value="1024"/>
+<Setting name="EnableClient" value="1"/>
+<Setting name="IsEnabled" value="0"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="IsRelayDiscoveryDisabled" value="0"/>
+<Setting name="RelayMulticastAddress" value="ff08::2"/>
+<Setting name="RelayServerCount" value="0"/>
+<Setting name="RelayServerPort" value="8083"/>
+</Section>
+<Section name="RepositoryService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+</Section>
+<Section name="SchedulerService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+</Section>
+<Section name="SensorService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+</Section>
+<Section name="StatsService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+</Section>
+<Section name="UdpService">
+<Setting name="IsBroadcastPingEnabled" value="1"/>
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="UdpBroadcastPort" value="8082"/>
+<Setting name="UdpMulticastAddress" value="ff08::2"/>
+</Section>
+<Section name="UpdateOptions">
+<Setting name="bAllowDATDowngrade" value="0"/>
+<Setting name="bRunIfUpdateSuccess" value="0"/>
+<Setting name="bUpdateAfterDeployment" value="1"/>
+<Setting name="szLogFileName" value=""/>
+<Setting name="szRunAfterUpdateEXE" value=""/>
+</Section>
+<Section name="UpdaterService">
+<Setting name="EnableAgentUI" value="1"/>
+<Setting name="EnableDatDowngrade" value="0"/>
+<Setting name="EnableExeAfterUpdate" value="0"/>
+<Setting name="EnableRebootUI" value="1"/>
+<Setting name="EnableUpdateAfterDeployment" value="1"/>
+<Setting name="ExeNameToRunAfterUpdate" value=""/>
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="RebootTimeout" value="-1"/>
+<Setting name="UpdateLogFileName" value=""/>
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Demo (Systray)::Settings (9AB94B96-FEDD-421C-AC72-44DB2D8F4195)" featureid="EPOAGENTMETA" categoryid="General" typeid="General" param_int="0" param_str="">
+<Section name="AHService">
+<Setting name="CipherSuiteList5Openssl" value="ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:AES128-SHA"/>
+<Setting name="CipherSuiteList5RSA" value="ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:EDH-RSA-AES256-SHA256:EDH-RSA-AES128-SHA256:EDH-RSA-AES256-SHA:AES128-SHA"/>
+<Setting name="CipherSuiteListTA587" value="ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384"/>
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="TLS13CipherSuiteListOpenssl" value="TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256"/>
+</Section>
+<Section name="AgentEvents">
+<Setting name="AgPlcyEnableEventTrigger" value="1"/>
+<Setting name="AgPlcyEventTriggerDelayMins" value="5"/>
+<Setting name="AgPlcyEventTriggerThreshold" value="3"/>
+<Setting name="AgPlcyMaxEventsPerTrigger" value="10"/>
+<Setting name="AgPlcySendNonPriorityEventsAlso" value="1"/>
+</Section>
+<Section name="AgentListenServer">
+<Setting name="AgentPingPort" value="8081"/>
+<Setting name="AgtServiceMgrPort" value="8083"/>
+<Setting name="ContentLongevity" value="30"/>
+<Setting name="IsRelayClientEnabled" value="0"/>
+<Setting name="LCDiskQuota" value="1"/>
+<Setting name="NewRepositoryContentInterval" value="30"/>
+<Setting name="VirtualDirectory" value="DEFAULT"/>
+<Setting name="VirtualDirectoryUnix" value=""/>
+<Setting name="bEnableAgentPing" value="1"/>
+<Setting name="bEnableBroadcastPing" value="1"/>
+<Setting name="bEnableLazyCaching" value="1"/>
+<Setting name="bEnableRelayService" value="0"/>
+<Setting name="bEnableSuperAgent" value="0"/>
+<Setting name="bEnableSuperAgentRepository" value="0"/>
+<Setting name="bListenToEPOServerOnly" value="1"/>
+</Section>
+<Section name="AgentLogging">
+<Setting name="IsApplicationLogEnabled" value="1"/>
+<Setting name="LogMaxRollover" value="5"/>
+<Setting name="LogSizeLimit" value="10"/>
+<Setting name="bEnableLog" value="1"/>
+<Setting name="bEnableRemoteLog" value="0"/>
+<Setting name="bLimitLogSize" value="1"/>
+<Setting name="bVerbose" value="0"/>
+<Setting name="nLogSizeLimit" value="200"/>
+<Setting name="sstZipSizeLimitMB" value="200"/>
+</Section>
+<Section name="BranchSelection">
+<Setting name="BranchType_0" value="Current"/>
+<Setting name="BranchType_1" value="Current"/>
+<Setting name="BranchType_10" value="Current"/>
+<Setting name="BranchType_11" value="Current"/>
+<Setting name="BranchType_12" value="Current"/>
+<Setting name="BranchType_13" value="Current"/>
+<Setting name="BranchType_14" value="Current"/>
+<Setting name="BranchType_15" value="Current"/>
+<Setting name="BranchType_16" value="Current"/>
+<Setting name="BranchType_17" value="Current"/>
+<Setting name="BranchType_2" value="Current"/>
+<Setting name="BranchType_3" value="Current"/>
+<Setting name="BranchType_4" value="Current"/>
+<Setting name="BranchType_5" value="Current"/>
+<Setting name="BranchType_6" value="Current"/>
+<Setting name="BranchType_7" value="Current"/>
+<Setting name="BranchType_8" value="Current"/>
+<Setting name="BranchType_9" value="Current"/>
+<Setting name="NumberOfItems" value="18"/>
+<Setting name="OneClickEnabled_0" value="1"/>
+<Setting name="OneClickEnabled_1" value="1"/>
+<Setting name="OneClickEnabled_10" value="1"/>
+<Setting name="OneClickEnabled_11" value="1"/>
+<Setting name="OneClickEnabled_12" value="1"/>
+<Setting name="OneClickEnabled_13" value="1"/>
+<Setting name="OneClickEnabled_14" value="1"/>
+<Setting name="OneClickEnabled_15" value="0"/>
+<Setting name="OneClickEnabled_16" value="1"/>
+<Setting name="OneClickEnabled_17" value="1"/>
+<Setting name="OneClickEnabled_2" value="1"/>
+<Setting name="OneClickEnabled_3" value="1"/>
+<Setting name="OneClickEnabled_4" value="1"/>
+<Setting name="OneClickEnabled_5" value="1"/>
+<Setting name="OneClickEnabled_6" value="1"/>
+<Setting name="OneClickEnabled_7" value="1"/>
+<Setting name="OneClickEnabled_8" value="1"/>
+<Setting name="OneClickEnabled_9" value="1"/>
+<Setting name="SoftwareID_0" value="ENDPCNT_1000_LYNX"/>
+<Setting name="SoftwareID_1" value="VSCANDAT1000"/>
+<Setting name="SoftwareID_10" value="MED_DAT_1000"/>
+<Setting name="SoftwareID_11" value="AMCORDAT2000"/>
+<Setting name="SoftwareID_12" value="EPOAGENT3000META"/>
+<Setting name="SoftwareID_13" value="EPOAGENT5000META"/>
+<Setting name="SoftwareID_14" value="MAR_CONTENT_1000"/>
+<Setting name="SoftwareID_15" value="JTICLIENTMETA"/>
+<Setting name="SoftwareID_16" value="ENDP_GS_1070LYNX"/>
+<Setting name="SoftwareID_17" value="SOLIDCOR_KMOD_5000_LNX"/>
+<Setting name="SoftwareID_2" value="MSCANENG1000"/>
+<Setting name="SoftwareID_3" value="MVEDR_R_3000"/>
+<Setting name="SoftwareID_4" value="VSCANENG1000"/>
+<Setting name="SoftwareID_5" value="MVEDR_R_3000LYNX"/>
+<Setting name="SoftwareID_6" value="LV2SNENG1000"/>
+<Setting name="SoftwareID_7" value="ENDPCNT_1000"/>
+<Setting name="SoftwareID_8" value="MVEDR_R_3000MACX"/>
+<Setting name="SoftwareID_9" value="MVEDR_R_3000WINX"/>
+</Section>
+<Section name="CompatService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+</Section>
+<Section name="CryptoService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+</Section>
+<Section name="DatachannelService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="MaxItems" value="64"/>
+</Section>
+<Section name="Deployment">
+<Setting name="EnableCompatibilityCheck" value="1"/>
+</Section>
+<Section name="EventService">
+<Setting name="EventFilterVersion" value="0"/>
+<Setting name="EventFilteredList" value="0"/>
+<Setting name="EventIsEnabledPriorityForward" value="1"/>
+<Setting name="EventPriorityLevel" value="3"/>
+<Setting name="EventUploadThreshold" value="10"/>
+<Setting name="EventUploadTimeout" value="5"/>
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="NonPriorityEventsAlso" value="1"/>
+</Section>
+<Section name="General">
+<Setting name="ExtensionVersion" value="5.0.0"/>
+<Setting name="ForceInstall" value="0"/>
+<Setting name="IPVersionPreference" value="2"/>
+<Setting name="IsCloud" value="0"/>
+<Setting name="IsHealthcheckEnabled" value="1"/>
+<Setting name="IsSelfProtectionEnabled" value="1"/>
+<Setting name="IsTestCertAuthenticationEnabled" value="0"/>
+<Setting name="PolicyEnforcementInterval" value="3600"/>
+<Setting name="RebootTimeOut" value="-1"/>
+<Setting name="ReduceProcessPriority" value="1"/>
+<Setting name="ServerId" value="8A3F542A-70ED-403F-93DA-2B963B358A03"/>
+<Setting name="ShowAgentUI" value="1"/>
+<Setting name="ShowRebootUI" value="1"/>
+<Setting name="TestCertRootCA" value=""/>
+<Setting name="TestCertSignerCA" value=""/>
+<Setting name="bAllowMcTrayRDP" value="1"/>
+<Setting name="bAllowUpdateSecurity" value="1"/>
+<Setting name="bCollectFullProps" value="1"/>
+<Setting name="bEnableAboutBox" value="1"/>
+</Section>
+<Section name="HttpServerService">
+<Setting name="ContentLongevity" value="30"/>
+<Setting name="DiskQuota" value="1"/>
+<Setting name="HttpServerPort" value="8081"/>
+<Setting name="IsAgentPingEnabled" value="1"/>
+<Setting name="IsDataChannelPingEnabled" value="1"/>
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="IsLazyCachingEnabled" value="0"/>
+<Setting name="IsListenToEPOServerOnly" value="1"/>
+<Setting name="IsSuperAgentEnabled" value="0"/>
+<Setting name="IsSuperAgentRepositoryEnabled" value="0"/>
+<Setting name="RepositorySyncInterval" value="30"/>
+<Setting name="SAConcurrentConnectionsLimit" value="1024"/>
+<Setting name="VirtualDirectory" value="DEFAULT"/>
+<Setting name="VirtualDirectoryUnix" value="DEFAULT"/>
+</Section>
+<Section name="LoggerService">
+<Setting name="IsApplicationLogEnabled" value="1"/>
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="IsLogRecordingEnabled" value="1"/>
+<Setting name="IsRemoteLogEnabled" value="0"/>
+<Setting name="LogEnableRollover" value="1"/>
+<Setting name="LogFilterPattern" value="*.Info"/>
+<Setting name="LogFormatPattern" value="%d %+t %p(%P.%T) %f.%s: %m"/>
+<Setting name="LogMaxRollover" value="5"/>
+<Setting name="LogRecordsSize" value="200"/>
+<Setting name="LogSizeLimit" value="10"/>
+<Setting name="bEnableGeneralLog" value="1"/>
+<Setting name="bVerbose" value="0"/>
+</Section>
+<Section name="Network">
+<Setting name="AsciDoWhen" value="1"/>
+<Setting name="CheckNetworkMessageInterval" value="300"/>
+<Setting name="bAgentASCI" value="1"/>
+</Section>
+<Section name="P2pService">
+<Setting name="ConcurrentConnectionsLimit" value="10"/>
+<Setting name="ContentLongevity" value="30"/>
+<Setting name="DiskQuota" value="512"/>
+<Setting name="EnableClient" value="1"/>
+<Setting name="EnableServing" value="1"/>
+<Setting name="HitCount" value="1"/>
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="P2pRepoPath" value="DEFAULT"/>
+<Setting name="P2pRepoPathUnix" value="DEFAULT"/>
+<Setting name="PurgeMethod" value="1"/>
+</Section>
+<Section name="PolicyService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="PolicyEnforcementTimeout" value="60"/>
+</Section>
+<Section name="PropertyService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="PropertyCollectFullProps" value="1"/>
+<Setting name="PropertyCollectSessionTimeout" value="1"/>
+<Setting name="PropertyCollectionIfDelayByDays" value="1"/>
+<Setting name="PropertyCollectionTimeout" value="5"/>
+</Section>
+<Section name="RelayService">
+<Setting name="ConcurrentConnectionsLimit" value="1024"/>
+<Setting name="EnableClient" value="0"/>
+<Setting name="IsEnabled" value="0"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="IsRelayDiscoveryDisabled" value="0"/>
+<Setting name="RelayMulticastAddress" value="ff08::2"/>
+<Setting name="RelayServerCount" value="0"/>
+<Setting name="RelayServerPort" value="8083"/>
+</Section>
+<Section name="RepositoryService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+</Section>
+<Section name="SchedulerService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+</Section>
+<Section name="SensorService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+</Section>
+<Section name="StatsService">
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+</Section>
+<Section name="UdpService">
+<Setting name="IsBroadcastPingEnabled" value="1"/>
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="UdpBroadcastPort" value="8082"/>
+<Setting name="UdpMulticastAddress" value="ff08::2"/>
+</Section>
+<Section name="UpdateOptions">
+<Setting name="SensorAvoidUpdateMins" value="30"/>
+<Setting name="bAllowDATDowngrade" value="0"/>
+<Setting name="bEnablePowerOption" value="0"/>
+<Setting name="bRunIfUpdateSuccess" value="0"/>
+<Setting name="bUpdateAfterDeployment" value="1"/>
+<Setting name="szLogFileName" value=""/>
+<Setting name="szRunAfterUpdateEXE" value=""/>
+</Section>
+<Section name="UpdaterService">
+<Setting name="EnableAgentUI" value="1"/>
+<Setting name="EnableDatDowngrade" value="0"/>
+<Setting name="EnableExeAfterUpdate" value="0"/>
+<Setting name="EnableRebootUI" value="1"/>
+<Setting name="EnableUpdateAfterDeployment" value="1"/>
+<Setting name="ExeNameToRunAfterUpdate" value=""/>
+<Setting name="IsEnabled" value="1"/>
+<Setting name="IsInstalled" value="1"/>
+<Setting name="RebootTimeout" value="-1"/>
+<Setting name="UpdateLogFileName" value=""/>
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="My Default::Settings (86C4E281-7319-4F70-8CC7-DB138ED91600)" featureid="EPOAGENTMETA" categoryid="Repository" typeid="Repository" param_int="0" param_str="">
+<Section name="Advanced">
+<Setting name="OverwriteClientSites" value="1"/>
+<Setting name="nMaxHopLimit" value="15"/>
+<Setting name="nMaxPingTimeout" value="30"/>
+<Setting name="uiFindNearestMethod" value="0"/>
+</Section>
+<Section name="General">
+<Setting name="IsHealthcheckEnabled" value="1"/>
+<Setting name="ServerId" value="8A3F542A-70ED-403F-93DA-2B963B358A03"/>
+</Section>
+<Section name="InetManager">
+<Setting name="DisabledSiteNum" value="0"/>
+<Setting name="DisabledSites_0" value="Local Source"/>
+<Setting name="SitelistOrderNum" value="2"/>
+<Setting name="SitelistOrder_0" value="ePO_W2022EPO510"/>
+<Setting name="SitelistOrder_1" value="Trellix HTTPS"/>
+<Setting name="SitelistOrder_2" value="Local Source"/>
+<Setting name="includeReposByDefault" value="0"/>
+</Section>
+<Section name="License">
+<Setting name="LicenseKey" value=""/>
+</Section>
+<Section name="ProxySettings">
+<Setting name="256_szFtpProxyPassword" value=""/>
+<Setting name="256_szHttpProxyPassword" value=""/>
+<Setting name="bAllowUserToConfigureProxy" value="0"/>
+<Setting name="bBypassLocalAddress" value="0"/>
+<Setting name="bUseFtpAuthentication" value="0"/>
+<Setting name="bUseHttpAuthentication" value="0"/>
+<Setting name="bUseSingleProxySettings" value="0"/>
+<Setting name="szFtpProxyPassword" value=""/>
+<Setting name="szFtpProxyServer" value=""/>
+<Setting name="szFtpProxyUser" value=""/>
+<Setting name="szHttpProxyPassword" value=""/>
+<Setting name="szHttpProxyServer" value=""/>
+<Setting name="szHttpProxyUser" value=""/>
+<Setting name="uiFtpProxyPort" value="21"/>
+<Setting name="uiHttpProxyPort" value="80"/>
+<Setting name="uiNumExceptions" value="0"/>
+<Setting name="uiUseProxyType" value="1"/>
+</Section>
+<Section name="SiteList">
+<Setting name="uiNumberOfSites" value="0"/>
+</Section>
+<Section name="VersionControl">
+<Setting name="Version" value="00000000000000"/>
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="My Default::Settings (622A299D-0169-4CF6-9A91-4CFF5CA68EF2)" featureid="EPOAGENTMETA" categoryid="Troubleshooting" typeid="Troubleshooting" param_int="0" param_str="">
+<Section name="General">
+<Setting name="AgentLanguage" value="0000"/>
+<Setting name="IsHealthcheckEnabled" value="1"/>
+<Setting name="ServerId" value="8A3F542A-70ED-403F-93DA-2B963B358A03"/>
+<Setting name="bEnableAgentLangSelection" value="0"/>
+</Section>
+<Section name="LanguageOptions">
+<Setting name="AgentLanguage" value="0000"/>
+<Setting name="bEnableAgentLangSelection" value="0"/>
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="Demo (English)::Settings (37A9E129-8FF9-4E1F-B9DF-B5C76C5BFC3C)" featureid="EPOAGENTMETA" categoryid="Troubleshooting" typeid="Troubleshooting" param_int="0" param_str="">
+<Section name="General">
+<Setting name="AgentLanguage" value="0409"/>
+<Setting name="IsHealthcheckEnabled" value="1"/>
+<Setting name="ServerId" value="8A3F542A-70ED-403F-93DA-2B963B358A03"/>
+<Setting name="bEnableAgentLangSelection" value="1"/>
+</Section>
+<Section name="LanguageOptions">
+<Setting name="AgentLanguage" value="0409"/>
+<Setting name="bEnableAgentLangSelection" value="1"/>
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="My Default::Settings (494B15B4-B95D-4F33-9A9E-663EEB7DFFB9)" featureid="EPOAGENTMETA" categoryid="Custom Props" typeid="CustomProps" param_int="0" param_str="">
+<Section name="CustomProps">
+<Setting name="AllowClientEditing_1" value="1"/>
+<Setting name="AllowClientEditing_2" value="1"/>
+<Setting name="AllowClientEditing_3" value="1"/>
+<Setting name="AllowClientEditing_4" value="1"/>
+<Setting name="AllowClientEditing_5" value="1"/>
+<Setting name="AllowClientEditing_6" value="1"/>
+<Setting name="AllowClientEditing_7" value="1"/>
+<Setting name="AllowClientEditing_8" value="1"/>
+<Setting name="NumberOfCustomProps" value="8"/>
+<Setting name="OverwriteBlanks" value="1"/>
+<Setting name="Visibility_1" value="1"/>
+<Setting name="Visibility_2" value="1"/>
+<Setting name="Visibility_3" value="1"/>
+<Setting name="Visibility_4" value="1"/>
+<Setting name="Visibility_5" value="1"/>
+<Setting name="Visibility_6" value="1"/>
+<Setting name="Visibility_7" value="1"/>
+<Setting name="Visibility_8" value="1"/>
+</Section>
+</EPOPolicySettings>
+<EPOPolicySettings name="My Default::Settings (6D62F226-AA7C-46C8-8853-D27B9D6D7553)" featureid="EPOAGENTMETA" categoryid="Product Improvement Program" typeid="Telemetry" param_int="0" param_str="">
+<Section name="Telemetry">
+<Setting name="branch" value="Current"/>
+<Setting name="maxTelemetrySize" value="10"/>
+<Setting name="optIn" value="true"/>
+<Setting name="serverLevelInstallFlag" value="true"/>
+<Setting name="timer" value="86400000"/>
+</Section>
+</EPOPolicySettings>
+
+<EPOPolicyObject name="My Default" featureid="EPOAGENTMETA" categoryid="General" serverid="W2022EPO510" editflag="0" typeid="General">
+<description></description><PolicySettings>My Default::Settings (0CFC6E78-B9FA-4E8C-B5A3-9CD6B024381A)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Demo (Systray)" featureid="EPOAGENTMETA" categoryid="General" serverid="W2022EPO510" editflag="0" typeid="General">
+<description>Show systray</description><PolicySettings>Demo (Systray)::Settings (9AB94B96-FEDD-421C-AC72-44DB2D8F4195)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="My Default" featureid="EPOAGENTMETA" categoryid="Repository" serverid="W2022EPO510" editflag="0" typeid="Repository">
+<description></description><PolicySettings>My Default::Settings (86C4E281-7319-4F70-8CC7-DB138ED91600)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="My Default" featureid="EPOAGENTMETA" categoryid="Troubleshooting" serverid="W2022EPO510" editflag="0" typeid="Troubleshooting">
+<description></description><PolicySettings>My Default::Settings (622A299D-0169-4CF6-9A91-4CFF5CA68EF2)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="Demo (English)" featureid="EPOAGENTMETA" categoryid="Troubleshooting" serverid="W2022EPO510" editflag="0" typeid="Troubleshooting">
+<description>The Trellix Default policy is configured with settings recommended by Trellix to protect many environments</description><PolicySettings>Demo (English)::Settings (37A9E129-8FF9-4E1F-B9DF-B5C76C5BFC3C)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="My Default" featureid="EPOAGENTMETA" categoryid="Custom Props" serverid="W2022EPO510" editflag="0" typeid="CustomProps">
+<description></description><PolicySettings>My Default::Settings (494B15B4-B95D-4F33-9A9E-663EEB7DFFB9)</PolicySettings>
+</EPOPolicyObject><EPOPolicyObject name="My Default" featureid="EPOAGENTMETA" categoryid="Product Improvement Program" serverid="W2022EPO510" editflag="0" typeid="Telemetry">
+<description></description><PolicySettings>My Default::Settings (6D62F226-AA7C-46C8-8853-D27B9D6D7553)</PolicySettings>
+</EPOPolicyObject>
+</epo:EPOPolicySchema>

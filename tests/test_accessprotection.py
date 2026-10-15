@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import (ESTPPolicyAccessProtection, APRule, APSubRule,
+from trellix_epo import (ESTPPolicyAccessProtection, APRule, APSubRule,
                                  APTarget, APExecutable, APUserName)
 
 FIXTURES = Path(__file__).parent / 'fixtures'
@@ -321,7 +321,7 @@ def test_markdown_console_rule(rules_policy):
 # Cases run on the lab (Threat Prevention 26.8.0.16045): the signer check of the ePO server
 # (ExecutableValidateSignerName.do) and the dialog scripts (VSECommon_CustomForAP.js,
 # EditSubruleParameter.jsp, EditUserName.jsp).
-from mcafee_epo_policies.validators import (is_x500_name, is_ens_executable_path,
+from trellix_epo.validators import (is_x500_name, is_ens_executable_path,
                                             is_ens_parameter_path, ENS_USER_NAME)
 
 SIGNERS = [('CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US', True),

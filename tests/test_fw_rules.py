@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import ESFWPolicyRules
+from trellix_epo import ESFWPolicyRules
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'fw_policy_all.xml'
 
@@ -61,5 +61,5 @@ def test_get_content_escapes_policy_values(fw_policy):
     assert '\\[Approve\\](https://a.example/login)' in content
     assert '!\\[x\\](https://a.example/p.png)' in content
     # The Markdown export table escapes the user name once only.
-    rule['LastModifyingUsername'] = 'mcafee_epo_policies'
-    assert 'By mcafee\\_epo\\_policies on' in fw_policy.to_markdown()
+    rule['LastModifyingUsername'] = 'trellix_epo'
+    assert 'By trellix\\_epo on' in fw_policy.to_markdown()

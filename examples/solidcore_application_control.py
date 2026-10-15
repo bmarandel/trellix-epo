@@ -7,7 +7,7 @@
 """
 solidcore_application_control.py
 
-Example for the mcafee_epo_policies package: from a Solidcore export (all the
+Example for the trellix_epo package: from a Solidcore export (all the
 Solidcore policies, as returned by the ePO API command
 "policy.export productId=SOLIDCORE_META"), list the policies, then create a
 copy of an Application Control Rules (Windows) policy with an updater, a
@@ -20,7 +20,7 @@ Usage:
 
 import sys
 
-from mcafee_epo_policies import SCPolicies, SCAWLPolicyRules
+from trellix_epo import SCPolicies, SCAWLPolicyRules
 
 TYPE_ID = 'AWL Rules (Windows)'
 

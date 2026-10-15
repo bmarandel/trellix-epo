@@ -7,7 +7,7 @@
 """
 edrf_best_practices.py
 
-Example for the mcafee_epo_policies package: from a Trellix EDR with
+Example for the trellix_epo package: from a Trellix EDR with
 Forensics export (all the EDRF policies, as returned by the ePO API command
 "policy.export productId=XCLIENT_META"), copy a policy of each type
 (General, Streaming, Detection, Investigation, Remediation - "My Default"
@@ -61,11 +61,11 @@ Usage:
 
 import sys
 
-from mcafee_epo_policies import (EDRFPolicies, EDRFPolicyGeneral, EDRFPolicyStreaming,
+from trellix_epo import (EDRFPolicies, EDRFPolicyGeneral, EDRFPolicyStreaming,
                                  EDRFEventLog, EDRFEventFilter, EDRFFilterCondition,
                                  EDRFSyslogServer, EDRFPolicyDetection, EDRFRegistryExclusion,
                                  EDRFPolicyInvestigation, EDRFPolicyRemediation, EDRFAllowedIP)
-from mcafee_epo_policies.policies import Policy
+from trellix_epo.policies import Policy
 
 # ----------------------------------------------------------------------------
 # Example values - replace them with those of your environment.

@@ -1,2 +1,2 @@
 include LICENSE
-include mcafee_epo_policies/ma/*.ca
+include trellix_epo/ta/*.ca

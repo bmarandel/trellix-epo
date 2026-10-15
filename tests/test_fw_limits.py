@@ -20,10 +20,10 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import ESFWPolicies, ESFWPolicyOptions
-from mcafee_epo_policies.es.fw.rules import (FWAddress, FWNetwork, FWExecutable,
+from trellix_epo import ESFWPolicies, ESFWPolicyOptions
+from trellix_epo.es.fw.rules import (FWAddress, FWNetwork, FWExecutable,
                                              FWLocation, FWRule, FWGroup)
-from mcafee_epo_policies.validators import (is_fw_host, is_fw_port, is_fw_defined_network,
+from trellix_epo.validators import (is_fw_host, is_fw_port, is_fw_defined_network,
                                             is_x500_name)
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'fw_options_limits.xml'
@@ -187,7 +187,7 @@ def test_unchanged_trellix_values():
     only rules of the console fixture): the objects read from the policy are
     not checked again by update_rule (check(unchanged)), new ones are.
     """
-    from mcafee_epo_policies import ESFWPolicyRules
+    from trellix_epo import ESFWPolicyRules
     policy = ESFWPolicyRules()
     policy.load_from_file(str(Path(__file__).parent / 'fixtures' / 'fw_console.xml'))
     policy.load_policy()

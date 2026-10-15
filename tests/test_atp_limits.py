@@ -26,8 +26,8 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import ESATPPolicies, ESATPPolicyOptions, ESATPPolicyDAC, DACExclusion
-from mcafee_epo_policies.validators import is_ens_executable_path
+from trellix_epo import ESATPPolicies, ESATPPolicyOptions, ESATPPolicyDAC, DACExclusion
+from trellix_epo.validators import is_ens_executable_path
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'atp_limits.xml'
 DAC = ESATPPolicyDAC.TYPE

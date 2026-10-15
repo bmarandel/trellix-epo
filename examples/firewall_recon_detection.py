@@ -7,7 +7,7 @@
 """
 firewall_recon_detection.py
 
-Example for the mcafee_epo_policies package: add network reconnaissance
+Example for the trellix_epo package: add network reconnaissance
 detection rules ("honey ports") to an existing ENS Firewall Rules policy.
 
 ENS Firewall blocks the traffic that no rule allows. A rule that blocks an
@@ -50,7 +50,7 @@ Usage:
 import argparse
 import sys
 
-from mcafee_epo_policies import ESFWPolicyRules, FWRule, FWGroup
+from trellix_epo import ESFWPolicyRules, FWRule, FWGroup
 
 TCP, UDP = FWRule.TCP, FWRule.UDP
 

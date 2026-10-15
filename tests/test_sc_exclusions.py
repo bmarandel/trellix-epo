@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import SCPolicies, SCAWLPolicyRules, SCException as exc
+from trellix_epo import SCPolicies, SCAWLPolicyRules, SCException as exc
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'sc_exclusions_win.xml'
 

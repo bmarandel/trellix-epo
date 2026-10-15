@@ -11,12 +11,12 @@ import importlib
 import inspect
 import pkgutil
 
-import mcafee_epo_policies
+import trellix_epo
 
 
 def _iter_package_classes():
     seen = set()
-    package = mcafee_epo_policies
+    package = trellix_epo
     for module_info in pkgutil.walk_packages(package.__path__, prefix=package.__name__ + '.'):
         module = importlib.import_module(module_info.name)
         for name, obj in vars(module).items():

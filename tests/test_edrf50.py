@@ -34,13 +34,13 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import (EDRFPolicies, EDRFPolicyGeneral, EDRFPolicyStreaming,
+from trellix_epo import (EDRFPolicies, EDRFPolicyGeneral, EDRFPolicyStreaming,
                                  EDRFPolicyDetection, EDRFPolicyInvestigation,
                                  EDRFPolicyRemediation, EDRFAllowedIP, EDRFRegistryExclusion)
-from mcafee_epo_policies.edrf import (EDRFEventLog, EDRFFileEvent, EDRFEventFilter,
+from trellix_epo.edrf import (EDRFEventLog, EDRFFileEvent, EDRFEventFilter,
                                       EDRFFilterCondition, EDRFSyslogServer)
-from mcafee_epo_policies.edrf.policy import EDRFPolicy
-from mcafee_epo_policies.validators import is_ipv4, is_ipv6, is_hostname, is_ip_or_hostname
+from trellix_epo.edrf.policy import EDRFPolicy
+from trellix_epo.validators import is_ipv4, is_ipv6, is_hostname, is_ip_or_hostname
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'edrf_policies_50.xml'
 FIXTURE_212 = Path(__file__).parent / 'fixtures' / 'edrf_policies.xml'

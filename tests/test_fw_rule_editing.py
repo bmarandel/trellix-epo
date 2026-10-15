@@ -19,7 +19,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import (ESFWPolicyRules, FWRule, FWGroup, FWNetwork, FWApplication,
+from trellix_epo import (ESFWPolicyRules, FWRule, FWGroup, FWNetwork, FWApplication,
                                  FWExecutable, FWLocation, FWAddress)
 
 FIXTURES = Path(__file__).parent / 'fixtures'

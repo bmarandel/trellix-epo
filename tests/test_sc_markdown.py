@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import (SCPolicies, SCGENPolicyConfiguration, SCGENPolicyExceptionRules,
+from trellix_epo import (SCPolicies, SCGENPolicyConfiguration, SCGENPolicyExceptionRules,
                                  SCAWLPolicyOptions, SCAWLPolicyRules, SCCCPolicyRules,
                                  SCFIMPolicyRules)
 

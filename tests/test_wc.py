@@ -26,7 +26,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import (ESWCPolicies, ESWCPolicyOptions, ESWCPolicyMessaging,
+from trellix_epo import (ESWCPolicies, ESWCPolicyOptions, ESWCPolicyMessaging,
                                  ESWCPolicyBlockAllowList, WCSite, ESWCPolicyContentActions,
                                  ESWCPolicyBrowserControl, RatingActions)
 

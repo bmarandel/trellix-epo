@@ -7,8 +7,8 @@
 """
 solidcore_change_control_critical_files.py
 
-Example for the mcafee_epo_policies package, working directly against an ePO
-server with the "mcafee-epo" API client (pip install mcafee-epo).
+Example for the trellix_epo package, working directly against an ePO
+server with the ePO Web API client of the library (EPOClient).
 
 It creates (or updates) a Solidcore Change Control Rules (Windows) policy which
 protects some of the files of the "Windows Critical Config Files" Rule Group
@@ -30,8 +30,8 @@ Usage:
 
 import sys
 
-from mcafee_epo_policies import SCCCPolicyRules, SCRuleGroups
-from epo_solidcore import SolidcoreEPO, parser
+from trellix_epo import SCCCPolicyRules, SCRuleGroups
+from epo_connection import connect, parser
 
 TYPE_ID = 'CC Rules (Windows)'
 CRITICAL_RULE_GROUP = 'Windows Critical Config Files'
@@ -52,7 +52,7 @@ def main():
     args_parser.add_argument('--policy', default='CC Windows Critical Files Sample',
                              help='policy name (default: %(default)s)')
     args = args_parser.parse_args()
-    epo = SolidcoreEPO.from_arguments(args)
+    epo = connect(args)
 
     critical_group = epo.export_rule_group(SCRuleGroups.WINDOWS, SCRuleGroups.INTEGRITY_MONITOR,
                                            CRITICAL_RULE_GROUP)
@@ -61,7 +61,7 @@ def main():
                  'solidcore_fim_windows_critical_files.py first.'.format(CRITICAL_RULE_GROUP))
     paths = [f['pattern'] for f in critical_group.get_file_list()]
 
-    policies = epo.export_policies()
+    policies = epo.export_policies('SOLIDCORE_META')
     policy_xml = policies.get_policy(TYPE_ID, args.policy)
     if policy_xml is None:
         policy_xml = policies.new_empty_policy(TYPE_ID, args.policy)
@@ -85,7 +85,7 @@ def main():
     if args.dry_run:
         print('Dry run: saved "{}"'.format(policy_file))
         return 0
-    print(epo.import_policies(policy.get_xml_content(), policy_file, force=True).strip())
+    print(epo.import_policies(policy, force=True, file_name=policy_file))
     print('Policy "{}" imported into ePO.'.format(args.policy))
     return 0
 

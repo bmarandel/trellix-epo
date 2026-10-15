@@ -40,7 +40,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import (EDRFPolicies, EDRFPolicyGeneral, EDRFPolicyStreaming,
+from trellix_epo import (EDRFPolicies, EDRFPolicyGeneral, EDRFPolicyStreaming,
                                  EDRFPolicyDetection, EDRFRegistryExclusion,
                                  EDRFPolicyInvestigation, EDRFPolicyRemediation, EDRFAllowedIP)
 

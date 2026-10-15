@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import (Policy, ESTPPolicyOnAccessScan, OASExclusionList, OASState,
+from trellix_epo import (Policy, ESTPPolicyOnAccessScan, OASExclusionList, OASState,
                                  ESTPPolicyOnDemandScan, ESTPPolicyExploitPrevention,
                                  ESFWPolicyRules)
 
@@ -284,7 +284,7 @@ def test_no_html_injection(oas_policy, fw_policy):
 
 
 def test_no_html_injection_access_protection():
-    from mcafee_epo_policies import ESTPPolicyAccessProtection, APRule, APSubRule, APTarget
+    from trellix_epo import ESTPPolicyAccessProtection, APRule, APSubRule, APTarget
     policy = ESTPPolicyAccessProtection()
     policy.load_from_file(str(FIXTURES / 'ap_policy_rules.xml'))
     rule = APRule('<img src=x onerror=alert(1)>', report=True)

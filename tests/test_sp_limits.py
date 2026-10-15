@@ -20,9 +20,9 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies.es.sp import (ESSPPolicies, ESSPPolicyICAP, ESSPPolicyNetApp,
+from trellix_epo.es.sp import (ESSPPolicies, ESSPPolicyICAP, ESSPPolicyNetApp,
                                        SPExclusion)
-from mcafee_epo_policies.validators import (is_sp_ipv4, is_sp_filer, is_sp_file_type,
+from trellix_epo.validators import (is_sp_ipv4, is_sp_filer, is_sp_file_type,
                                             is_sp_exclusion_pattern, is_sp_exclusion_file_type)
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'sp_limits.xml'

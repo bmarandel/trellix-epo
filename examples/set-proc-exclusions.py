@@ -7,7 +7,7 @@
 """
 set-proc-exclusions.py
 
-Example for the mcafee_epo_policies package.
+Example for the trellix_epo package.
 
 Given an ENS Threat Prevention On-Access Scan policy exported from ePO (used
 here as a template) and a plain text file listing processes, this adds each
@@ -36,7 +36,7 @@ import argparse
 import os
 import sys
 
-from mcafee_epo_policies import ESTPPolicyOnAccessScan, OASProcessList, State
+from trellix_epo import ESTPPolicyOnAccessScan, OASProcessList, State
 
 
 def read_process_names(list_file_path):

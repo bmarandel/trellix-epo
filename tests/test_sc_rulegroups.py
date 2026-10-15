@@ -19,7 +19,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import (SCRuleGroups, SCAWLRuleGroup, SCCCRuleGroup, SCFIMRuleGroup,
+from trellix_epo import (SCRuleGroups, SCAWLRuleGroup, SCCCRuleGroup, SCFIMRuleGroup,
                                  SCAWLPolicyRules, SCCCPolicyRules, SCException as exc)
 
 FIXTURES = Path(__file__).parent / 'fixtures'
@@ -144,7 +144,7 @@ def test_add_rule_group(awl_groups):
 
 
 def test_new_empty_policy():
-    from mcafee_epo_policies import SCPolicies
+    from trellix_epo import SCPolicies
     policies = SCPolicies((FIXTURES / 'sc_awl_rules_win_groups.xml').read_bytes())
     empty = SCAWLPolicyRules(policies.new_empty_policy('AWL Rules (Windows)', 'Empty'))
     assert empty.get_name() == 'Empty'

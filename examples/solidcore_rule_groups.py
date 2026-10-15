@@ -7,7 +7,7 @@
 """
 solidcore_rule_groups.py
 
-Example for the mcafee_epo_policies package: create a user defined Solidcore
+Example for the trellix_epo package: create a user defined Solidcore
 Application Control Rule Group (Windows) and make an Application Control Rules
 policy use it.
 
@@ -26,7 +26,7 @@ Usage:
 
 import sys
 
-from mcafee_epo_policies import SCPolicies, SCAWLPolicyRules, SCRuleGroups, SCException
+from trellix_epo import SCPolicies, SCAWLPolicyRules, SCRuleGroups, SCException
 
 
 def main():

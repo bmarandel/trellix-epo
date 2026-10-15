@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import ESFWPolicyOptions
+from trellix_epo import ESFWPolicyOptions
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'fw_options.xml'
 

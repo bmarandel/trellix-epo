@@ -7,7 +7,7 @@
 """
 firewall_rules.py
 
-Example for the mcafee_epo_policies package: load an ENS Firewall Rules
+Example for the trellix_epo package: load an ENS Firewall Rules
 policy and export its rule tree as a Markdown report.
 
 To change the rules, see firewall_rule_editing.py.
@@ -18,7 +18,7 @@ Usage:
 
 import sys
 
-from mcafee_epo_policies import ESFWPolicyRules
+from trellix_epo import ESFWPolicyRules
 
 
 def main():

@@ -7,8 +7,8 @@
 """
 solidcore_app_control_sample.py
 
-Example for the mcafee_epo_policies package, working directly against an ePO
-server with the "mcafee-epo" API client (pip install mcafee-epo).
+Example for the trellix_epo package, working directly against an ePO
+server with the ePO Web API client of the library (EPOClient).
 
 It retrieves the Application Control Rules (Windows) policy "App CTRL Windows
 Sample" from ePO - a policy using the Trellix Rule Groups and the Rule Groups
@@ -33,8 +33,8 @@ Usage:
 import base64
 import sys
 
-from mcafee_epo_policies import SCAWLPolicyRules, SCRuleGroups, SCException
-from epo_solidcore import SolidcoreEPO, parser
+from trellix_epo import SCAWLPolicyRules, SCRuleGroups, SCException
+from epo_connection import connect, parser
 
 TYPE_ID = 'AWL Rules (Windows)'
 
@@ -63,7 +63,7 @@ def get_or_create_policy(epo, name):
     """
     Returns the policy from ePO, or a new one with the Trellix Rule Groups.
     """
-    policies = epo.export_policies()
+    policies = epo.export_policies('SOLIDCORE_META')
     policy_xml = policies.get_policy(TYPE_ID, name)
     if policy_xml is not None:
         print('Policy "{}" found in ePO.'.format(name))
@@ -175,7 +175,7 @@ def main():
     args_parser.add_argument('--certificate',
                              help='a certificate file (.cer/.pem) to add as a trusted publisher')
     args = args_parser.parse_args()
-    epo = SolidcoreEPO.from_arguments(args)
+    epo = connect(args)
     certificate = read_certificate(args.certificate) if args.certificate else None
 
     policy = get_or_create_policy(epo, args.policy)
@@ -196,13 +196,13 @@ def main():
         return 0
     exists = epo.rule_group_exists(SCRuleGroups.WINDOWS, SCRuleGroups.APPLICATION_CONTROL,
                                    DATABASE_RULE_GROUP)
-    epo.import_rule_groups(rule_groups, 'sample_rule_group.xml', override=exists)
+    epo.import_rule_groups(rule_groups, override=exists, file_name='sample_rule_group.xml')
     print('Rule Group "{}" {} in ePO.'.format(DATABASE_RULE_GROUP,
                                               'updated' if exists else 'created'))
     if policy.add_rule_group(group):
         print('  added to the policy.')
     policy.save_to_file(policy_file)
-    print(epo.import_policies(policy.get_xml_content(), policy_file, force=True).strip())
+    print(epo.import_policies(policy, force=True, file_name=policy_file))
     print('Policy "{}" imported into ePO.'.format(args.policy))
     return 0
 

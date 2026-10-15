@@ -7,7 +7,7 @@
 """
 on_access_scan.py
 
-Example for the mcafee_epo_policies package: load an ENS Threat Prevention
+Example for the trellix_epo package: load an ENS Threat Prevention
 On-Access Scan policy, read a few settings, add a folder exclusion, and
 save the result.
 
@@ -17,7 +17,7 @@ Usage:
 
 import sys
 
-from mcafee_epo_policies import ESTPPolicyOnAccessScan, OASExclusionList, Gti
+from trellix_epo import ESTPPolicyOnAccessScan, OASExclusionList, Gti
 
 
 def main():

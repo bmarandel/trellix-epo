@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<epo:EPOPolicyRuleSchema xmlns:epo="mcafee-epo-policyassignmentrule" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<EPOPolicyRule name="Disable Endpoint Security" id="1" systemExpression="( where ( descendsFrom ubp_system &quot;\\&quot; ) )" assignmentMethod="1" userExpression="( where ( hasTag tag_system &quot;EPO/OFF&quot; ) )" notes="">
+<EPOPolicyRuleAssignment policyname="OFF" typeid="EAM_General_Policies" featureid="ENDP_AM_1000" categoryid="EAM_General_Policies">
+</EPOPolicyRuleAssignment>
+</EPOPolicyRule>
+<EPOPolicyRule name="Claude - Rule System Test" id="2" systemExpression="( where ( childOf ubp_system &quot;\\Linux Servers\\&quot; &quot;\\Workstations\\&quot; ) )" assignmentMethod="1" userExpression="( where ( and ( hasTag tag_system &quot;EPO/SQL Server&quot; ) ( doesNotHaveTag tag_system &quot;EPO/OFF&quot; ) ) )" notes="Notes &quot;quoted&quot; &amp; &lt;b&gt;">
+<EPOPolicyRuleAssignment policyname="Demo (Systray)" typeid="General" featureid="EPOAGENTMETA" categoryid="General">
+</EPOPolicyRuleAssignment>
+<EPOPolicyRuleAssignment policyname="Demo (Monitor Fileless)" typeid="EAM_BufferOverflow_Policies" featureid="ENDP_AM_1000" categoryid="EAM_BufferOverflow_Policies">
+</EPOPolicyRuleAssignment>
+<EPOPolicyRuleAssignment policyname="Demo (Monitor Linux)" typeid="EAM_BufferOverflow_Policies" featureid="ENDP_AM_1000" categoryid="EAM_BufferOverflow_Policies">
+</EPOPolicyRuleAssignment>
+<EPOPolicyRuleAssignment policyname="Demo (Ransomware)" typeid="EAM_General_Policies" featureid="ENDP_AM_1000" categoryid="EAM_General_Policies">
+</EPOPolicyRuleAssignment>
+<EPOPolicyRuleAssignment policyname="Demo (No Throttling)" typeid="Lockdown Rules" featureid="SCOR_GEN" categoryid="Lockdown Rules">
+</EPOPolicyRuleAssignment>
+</EPOPolicyRule>
+<EPOPolicyRule name="Claude - Rule Disabled Test" id="3" systemExpression="( where ( descendsFrom ubp_system &quot;\\OT Systems\\&quot; ) )" assignmentMethod="1" userExpression="( where ( hasTag tag_system &quot;EPO/SQL Server&quot; ) )" notes="overwritten">
+<EPOPolicyRuleAssignment policyname="My Default" typeid="General" featureid="SIR_____1000_COLLECT_DATA" categoryid="General">
+</EPOPolicyRuleAssignment>
+</EPOPolicyRule>
+<EPOPolicyRule name="Claude - Rule Import A" id="4" systemExpression="( where ( childOf ubp_system &quot;\\Linux Servers\\&quot; &quot;\\Workstations\\&quot; ) )" assignmentMethod="1" userExpression="( where ( and ( hasTag tag_system &quot;EPO/SQL Server&quot; ) ( doesNotHaveTag tag_system &quot;EPO/OFF&quot; ) ) )" notes="Imported A">
+<EPOPolicyRuleAssignment policyname="Demo (Systray)" typeid="General" featureid="EPOAGENTMETA" categoryid="General">
+</EPOPolicyRuleAssignment>
+<EPOPolicyRuleAssignment policyname="Demo (Monitor Fileless)" typeid="EAM_BufferOverflow_Policies" featureid="ENDP_AM_1000" categoryid="EAM_BufferOverflow_Policies">
+</EPOPolicyRuleAssignment>
+</EPOPolicyRule>
+<EPOPolicyRule name="Claude - Rule Import C1" id="5" systemExpression="( where ( descendsFrom ubp_system &quot;\\Lost&amp;Found\\(none)\\&quot; ) )" assignmentMethod="1" userExpression="" notes="no tag">
+<EPOPolicyRuleAssignment policyname="My Default" typeid="General" featureid="SIR_____1000_COLLECT_DATA" categoryid="General">
+</EPOPolicyRuleAssignment>
+</EPOPolicyRule>
+<EPOPolicyRule name="Claude - Rule Import B4" id="6" systemExpression="( where ( descendsFrom ubp_system &quot;\\Lost&amp;Found\\(none)\\&quot; ) )" assignmentMethod="1" userExpression="" notes="">
+<EPOPolicyRuleAssignment policyname="My Default" typeid="General" featureid="SIR_____1000_COLLECT_DATA" categoryid="General">
+</EPOPolicyRuleAssignment>
+</EPOPolicyRule>
+</epo:EPOPolicyRuleSchema>

@@ -21,7 +21,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import (SIRPolicies, SIRPolicyCollectData, SIRPolicySetRegistry,
+from trellix_epo import (SIRPolicies, SIRPolicyCollectData, SIRPolicySetRegistry,
                                  SIRRegistryValue)
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'sir_policies.xml'

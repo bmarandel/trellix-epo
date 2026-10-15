@@ -7,7 +7,7 @@
 """
 access_protection.py
 
-Example for the mcafee_epo_policies package: load an ENS Threat Prevention
+Example for the trellix_epo package: load an ENS Threat Prevention
 Access Protection policy, list its rules, then - as in the console - create
 a rule blocking ransomware file extensions and the change of the Run
 registry key, block a Trellix-defined rule and add an exclusion.
@@ -18,7 +18,7 @@ Usage:
 
 import sys
 
-from mcafee_epo_policies import (ESTPPolicyAccessProtection, APRule, APSubRule, APTarget,
+from trellix_epo import (ESTPPolicyAccessProtection, APRule, APSubRule, APTarget,
                                  APExecutable, APUserName)
 
 

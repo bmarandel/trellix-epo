@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import ESTPPolicyOnDemandScan, ODSLocationList, ODSExclusionList
+from trellix_epo import ESTPPolicyOnDemandScan, ODSLocationList, ODSExclusionList
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'ods_policy.xml'
 
@@ -63,7 +63,7 @@ def test_gti_level(ods_policy):
 # Bounds and rules of the On-Demand Scan page (Threat Prevention 26.8.0.16045), checked on the
 # lab: the defer settings are reset by the console when "User can defer scans" is unchecked, a
 # user name makes the (console only) password required.
-from mcafee_epo_policies.es.tp.ondemandscan import check_scan_location, DEFAULT_DEFER_MESSAGE
+from trellix_epo.es.tp.ondemandscan import check_scan_location, DEFAULT_DEFER_MESSAGE
 
 SCAN_LOCATION_PATHS = [('C:\\Data', True), ('D:\\Share\\folder\\', True), ('\\\\server\\share', True),
                        ('%TEMP%', True), ('relative', True), ('C:\\a;b', False), ('C:\\a*', False),

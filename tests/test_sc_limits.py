@@ -20,13 +20,13 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies.sc import SCPolicies
-from mcafee_epo_policies.sc.awl import SCAWLPolicyOptions, SCAWLPolicyRules
-from mcafee_epo_policies.sc.cc import SCCCPolicyRules
-from mcafee_epo_policies.sc.fim import SCFIMPolicyRules
-from mcafee_epo_policies.sc.gen import SCGENPolicyConfiguration, SCGENPolicyExceptionRules
-from mcafee_epo_policies.sc.rulegroups import check_rule_group_name
-from mcafee_epo_policies.validators import (is_sc_path, is_sc_updater_name, is_sc_cc_path,
+from trellix_epo.sc import SCPolicies
+from trellix_epo.sc.awl import SCAWLPolicyOptions, SCAWLPolicyRules
+from trellix_epo.sc.cc import SCCCPolicyRules
+from trellix_epo.sc.fim import SCFIMPolicyRules
+from trellix_epo.sc.gen import SCGENPolicyConfiguration, SCGENPolicyExceptionRules
+from trellix_epo.sc.rulegroups import check_rule_group_name
+from trellix_epo.validators import (is_sc_path, is_sc_updater_name, is_sc_cc_path,
                                             is_sc_directory, is_sc_file_name, is_sc_email_list,
                                             is_sc_website, is_sc_exclusion_value, is_sc_fim_user,
                                             is_sc_fim_pattern, is_sc_registry_key,

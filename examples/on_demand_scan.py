@@ -7,7 +7,7 @@
 """
 on_demand_scan.py
 
-Example for the mcafee_epo_policies package: load an ENS Threat Prevention
+Example for the trellix_epo package: load an ENS Threat Prevention
 On-Demand Scan policy, adjust the Full Scan locations and exclusions, and
 save the result.
 
@@ -17,7 +17,7 @@ Usage:
 
 import sys
 
-from mcafee_epo_policies import ESTPPolicyOnDemandScan, ODSLocationList, ODSExclusionList
+from trellix_epo import ESTPPolicyOnDemandScan, ODSLocationList, ODSExclusionList
 
 
 def main():

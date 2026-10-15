@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import SCGENPolicyConfiguration, SCPolicies, State
+from trellix_epo import SCGENPolicyConfiguration, SCPolicies, State
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'sc_gen_config.xml'
 

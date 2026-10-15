@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import ESTPPolicyOptions
+from trellix_epo import ESTPPolicyOptions
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'tp_options.xml'
 
@@ -66,7 +66,7 @@ def test_markdown(options_policy):
 # ------------------------------ Values accepted by the console ------------------------------
 # validateQuarantineFilePath of the Options page (Threat Prevention 26.8.0.16045) run on the
 # lab, without prefix and with the <SYSTEM_DRIVE> prefix.
-from mcafee_epo_policies.es.tp.options import check_quarantine_folder
+from trellix_epo.es.tp.options import check_quarantine_folder
 
 QUARANTINE_FOLDERS = [('C:\\Quarantine', True), ('C:\\Q\\sub', True), ('**\\Q', True),
                       ('C:\\Q\\\\x', False), ('C:Q', False), ('Q', False), ('C:\\Q?', False),

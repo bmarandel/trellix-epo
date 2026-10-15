@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import SCFIMPolicyRules
+from trellix_epo import SCFIMPolicyRules
 
 FIXTURES = Path(__file__).parent / 'fixtures'
 

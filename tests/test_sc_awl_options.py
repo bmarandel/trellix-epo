@@ -15,7 +15,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import SCAWLPolicyOptions, SCReputation as rep, State
+from trellix_epo import SCAWLPolicyOptions, SCReputation as rep, State
 
 FIXTURES = Path(__file__).parent / 'fixtures'
 

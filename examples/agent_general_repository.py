@@ -7,7 +7,7 @@
 """
 agent_general_repository.py
 
-Example for the mcafee_epo_policies package: load a McAfee Agent "General"
+Example for the trellix_epo package: load a McAfee Agent "General"
 policy and a McAfee Agent "Repository" policy, read and adjust a few common
 settings, and save the result.
 
@@ -22,16 +22,16 @@ not a raw multi-policy export.
 import sys
 import xml.etree.ElementTree as et
 
-from mcafee_epo_policies import (
-    McAfeeAgentPolicyGeneral,
-    McAfeeAgentPolicyRepository,
+from trellix_epo import (
+    TAPolicyGeneral,
+    TAPolicyRepository,
     RepositoryList,
 )
 
 
 def load_policy(policy_class, file_path):
     """
-    McAfeeAgentPolicyGeneral/Repository take their policy element directly
+    TAPolicyGeneral/Repository take their policy element directly
     at construction time (no optional default, unlike the ENS classes), so
     parse the file and pass the root explicitly instead of calling
     load_from_file() on an empty instance.
@@ -46,7 +46,7 @@ def main():
               '<repository_policy.xml>', file=sys.stderr)
         return 1
 
-    general = load_policy(McAfeeAgentPolicyGeneral, sys.argv[1])
+    general = load_policy(TAPolicyGeneral, sys.argv[1])
     print('General policy "{}" from server {}'.format(
         general.get_name(), general.get_epo_server()))
     print('  Agent-to-server communication interval: {} minutes'.format(general.asci))
@@ -59,7 +59,7 @@ def main():
     general.save_to_file('general_updated.xml')
     print('  -> saved to general_updated.xml')
 
-    repository = load_policy(McAfeeAgentPolicyRepository, sys.argv[2])
+    repository = load_policy(TAPolicyRepository, sys.argv[2])
     print()
     print('Repository policy "{}"'.format(repository.get_name()))
     repo_list = RepositoryList(repository.get_site_list())

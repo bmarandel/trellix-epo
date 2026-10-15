@@ -20,10 +20,10 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import ESWCPolicies
-from mcafee_epo_policies.es.wc import (ESWCPolicyOptions, ESWCPolicyBlockAllowList,
+from trellix_epo import ESWCPolicies
+from trellix_epo.es.wc import (ESWCPolicyOptions, ESWCPolicyBlockAllowList,
                                        ESWCPolicyMessaging, WCSite)
-from mcafee_epo_policies.validators import (is_wc_ip_list, is_wc_gateway_ip_list,
+from trellix_epo.validators import (is_wc_ip_list, is_wc_gateway_ip_list,
                                             is_wc_domain_name, is_wc_reporter_url,
                                             is_wc_site_pattern)
 

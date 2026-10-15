@@ -7,8 +7,8 @@
 """
 solidcore_fim_windows_critical_files.py
 
-Example for the mcafee_epo_policies package, working directly against an ePO
-server with the "mcafee-epo" API client (pip install mcafee-epo).
+Example for the trellix_epo package, working directly against an ePO
+server with the ePO Web API client of the library (EPOClient).
 
 It creates (or updates) a Solidcore Integrity Monitoring Rules (Windows) policy
 for Windows Server 2019, starting from a blank policy:
@@ -40,8 +40,8 @@ Usage:
 
 import sys
 
-from mcafee_epo_policies import SCFIMPolicyRules, SCRuleGroups
-from epo_solidcore import SolidcoreEPO, parser
+from trellix_epo import SCFIMPolicyRules, SCRuleGroups
+from epo_connection import connect, parser
 
 TYPE_ID = 'Mon Rules (Windows)'
 TRELLIX_RULE_GROUP = 'Windows 2019 Server (64 bit) Base Filters'
@@ -111,10 +111,10 @@ def main():
     args_parser.add_argument('--policy', default='FIM Windows Server 2019 Sample',
                              help='policy name (default: %(default)s)')
     args = args_parser.parse_args()
-    epo = SolidcoreEPO.from_arguments(args)
+    epo = connect(args)
 
     # 1. A blank policy, or the policy created by a previous run.
-    policies = epo.export_policies()
+    policies = epo.export_policies('SOLIDCORE_META')
     policy_xml = policies.get_policy(TYPE_ID, args.policy)
     if policy_xml is None:
         policy_xml = policies.new_empty_policy(TYPE_ID, args.policy)
@@ -148,14 +148,15 @@ def main():
         return 0
     exists = epo.rule_group_exists(SCRuleGroups.WINDOWS, SCRuleGroups.INTEGRITY_MONITOR,
                                    CRITICAL_RULE_GROUP)
-    epo.import_rule_groups(rule_groups, 'windows_critical_config_files.xml', override=exists)
+    epo.import_rule_groups(rule_groups, override=exists,
+                           file_name='windows_critical_config_files.xml')
     print('  {} in ePO.'.format('updated' if exists else 'created'))
     if policy.add_rule_group(critical_group):
         print('  added to the policy.')
 
     # 3. The policy.
     policy.save_to_file(policy_file)
-    print(epo.import_policies(policy.get_xml_content(), policy_file, force=True).strip())
+    print(epo.import_policies(policy, force=True, file_name=policy_file))
     print('Policy "{}" imported into ePO, Rule Groups: {}'.format(
         args.policy, ', '.join(policy.get_rule_group_names())))
     return 0

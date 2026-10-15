@@ -1,12 +1,12 @@
 """
-The examples of mcafee_epo_policies.validators (a valid and an invalid value
+The examples of trellix_epo.validators (a valid and an invalid value
 for each check, in doctest format) and of its regular expressions.
 """
 
 import doctest
 
-from mcafee_epo_policies import validators
-from mcafee_epo_policies.validators import (ENS_USER_NAME, EP_SID, EP_USER_NAME, EP_GROUP_NAME,
+from trellix_epo import validators
+from trellix_epo.validators import (ENS_USER_NAME, EP_SID, EP_USER_NAME, EP_GROUP_NAME,
                                             EP_HOSTNAME, EP_REGISTRY, EP_EXPERT_RULE_NAME)
 
 

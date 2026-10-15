@@ -3,9 +3,9 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mcafee_epo_policies"
+name = "trellix-epo"
 version = "1.2.0"
-description = "McAfee ePolicy Orchestrator Policies Python Class Library"
+description = "Trellix ePolicy Orchestrator policies and Web API Python library"
 readme = "README.md"
 license = "Apache-2.0"
 authors = [{ name = "Benjamin Marandel" }]
@@ -19,18 +19,16 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/bmarandel/mcafee-epo-policies"
+Homepage = "https://github.com/bmarandel/trellix-epo"
 
 [project.optional-dependencies]
 test = ["pytest>=7"]
-# For the examples working directly against an ePO server (examples/epo_solidcore.py).
-examples = ["mcafee-epo>=1.1"]
 
 [tool.setuptools.packages.find]
-include = ["mcafee_epo_policies*"]
+include = ["trellix_epo*"]
 
 [tool.setuptools.package-data]
-"mcafee_epo_policies.ma" = ["*.ca"]
+"trellix_epo.ta" = ["*.ca"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

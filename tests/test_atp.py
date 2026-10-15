@@ -22,7 +22,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import ESATPPolicies, ESATPPolicyOptions, ESATPPolicyDAC, DACExclusion
+from trellix_epo import ESATPPolicies, ESATPPolicyOptions, ESATPPolicyDAC, DACExclusion
 
 FIXTURE = Path(__file__).parent / 'fixtures' / 'atp_policies.xml'
 DAC = ESATPPolicyDAC.TYPE

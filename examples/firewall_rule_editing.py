@@ -7,7 +7,7 @@
 """
 firewall_rule_editing.py
 
-Example for the mcafee_epo_policies package: load an ENS Firewall Rules
+Example for the trellix_epo package: load an ENS Firewall Rules
 policy, print its rule tree, then - as in the console "Add Group" / "Add
 Rule" dialogs - add a group with a location holding a rule (networks,
 application, schedule), move a rule into the group, disable a rule and
@@ -19,7 +19,7 @@ Usage:
 
 import sys
 
-from mcafee_epo_policies import (ESFWPolicyRules, FWRule, FWGroup, FWNetwork, FWApplication,
+from trellix_epo import (ESFWPolicyRules, FWRule, FWGroup, FWNetwork, FWApplication,
                                  FWExecutable, FWLocation)
 
 

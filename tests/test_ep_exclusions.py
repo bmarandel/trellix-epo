@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from mcafee_epo_policies import Policies, ESTPPolicyExploitPrevention, EPExclusion, EPExecutable
+from trellix_epo import Policies, ESTPPolicyExploitPrevention, EPExclusion, EPExecutable
 
 FIXTURES = Path(__file__).parent / 'fixtures'
 GUID = re.compile(r'^[0-9a-f-]{36}$')

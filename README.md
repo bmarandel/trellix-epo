@@ -1,30 +1,37 @@
-# McAfee ePolicy Orchestrator Policies Python Class Library
+# Trellix ePolicy Orchestrator Python Library (trellix-epo)
 
-![PyPI](https://img.shields.io/pypi/v/mcafee_epo_policies)
+![PyPI](https://img.shields.io/pypi/v/trellix-epo)
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![Status](https://img.shields.io/badge/status-stable-brightgreen)
-![License](https://img.shields.io/github/license/bmarandel/mcafee-epo-policies)
-![Top language](https://img.shields.io/github/languages/top/bmarandel/mcafee-epo-policies)
+![License](https://img.shields.io/github/license/bmarandel/trellix-epo)
+![Top language](https://img.shields.io/github/languages/top/bmarandel/trellix-epo)
 
 ## Overview
 
+This package was published as `mcafee-epo-policies` up to version 1.2.0; it
+continues as `trellix-epo` (`pip install trellix-epo`, `import trellix_epo`)
+from version 2.0.0, see the History.
+
 This package provides a set of Python classes to read, inspect, and modify policy
-documents exported from the Policy Catalog of McAfee ePolicy Orchestrator (ePO),
+documents exported from the Policy Catalog of Trellix (formerly McAfee)
+ePolicy Orchestrator (ePO),
 without needing to know the underlying XML schema. Each supported policy is
 exposed as an object with named properties (e.g. `policy.asci = 15`) instead of
 raw Section/Setting XML lookups. Policies can also be exported as a Markdown
 document (`to_markdown()` / `save_markdown()`, see "Policy documentation"
-below) to keep a documentation of the enforced security policies.
+below) to keep a documentation of the enforced security policies. A client of
+the ePO Web API (`EPOClient`, see "ePO Web API" below) exports and imports the
+policies directly from the ePO server.
 
 ## Supported policies
 
 | Product | Policy | Status | Markdown report |
 |---|---|---|---|
-| McAfee Agent | General | Full read/write | Yes |
-| McAfee Agent | Repository | Full read/write | Yes |
-| McAfee Agent | Troubleshooting | Full read/write | Yes |
-| McAfee Agent | Custom Properties | Full read/write | Yes |
-| McAfee Agent | Product Improvement Program (Telemetry) | Full read/write | Yes |
+| Trellix Agent | General | Full read/write | Yes |
+| Trellix Agent | Repository | Full read/write | Yes |
+| Trellix Agent | Troubleshooting | Full read/write | Yes |
+| Trellix Agent | Custom Properties | Full read/write | Yes |
+| Trellix Agent | Product Improvement Program (Telemetry) | Full read/write | Yes |
 | ENS Common | Options | Full read/write (passwords: see the note below) | Yes |
 | ENS Threat Prevention | On-Access Scan | Full read/write | Yes |
 | ENS Threat Prevention | On-Demand Scan | Full read/write | Yes |
@@ -63,7 +70,7 @@ export (`to_markdown()` / `save_markdown()`); for the other policy classes
 these methods raise `NotImplementedError` for now (`SCRuleGroups` has no
 Markdown export method yet).
 
-McAfee Agent policy coverage is complete - all 5 McAfee Agent policy types are implemented.
+Trellix Agent policy coverage is complete - all 5 Trellix Agent policy types are implemented.
 
 Endpoint Security (ENS) policy coverage is complete - all 15 ENS policy types
 of the ePO Policy Catalog are implemented: Common (Options), Threat Prevention
@@ -86,24 +93,24 @@ subpackage: all policy types except Protection.
 ## Installation
 
 ```
-pip install mcafee_epo_policies
+pip install trellix-epo
 ```
 
 ## Usage
 
 ```python
-from mcafee_epo_policies import McAfeeAgentPolicies, McAfeeAgentPolicyGeneral
+from trellix_epo import TAPolicies, TAPolicyGeneral
 
 # Load a Policies export (XML) from the ePO Policy Catalog
 with open('EPOAGENTMETA_policies.xml', 'rb') as f:
-    policies = McAfeeAgentPolicies(f.read())
+    policies = TAPolicies(f.read())
 
 # List the policies contained in the export
 print(policies.list())
 
 # Extract one policy and wrap it for editing
 policy_xml = policies.get_policy('General', 'My Custom Policy')
-policy = McAfeeAgentPolicyGeneral(policy_xml)
+policy = TAPolicyGeneral(policy_xml)
 
 # Read and change a setting through a property, instead of raw XML
 print(policy.asci)
@@ -130,6 +137,157 @@ server keeps 3072 characters per setting and truncates the rest, even on
 import (a long Exploit Prevention Expert Rule is split over several
 settings, as the console does).
 
+The Trellix Agent General policy also holds the TLS cipher suites of the
+agent 5.8.7 (extension 5.8.7), which no console page shows:
+`TAPolicyGeneral.cipher_suites` (TLS 1.2) and `tls13_cipher_suites` read
+them, and the Markdown export lists them. They are read only: the ePO
+server manages them.
+
+### ePO Web API
+
+`EPOClient` connects to the ePO Web API (`https://<server>:8443/remote/...`)
+with the Python standard library only, so that policies can be exported,
+edited and imported back from the same script. The password stays in
+memory: the library never writes it.
+
+```python
+from trellix_epo import EPOClient, EPOError
+
+epo = EPOClient('https://epo.example.com:8443', 'admin', password)
+# or EPOClient.from_environment() with EPO_URL, EPO_USER and EPO_PASSWORD;
+# verify=False skips the certificate check (lab servers only), verify='ca.pem'
+# uses a CA file.
+
+# Export all the policies of a product: the policy class of the product comes
+# back (ESTPPolicies for ENDP_AM_1000, SCPolicies for SOLIDCORE_META...)
+policies = epo.export_policies('ENDP_AM_1000')
+policy = ESTPPolicyOnAccessScan(policies.get_policy('EAM_General_Policies', 'My Default'))
+# ... edit it, then import it back (force=True replaces a policy with the same name)
+print(epo.import_policies(policies, force=True))
+
+# Any Web API command, the JSON answers decoded; an ePO error raises EPOError
+epo.find_policies('Threat Prevention')
+epo.query('EPOLeafNode', '(select EPOLeafNode.NodeName)', '(eq EPOLeafNode.ManagedState 1)')
+epo.call('system.find', 'W2022', searchNameOnly=True)
+print(epo.help('policy.find'))
+
+# Solidcore Rule Groups (scor.rulegroup.* commands)
+group = epo.export_rule_group(SCRuleGroups.WINDOWS, SCRuleGroups.APPLICATION_CONTROL, 'Docker')
+```
+
+The client handles the ePO answers: the status line (`OK:` / `Error <n> :`),
+the commands that ignore `:output=json` (`policy.export`, `scor.*`), the
+`scor.*` errors sent in an `OK:` answer, and the file uploads of
+`policy.importPolicy` and `scor.rulegroup.import`.
+
+### ePO tags
+
+The ePO Web API spreads the tags over many commands (`system.findTag`,
+`system.exportTag`, `system.importTag`, `system.applyTag`,
+`ComputerMgmt.createTagGroup`...) and has no command to create or edit a
+tag. `epo.tags` gives one method per task, by tag and group names:
+
+```python
+from trellix_epo import EPOClient, Tag, TagCriteria
+
+epo = EPOClient.from_environment()
+
+# A manual tag, in a tag group (created with its parents if missing)
+epo.tags.groups.create('Policy Management')
+epo.tags.create(Tag('OFF', 'Systems that get the OFF policies', group='Policy Management'))
+epo.tags.apply('OFF', ['W10ENTB01', 'W2022CORE'])     # names, IP addresses or ids
+epo.tags.systems('OFF')                 # {'tagged': [...], 'excluded': [...]}
+epo.tags.clear('OFF', 'W2022CORE')
+
+# A criteria tag, written as in the console builder: the conditions on
+# different properties are all required, the ones on the same property are
+# joined with "and" or "or"
+criteria = TagCriteria()
+criteria.add('OS Platform', 'eq', 'Server').add('OS Platform', 'eq', 'Workstation')
+criteria.set_grouping('OS Platform', 'or')
+criteria.add('Free Disk Space', 'Greater than', '10 GB')
+criteria.add('Last System Boot Time', 'olderThan', '2 weeks')
+criteria.add('IP address', 'match_any', ['192.168.100.0/24', '10.0.0.1-10.0.0.9'])
+criteria.add('Is 64-bit OS', 'eq', 'Yes')
+epo.tags.save(Tag('Old servers', 'Not rebooted for 2 weeks', criteria,
+                  evaluate_on_asci=True))
+epo.tags.run_criteria('Old servers')    # number of systems affected
+
+for tag in epo.tags.list():             # name, notes, criteria, group path, type...
+    print(tag.name, tag.group, tag.tag_type, tag.criteria)
+```
+
+- **Criteria**: prefer the properties of the "Computer Properties" category
+  (`EPOComputerProperties.*`): the product properties depend on the
+  extensions installed on the server. The 120 system properties of the
+  console builder are available (by key, by label, or "category: label"
+  when several products share a label) with the operators of each
+  property (`eq` or `Equals`...). The values are
+  given as in the console and converted as the server does: sizes (`'10
+  GB'`), durations (`'2 weeks'`, a month is 30 days), dates (`datetime`),
+  IPv4/IPv6 addresses, ranges, subnets and lists, versions, languages and
+  Yes/No lists by their label. `TagCriteria.from_squid()` reads the criteria
+  of an existing tag back.
+- **Checks** as in the console: tag name of 50 characters (unique, case
+  ignored), text values of 100 or 255 characters, number of digits per
+  size unit, durations from 1 to 9999, address lists of 2048 characters,
+  tag group names without ``\/"[]:|<>+=;?*@`` and 5 levels at most.
+- **Server pitfalls handled**: `save()` imports the tag, places it with the
+  group id (the import file only has a group name, and an update without it
+  moves the tag back to "My Tags") and reads it back, since the import
+  answers "true" even when it ignored the tag. A tag can't be renamed (ePO
+  has no command for it). `run_criteria(name, reset=True)` also removes the
+  manual additions and exclusions.
+
+### Policy Assignment Rules
+
+The ePO Web API has no command for the Policy Assignment Rules: the console
+only imports and exports them as an XML file (Policy > Policy Assignment
+Rules > Actions > Import / Export). `trellix_epo.assignmentrules` reads that
+file and writes it, byte for byte as the console exports it, so that a rule
+can be written in code and imported by hand:
+
+```python
+from trellix_epo import AssignmentRule, AssignmentRuleList, PolicyAssignment, EPOClient
+
+# Every system with the "Suspicious" tag (set by the helpdesk) gets harder policies
+rule = AssignmentRule('Suspicious systems', 'My Organization',     # and its subgroups
+                      tags=['Suspicious'],               # or [('OFF', False)], joiner 'and'/'or'
+                      notes='Harder policies for the systems tagged by the helpdesk.')
+rule.add_policy(PolicyAssignment.from_console('Endpoint Security Threat Prevention',
+                                              'On-Access Scan', 'Suspicious'))
+rule.add_policy('Suspicious EP', 'EAM_BufferOverflow_Policies', 'ENDP_AM_1000')
+# or rule.add_policy(policy): a Policy of the library (typeid and featureid of the export)
+
+rules = AssignmentRuleList()
+rules.add(rule)
+print(rules.check_server(EPOClient.from_environment()))   # [] or the problems found
+rules.save_to_file('suspicious_rule.xml')                 # to import in the console
+
+rules = AssignmentRuleList.load_from_file('Policy_Assignment_Rules.xml')   # console export
+print(rules.to_markdown())
+```
+
+- **System Based rules**: System Tree groups by path (`'Workstations'`,
+  `'My Organization\\Lost and Found\\(none)'`), with their subgroups or not
+  (`subgroups=False`), any of the groups; tags "Has tag" / "Does not have
+  tag" (by name, without the tag group), all of them or any. The rule name
+  (128 characters), the notes (1024) and the policies are checked as in the
+  wizard: one policy per category, several for the "Multi-slot" categories
+  (Exploit Prevention, Web Control Block and Allow List and Content Actions,
+  Solidcore rules, Configuration and Exception Rules).
+- **Import behavior** (ePO 5.10 Update 7): a rule is matched by name; a new
+  rule is added at the end (lowest priority) and enabled, an existing one is
+  replaced and keeps its priority and its enabled or disabled state (the
+  file has neither). Move a new rule with Actions > Edit Priority. A file
+  with an unknown group or policy is refused as a whole; **a rule with an
+  unknown tag is imported without its tag criteria** and then applies to
+  every system of its groups: `check_server()` reads the groups, tags and
+  policies of the server (read only) before the import.
+- **User Based rules** (LDAP users and groups, ENS Firewall and Web Control
+  only) are read and written back unchanged, not created: they need an LDAP
+  server registered in ePO, not available on the test server.
+
 ### Policy documentation (Markdown)
 
 Most companies must keep a documentation of the security policies they
@@ -146,7 +304,7 @@ policy.save_markdown('On-Access Scan - My Custom Policy.md',
                      author='Jane Doe', reviewers=['CISO'])
 ```
 
-Available for all McAfee (Trellix) Agent policy types (General, Repository,
+Available for all Trellix (McAfee) Agent policy types (General, Repository,
 Troubleshooting, Custom Properties, Product Improvement Program), System
 Information Reporter (Collect Data, Set Registry), all Solidcore
 policy types (the rules policies list their Rule Groups, then the tabs of My
@@ -164,7 +322,7 @@ Prevention lists the same 486 signatures as the console). See
 ### ENS Access Protection rules
 
 ```python
-from mcafee_epo_policies import (ESTPPolicyAccessProtection, APRule, APSubRule, APTarget,
+from trellix_epo import (ESTPPolicyAccessProtection, APRule, APSubRule, APTarget,
                                  APExecutable, APUserName)
 
 rule = APRule('Block ransomware extensions', block=True, report=True)
@@ -182,7 +340,7 @@ and `APSubRule.LINUX_OPERATIONS` (Linux rules), with the console labels.
 ### ENS Storage Protection
 
 ```python
-from mcafee_epo_policies import ESSPPolicies, ESSPPolicyNetApp, SPExclusion
+from trellix_epo import ESSPPolicies, ESSPPolicyNetApp, SPExclusion
 
 policies = ESSPPolicies(xml_export)               # policy.export productId=VSESTOMD1300
 policy = ESSPPolicyNetApp(policies.get_policy('VSES1000_Netapp_Policies', 'My Default'))
@@ -201,7 +359,7 @@ methods.
 ### ENS Common
 
 ```python
-from mcafee_epo_policies import ESCommonPolicies, ESCommonPolicyOptions, AACExclusion
+from trellix_epo import ESCommonPolicies, ESCommonPolicyOptions, AACExclusion
 
 policies = ESCommonPolicies(xml_export)           # policy.export productId=ENDP_GS_1000
 policy = ESCommonPolicyOptions(policies.get_policy(ESCommonPolicyOptions.TYPE, 'My Default'))
@@ -225,7 +383,7 @@ sets them; the Markdown export only says they are defined in the console.
 ### ENS Adaptive Threat Protection
 
 ```python
-from mcafee_epo_policies import ESATPPolicies, ESATPPolicyOptions, ESATPPolicyDAC, DACExclusion
+from trellix_epo import ESATPPolicies, ESATPPolicyOptions, ESATPPolicyDAC, DACExclusion
 
 policies = ESATPPolicies(xml_export)              # policy.export productId=TIEClientMETA
 options = ESATPPolicyOptions(policies.get_policy('General', 'My Default'))
@@ -250,7 +408,7 @@ are given by their RuleID or console label (`ESATPPolicyDAC.RULES`).
 ### ENS Web Control
 
 ```python
-from mcafee_epo_policies import (ESWCPolicies, ESWCPolicyOptions, ESWCPolicyBlockAllowList, WCSite,
+from trellix_epo import (ESWCPolicies, ESWCPolicyOptions, ESWCPolicyBlockAllowList, WCSite,
                                  ESWCPolicyContentActions, ESWCPolicyMessaging, RatingActions)
 
 policies = ESWCPolicies(xml_export)               # policy.export productId=ENDP_WP_1000
@@ -279,7 +437,7 @@ in the console, the library keeps it and never writes it in the Markdown export.
 
 ```python
 import datetime
-from mcafee_epo_policies import (SIRPolicies, SIRPolicyCollectData, SIRPolicySetRegistry,
+from trellix_epo import (SIRPolicies, SIRPolicyCollectData, SIRPolicySetRegistry,
                                  SIRRegistryValue)
 
 policies = SIRPolicies(xml_export)                # policy.export productId=SIR_____1000
@@ -304,7 +462,7 @@ a hive (`[HKLM]\\`...), files and folders with `[SYSTEMDRIVE]\\`,
 ### ENS Firewall rules
 
 ```python
-from mcafee_epo_policies import (FWRule, FWGroup, FWNetwork, FWApplication, FWExecutable,
+from trellix_epo import (FWRule, FWGroup, FWNetwork, FWApplication, FWExecutable,
                                  FWLocation, FWAddress)
 
 rule = FWRule('Allow backup server', FWRule.ALLOW, FWRule.OUT, log=True,
@@ -337,7 +495,7 @@ products, a Solidcore policy is a list of rules, plus references to shared Rule
 Groups: each tab of the ePO console has its own list methods.
 
 ```python
-from mcafee_epo_policies import SCPolicies, SCAWLPolicyRules, SCException
+from trellix_epo import SCPolicies, SCAWLPolicyRules, SCException
 
 with open('SOLIDCORE_META_policies.xml', 'rb') as f:
     policies = SCPolicies(f.read())
@@ -363,7 +521,7 @@ the user defined Rule Groups). `SCRuleGroups` reads and writes those files, and
 each Rule Group is edited with the same methods as the matching policy tabs.
 
 ```python
-from mcafee_epo_policies import SCRuleGroups, SCAWLPolicyRules
+from trellix_epo import SCRuleGroups, SCAWLPolicyRules
 
 rule_groups = SCRuleGroups()   # or SCRuleGroups(<scor.rulegroup.export output>)
 group = rule_groups.new_rule_group('My Apps', SCRuleGroups.APPLICATION_CONTROL,
@@ -401,7 +559,7 @@ Monitoring Rules (Unix)); `SCPolicies.list()` shows them.
 ### Trellix EDR with Forensics
 
 ```python
-from mcafee_epo_policies import (EDRFPolicies, EDRFPolicyGeneral, EDRFPolicyStreaming,
+from trellix_epo import (EDRFPolicies, EDRFPolicyGeneral, EDRFPolicyStreaming,
                                  EDRFEventLog, EDRFSyslogServer, EDRFPolicyDetection,
                                  EDRFRegistryExclusion, EDRFPolicyInvestigation,
                                  EDRFPolicyRemediation, EDRFAllowedIP)
@@ -503,14 +661,14 @@ and 50.3. Notes:
 
 ### Address checks
 
-`mcafee_epo_policies.validators` holds address checks shared by the policy
+`trellix_epo.validators` holds address checks shared by the policy
 classes, written as the regular expressions of the ePO console extensions so
 that a class refuses exactly what its console refuses: `is_ipv4()`,
 `is_ipv6()` (every short form, link-local zone, IPv4 mapped), `is_hostname()`
 (a DNS name with a domain) and `is_ip_or_hostname()`.
 
 ```python
-from mcafee_epo_policies.validators import is_ip_or_hostname
+from trellix_epo.validators import is_ip_or_hostname
 
 is_ip_or_hostname('fd00::10')       # True
 is_ip_or_hostname('localhost')      # False: the console wants a domain
@@ -519,7 +677,7 @@ is_ip_or_hostname('localhost')      # False: the console wants a domain
 ## Examples
 
 The [`examples/`](examples/) directory has short, runnable scripts covering
-McAfee Agent (General/Repository), ENS Threat Prevention (On-Access Scan,
+Trellix Agent (General/Repository), ENS Threat Prevention (On-Access Scan,
 On-Demand Scan, process exclusions), ENS Firewall (Rules reporting and editing), and
 Solidcore (Application Control, Integrity Monitor and Change Control policies,
 Rule Groups - some of them working directly against an ePO server) and Trellix
@@ -875,7 +1033,7 @@ Starting point for this changelog.
 
 ## Bugs and Feedback
 
-For bugs, questions and discussions please use the [GitHub Issues](https://github.com/bmarandel/mcafee-epo-policies/issues).
+For bugs, questions and discussions please use the [GitHub Issues](https://github.com/bmarandel/trellix-epo/issues).
 
 ## License
 
