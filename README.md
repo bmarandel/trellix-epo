@@ -64,7 +64,6 @@ policies directly from the ePO server.
 | Trellix EDR with Forensics | Detection | Full read/write: events, exclusions, registry key exclusions | Yes |
 | Trellix EDR with Forensics | Investigation | Full read/write: Real-Time Search, Network Flow, File Hashing, exclusions | Yes |
 | Trellix EDR with Forensics | Remediation | Full read/write: Host Remediation, containment page (by hand with title and logo, or from URL), messages and exclusions, allowed IP addresses (password: see below) | Yes |
-| Trellix EDR with Forensics | Protection | Not supported (removed by the extension 50.3) | No |
 
 The "Markdown report" column tells which policy types support the Markdown
 export (`to_markdown()` / `save_markdown()`); for the other policy classes
