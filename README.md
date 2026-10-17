@@ -58,7 +58,7 @@ policies directly from the ePO server.
 | Solidcore - Application Control | Application Control Rules (Windows/Unix) | Full read/write (all tabs); Rule Groups added/removed | Yes |
 | Solidcore - Change Control | Change Control Rules (Windows/Unix) | Full read/write (all tabs); Rule Groups added/removed | Yes |
 | Solidcore - Integrity Monitor | Integrity Monitoring Rules (Windows/Unix) | Full read/write (all tabs); Rule Groups added/removed | Yes |
-| Solidcore | Rule Groups (Application Control, Change Control, Integrity Monitor) | Full read/write of the `scor.rulegroup.export` / `import` files | Not yet |
+| Solidcore | Rule Groups (Application Control, Change Control, Integrity Monitor) | Full read/write of the `scor.rulegroup.export` / `import` files; Markdown of a group or of all the groups, with the policies using them | Yes |
 | Trellix EDR with Forensics | General | Full read/write, "Show Advanced" settings included (passwords, Forensics(HX) server: see below) | Yes |
 | Trellix EDR with Forensics | Streaming | Full read/write: Trace, exclusions, Event streamer (event logs, file events, filters, OS events, DXL, Helix, syslog servers), Alerts, Process Tracker, Logon Tracker (S3 keys: see below) | Yes |
 | Trellix EDR with Forensics | Detection | Full read/write: events, exclusions, registry key exclusions | Yes |
@@ -850,6 +850,27 @@ checked with single users (`add_trusted_user()`); the Active Directory groups
 imported with "AD Import" (and their "Include Subgroups" column) are kept as
 they are but were not tested.
 
+The Rule Groups have their Markdown documents too, laid out as the policy
+documents and with the same tables as the policy tabs: one Rule Group
+(`to_markdown()` / `save_markdown()`), or all the Rule Groups of an export
+with a summary table (`SCRuleGroups.to_markdown()`). Given the Solidcore
+policies (`policy.export productId=SOLIDCORE_META`), they also list the
+policies using each Rule Group:
+
+```python
+from trellix_epo import EPOClient, SCRuleGroups
+
+epo = EPOClient.from_environment()
+policies = epo.export_policies('SOLIDCORE_META')
+docker = epo.export_rule_group(SCRuleGroups.WINDOWS, SCRuleGroups.APPLICATION_CONTROL, 'Docker')
+print(docker)                     # <SCAWLRuleGroup 'Docker' (Application Control, Windows): 12 rules>
+docker.save_markdown('docker.md', policies)   # properties, policies using it, rules by tab
+```
+
+The export of `scor.rulegroup.export` without a name holds the user defined
+Rule Groups only; `examples/solidcore_rule_groups_report.py` documents every
+Rule Group of a type and platform, the ones predefined by Trellix included.
+
 To rename a Rule Group in ePO, use `scor.rulegroup.rename <WIN|UNIX>
 <APPLICATION_CONTROL|CHANGE_CONTROL|INTEGRITY_MONITOR> <old name> <new name>`:
 ePO renames it in the policies using it too. `SCRuleGroups.rename_rule_group()`
@@ -1018,6 +1039,16 @@ Python 3.8 or later.
 - One representation for every policy and every export, built from
   `get_info()`: `<ESFWPolicyRules 'Demo': 10 groups, 56 rules>`,
   `<ESTPPolicies: 12 policies>` (it replaces the three former styles).
+- Markdown export of the Solidcore Rule Groups: one Rule Group
+  (`to_markdown()` / `save_markdown()`) or all the Rule Groups of an export
+  (`SCRuleGroups.to_markdown()`), laid out as the policy documents, with the
+  tables of the policy tabs and, given the Solidcore policies, the policies
+  using each Rule Group (`rule_group_users()`); `get_info()` and the same
+  representation as the policies for the Rule Groups. Checked on the 272
+  Rule Groups of the lab (all types and platforms, predefined ones
+  included). Example `solidcore_rule_groups_report.py`.
+- `md_document()` (`trellix_epo.policies`): the document layout shared by
+  the policy and Rule Group documents.
 
 **Removed (breaking)**
 - The display code written before the Markdown export, which the Markdown

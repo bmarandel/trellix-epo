@@ -25,11 +25,47 @@ before the policy.
 
 import copy
 import xml.etree.ElementTree as et
-from ..policies import XmlObject
+from ..policies import Policy, XmlObject, md_document
+from ..policycatalog import CATEGORIES
 from .rules import SCRules
 from .awl import SCAWLRules
 from .cc import SCCCRules
 from .fim import SCFIMRules
+
+
+# Console labels of the Rule Group types and platforms (Menu > Configuration >
+# Solidcore Rules).
+TYPE_LABELS = {'application_control': 'Application Control', 'change_control': 'Change Control',
+               'mon': 'Integrity Monitor'}
+PLATFORM_LABELS = {'WIN': 'Windows', 'UNIX': 'Unix'}
+
+
+def rule_group_users(policies):
+    """
+    Returns the Solidcore policies using each shared Rule Group: {(type,
+    platform, name): ['<policy name> (<policy category>)', ...]}, from a
+    Solidcore policy export (SCPolicies, policy.export productId=SOLIDCORE_META)
+    or a list of SCPolicy. A policy refers to a Rule Group by its name, type
+    and platform (its scor_info section).
+
+    >>> rule_group_users([])
+    {}
+    """
+    from .scpolicies import SCPolicies, SCPolicy
+    if isinstance(policies, SCPolicies):
+        policies = [SCPolicy(policies.get_policy(row['typeid'], row['name']))
+                    for row in policies.list()]
+    users = {}
+    for policy in policies:
+        policy_obj = policy.root.find('EPOPolicyObject')
+        labels = CATEGORIES.get((policy_obj.get('featureid'), policy_obj.get('typeid')))
+        label = '{} ({})'.format(policy.get_name(), labels[1] if labels else
+                                 policy_obj.get('typeid'))
+        for group in policy.get_rule_groups():
+            if group['shared']:
+                key = (group['group_type'], group['platforms'], group['group_name'])
+                users.setdefault(key, []).append(label)
+    return {key: sorted(set(value), key=str.lower) for key, value in users.items()}
 
 
 def check_rule_group_name(name):
@@ -55,8 +91,84 @@ class SCRuleGroup(SCRules):
         self.root = rule_group_obj
 
     def __repr__(self):
-        return '<{} {} ({}, {}).>'.format(type(self).__name__, self.get_name(),
-                                         self.get_type(), self.get_platform())
+        """
+        Shows the class, the name, the type and platform and the number of
+        rules, as the policies do, e.g. <SCAWLRuleGroup 'Docker' (Application
+        Control, Windows): 12 rules>.
+        """
+        info = self.get_info()
+        return '<{} {!r} ({}, {}): {} rule{}>'.format(
+            type(self).__name__, info['name'], info['type'], info['platform'], info['rules'],
+            '' if info['rules'] == 1 else 's')
+
+    def get_info(self):
+        """
+        Returns what the Rule Group holds: name, type and platform (console
+        labels), origin (predefined by Trellix or user defined) and the
+        number of rules.
+
+        Example: {'name': 'Docker', 'type': 'Application Control', 'platform':
+        'Windows', 'origin': 'User defined', 'rules': 12}.
+        """
+        return {'name': self.get_name(),
+                'type': TYPE_LABELS.get(self.get_type(), self.get_type()),
+                'platform': PLATFORM_LABELS.get(self.get_platform(), self.get_platform()),
+                'origin': 'Predefined by Trellix (read-only)' if self.is_read_only()
+                          else 'User defined',
+                'rules': sum(1 for _ in self._iter_rules())}
+
+    def md_properties(self, users=None):
+        """
+        Returns the "Property | Value" rows of the Rule Group (type,
+        platform, origin, number of rules and, when users is given, the
+        policies using it).
+
+        :param: users: The result of rule_group_users() (None: not shown).
+        """
+        info = self.get_info()
+        rows = [['Rule Group type', info['type']], ['Platform', info['platform']],
+                ['Origin', info['origin']], ['Rules', str(info['rules'])]]
+        if users is not None:
+            used = users.get((self.get_type(), self.get_platform(), self.get_name()), [])
+            rows.append(['Used by policies', ', '.join(used) or 'None'])
+        return rows
+
+    def md_sections(self, users=None):
+        """
+        Returns the sections of the Rule Group document: its properties,
+        then its rules as the tabs of the console (see md_tabs() of the
+        rules classes, the same tables as in the policies).
+        """
+        return [('Rule Group', Policy.md_table(['Property', 'Value'], self.md_properties(users))),
+                ('Rules', self.md_tabs())]
+
+    def to_markdown(self, policies=None, author='', reviewers=None):
+        """
+        Returns a Markdown document of the Rule Group, laid out as the policy
+        documents (header, contents, sections, document control).
+
+        Example: groups.get_rule_group('Docker').to_markdown(
+        epo.export_policies('SOLIDCORE_META')).
+
+        :param: policies: A Solidcore policy export (SCPolicies) or a list of
+                          SCPolicy, to list the policies using the Rule Group.
+        :param: author: The name written in the document control section.
+        :param: reviewers: The names of the review/approval table.
+        """
+        info = self.get_info()
+        users = rule_group_users(policies) if policies is not None else None
+        return md_document(info['name'], 'Solidcore - {} Rule Group ({})'.format(
+            info['type'], info['platform']), [
+                ['Product', 'Solidcore'], ['Rule Group type', info['type']],
+                ['Platform', info['platform']], ['Rule Group name', info['name']]],
+            self.md_sections(users), author, reviewers)
+
+    def save_markdown(self, file_path, policies=None, author='', reviewers=None):
+        """
+        Writes the Markdown document of the Rule Group (see to_markdown()).
+        """
+        with open(file_path, 'w', encoding='utf-8') as output:
+            output.write(self.to_markdown(policies, author, reviewers))
 
     def get_name(self):
         """
@@ -169,8 +281,63 @@ class SCRuleGroups(XmlObject):
             et.SubElement(self.root, 'Active-Directories')
 
     def __repr__(self):
-        return '<SCRuleGroups which contains {} Rule Group(s)>'.format(
-            len(self.root.findall('Rule-Group')))
+        """
+        Shows the number of Rule Groups, e.g. <SCRuleGroups: 5 rule groups>.
+        """
+        number = len(self.root.findall('Rule-Group'))
+        return '<SCRuleGroups: {} rule group{}>'.format(number, '' if number == 1 else 's')
+
+    def get_info(self):
+        """
+        Returns the number of Rule Groups by type and platform, e.g.
+        {'rule_groups': 5, 'types': {'Application Control (Windows)': 5}}.
+        """
+        types = {}
+        for group in self.root.findall('Rule-Group'):
+            key = '{} ({})'.format(TYPE_LABELS.get(group.get('type'), group.get('type')),
+                                   PLATFORM_LABELS.get(group.get('platform'), group.get('platform')))
+            types[key] = types.get(key, 0) + 1
+        return {'rule_groups': sum(types.values()), 'types': types}
+
+    def to_markdown(self, policies=None, title='Solidcore Rule Groups', author='', reviewers=None):
+        """
+        Returns a Markdown document of all the Rule Groups of the export: a
+        summary table (Menu > Configuration > Solidcore Rules), then one
+        section per Rule Group with its properties and its rules.
+
+        Example: SCRuleGroups(epo.export_rule_group(SCRuleGroups.WINDOWS,
+        SCRuleGroups.APPLICATION_CONTROL)).to_markdown(epo.export_policies('SOLIDCORE_META')).
+
+        :param: policies: A Solidcore policy export (SCPolicies) or a list of
+                          SCPolicy, to list the policies using each group.
+        """
+        users = rule_group_users(policies) if policies is not None else None
+        groups = [self.get_rule_group(row['name']) for row in self.list()]
+        summary = Policy.md_table(
+            ['Rule Group', 'Type', 'Platform', 'Origin', 'Rules'] +
+            (['Used by policies'] if users is not None else []),
+            [[info['name'], info['type'], info['platform'], info['origin'], str(info['rules'])] +
+             ([', '.join(users.get((group.get_type(), group.get_platform(), group.get_name()),
+                                   [])) or 'None'] if users is not None else [])
+             for group, info in ((group, group.get_info()) for group in groups)],
+            numbered=True)
+        sections = [('Rule Groups', summary)]
+        for group in groups:
+            body = Policy.md_table(['Property', 'Value'], group.md_properties(users))
+            sections.append((group.get_name(), body + '\n' + group.md_tabs()))
+        info = self.get_info()
+        return md_document(title, 'Solidcore - Rule Groups', [
+            ['Product', 'Solidcore'], ['Rule Groups', str(info['rule_groups'])]] +
+            [[label, str(number)] for label, number in sorted(info['types'].items())],
+            sections, author, reviewers)
+
+    def save_markdown(self, file_path, policies=None, title='Solidcore Rule Groups', author='',
+                      reviewers=None):
+        """
+        Writes the Markdown document of the Rule Groups (see to_markdown()).
+        """
+        with open(file_path, 'w', encoding='utf-8') as output:
+            output.write(self.to_markdown(policies, title, author, reviewers))
 
     def __find(self, name):
         for rule_group_obj in self.root.findall('Rule-Group'):
@@ -259,6 +426,30 @@ class SCRuleGroups(XmlObject):
         new_obj = copy.deepcopy(rule_group_obj)
         new_obj.set('name', new_name)
         new_obj.set('is-read-only', 'false')
+        self.__insert(new_obj)
+        return self.__wrap(new_obj)
+
+    def add_rule_group(self, rule_group):
+        """
+        Adds a copy of a Rule Group of another export as it is (name, type,
+        platform, predefined or user defined), e.g. to gather in one object
+        the Rule Groups exported one by one (scor.rulegroup.export with a
+        name, the only way to export the predefined ones). Use
+        copy_rule_group() for a user defined copy under another name.
+
+        :param: rule_group: A SCRuleGroup.
+        :return: The added Rule Group.
+        :raise: ValueError: A Rule Group of this name is in the export.
+
+        >>> groups = SCRuleGroups()
+        >>> other = SCRuleGroups().new_rule_group('Apps', SCRuleGroups.APPLICATION_CONTROL,
+        ...                                       SCRuleGroups.WINDOWS)
+        >>> groups.add_rule_group(other)
+        <SCAWLRuleGroup 'Apps' (Application Control, Windows): 0 rules>
+        """
+        if self.contain(rule_group.get_name()):
+            raise ValueError('A Rule Group named "{}" already exists.'.format(rule_group.get_name()))
+        new_obj = copy.deepcopy(rule_group.root)
         self.__insert(new_obj)
         return self.__wrap(new_obj)
 

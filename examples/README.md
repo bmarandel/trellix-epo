@@ -46,6 +46,12 @@ policy out of a `Policies` collection, or from `Policy.load_from_file`).
   and an execution control rule added. Takes two arguments - the export file
   and the name of the policy to copy.
 
+- **`solidcore_rule_groups_report.py`** - Markdown document of the Solidcore
+  Rule Groups of a server (a type and platform, or one Rule Group): summary
+  table, then the properties, rules (tables of the policy tabs) and the
+  policies using each Rule Group; the Rule Groups predefined by Trellix are
+  exported by name so they are documented too (`--user-defined` leaves them
+  out).
 - **`solidcore_rule_groups.py`** - Solidcore Rule Groups: create a user
   defined Application Control Rule Group and make a policy use it; writes
   `rule_group.xml` (for `scor.rulegroup.import`) and `policy.xml` (for
