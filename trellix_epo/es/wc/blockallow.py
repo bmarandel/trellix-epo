@@ -72,6 +72,12 @@ class ESWCPolicyBlockAllowList(ESWCPolicy):
     SECTION = 'BlockAndAllowList'
 
     # ------------------------------ Block and Allow List ------------------------------
+    def _info_counts(self):
+        """
+        The counts of get_info() and of the representation: the sites.
+        """
+        return {'sites': len(self.get_sites())}
+
     def get_sites(self):
         """
         Get the sites (list of WCSite) in the policy order (the console sorts

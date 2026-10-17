@@ -98,8 +98,12 @@ class SIRPolicyCollectData(Policy):
         if policy_from_sirpolicies is not None and self.get_product() != self.FEATURE:
             raise ValueError('Wrong policy! Policy feature must be "{}".'.format(self.FEATURE))
 
-    def __repr__(self):
-        return 'SIRPolicyCollectData()'
+    def _info_counts(self):
+        """
+        The counts of get_info() and of the representation: the registry queries, files and folders.
+        """
+        return {'registry_queries': len(self.get_registry_queries()), 'files': len(self.get_files()),
+                'folders': len(self.get_folders())}
 
     def __set(self, section, setting, value):
         """

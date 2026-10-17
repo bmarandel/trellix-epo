@@ -66,8 +66,11 @@ class ESFWPolicyOptions(Policy):
             if self.get_type() != 'FW_StatusMode':
                 raise ValueError('Wrong policy! Policy type must be "FW_StatusMode".')
 
-    def __repr__(self):
-        return 'ESFWPolicyOptions()'
+    def _info_counts(self):
+        """
+        The counts of get_info() and of the representation: the trusted executables.
+        """
+        return {'trusted_executables': len(self.get_trusted_executables())}
 
     def __section(self):
         """

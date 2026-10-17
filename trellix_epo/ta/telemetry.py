@@ -20,15 +20,10 @@ class TAPolicyTelemetry(Policy):
     private, read-only "hidden setting" accessors.
     """
 
-    def __init__(self, policy_from_mcafeeagentpolicies):
-        super(TAPolicyTelemetry, self).__init__(policy_from_mcafeeagentpolicies)
-        if self.get_type() != 'Telemetry':
-            raise ValueError('Wrong McAfee Agent policy. Policy type must be "Telemetry".')
-
-    def __repr__(self):
-        name = self.get_name()
-        epo = self.get_epo_server()
-        return '<TAPolicyTelemetry for policy {} from server {}.>'.format(name, epo)
+    def __init__(self, policy_from_tapolicies=None):
+        super(TAPolicyTelemetry, self).__init__(policy_from_tapolicies)
+        if policy_from_tapolicies is not None and self.get_type() != 'Telemetry':
+            raise ValueError('Wrong Trellix Agent policy. Policy type must be "Telemetry".')
 
     # ------------------------------ Product Improvement Program ------------------------------
     #   Enable Product Improvement Program

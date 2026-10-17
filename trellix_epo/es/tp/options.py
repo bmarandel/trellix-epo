@@ -59,9 +59,6 @@ class ESTPPolicyOptions(Policy):
             if self.get_type() != 'EAM_CommonScan_Policies':
                 raise ValueError('Wrong policy! Policy type must be "EAM_CommonScan_Policies".')
 
-    def __repr__(self):
-        return 'ESTPPolicyOptions()'
-
     # ------------------------------ Options Policy ------------------------------
     # Quarantine Manager (Windows & Linux only):
     #   Quarantine folder (e.g. "<SYSTEM_DRIVE>\Quarantine")

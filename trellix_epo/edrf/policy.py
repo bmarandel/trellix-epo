@@ -90,9 +90,6 @@ class EDRFPolicy(Policy):
         if policy_from_edrfpolicies is not None and self.get_type() != self.TYPE:
             raise ValueError('Wrong policy! Policy type must be "{}".'.format(self.TYPE))
 
-    def __repr__(self):
-        return '{}()'.format(type(self).__name__)
-
     # ------------------------------ Storage helpers ------------------------------
     def _decode(self, setting, value):
         if value is None:

@@ -112,9 +112,6 @@ class ESATPPolicyOptions(Policy):
             if self.get_type() != self.TYPE:
                 raise ValueError('Wrong policy! Policy type must be "{}".'.format(self.TYPE))
 
-    def __repr__(self):
-        return 'ESATPPolicyOptions()'
-
     def get_option(self, setting):
         """
         Get the value of a setting of the policy, e.g. get_option('telemetry').

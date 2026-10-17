@@ -266,8 +266,12 @@ class ESCommonPolicyOptions(Policy):
         if policy_from_escommonpolicies is not None and self.get_type() != self.TYPE:
             raise ValueError('Wrong policy! Policy type must be "{}".'.format(self.TYPE))
 
-    def __repr__(self):
-        return 'ESCommonPolicyOptions()'
+    def _info_counts(self):
+        """
+        The counts of get_info() and of the representation: the Self Protection and AAC exclusions.
+        """
+        return {'self_protection_exclusions': len(self.get_sp_process_exclusions()),
+                'aac_exclusions': len(self.get_aac_exclusions())}
 
     # ------------------------------ Storage helpers ------------------------------
     def __section(self, name):

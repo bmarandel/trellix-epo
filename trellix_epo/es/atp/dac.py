@@ -172,8 +172,11 @@ class ESATPPolicyDAC(Policy):
             if self.get_type() != self.TYPE:
                 raise ValueError('Wrong policy! Policy type must be "{}".'.format(self.TYPE))
 
-    def __repr__(self):
-        return 'ESATPPolicyDAC()'
+    def _info_counts(self):
+        """
+        The counts of get_info() and of the representation: the containment rules and exclusions.
+        """
+        return {'rules': len(self.get_rules()), 'exclusions': len(self.get_exclusions())}
 
     # ------------------------------ Containment Rules ------------------------------
     def __rule_sections(self):

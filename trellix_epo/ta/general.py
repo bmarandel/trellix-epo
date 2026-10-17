@@ -9,7 +9,6 @@ This module defines the class TAPolicyGeneral.
 
 import os
 import re
-import xml.etree.ElementTree as et
 from ..policies import Policy
 from ..validators import (check_int, check_length, has_valid_macros, is_orion_ipv4,
                           is_orion_ipv6)
@@ -102,15 +101,10 @@ class TAPolicyGeneral(Policy):
     The TAPolicyGeneral class can be used to edit the McAfee Agent policy: General.
     """
 
-    def __init__(self, policy_from_mcafeeagentpolicies):
-        super(TAPolicyGeneral, self).__init__(policy_from_mcafeeagentpolicies)
-        if self.get_type() != 'General':
-            raise ValueError('Wrong McAfee Agent policy. Policy type must be "General".')
-
-    def __repr__(self):
-        name = self.get_name()
-        epo = self.get_epo_server()
-        return '<TAPolicyGeneral for policy {} from server {}.>'.format(name, epo)
+    def __init__(self, policy_from_tapolicies=None):
+        super(TAPolicyGeneral, self).__init__(policy_from_tapolicies)
+        if policy_from_tapolicies is not None and self.get_type() != 'General':
+            raise ValueError('Wrong Trellix Agent policy. Policy type must be "General".')
 
     def __console_value(self, console, service):
         """
@@ -140,7 +134,6 @@ class TAPolicyGeneral(Policy):
             return False
         keys = table[0].keys()
         return self.set_indexed_table(section, 'NumberOfItems', keys, table)
-        return success
 
     # ------------------------------ GENERAL TAB ------------------------------
     # General options:

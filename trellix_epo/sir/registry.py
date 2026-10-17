@@ -160,8 +160,11 @@ class SIRPolicySetRegistry(Policy):
         if policy_from_sirpolicies is not None and self.get_product() != self.FEATURE:
             raise ValueError('Wrong policy! Policy feature must be "{}".'.format(self.FEATURE))
 
-    def __repr__(self):
-        return 'SIRPolicySetRegistry()'
+    def _info_counts(self):
+        """
+        The counts of get_info() and of the representation: the registry values.
+        """
+        return {'registry_values': len(self.get_values())}
 
     def __get(self, setting):
         return self.get_setting_value(self.SECTION, setting) or ''

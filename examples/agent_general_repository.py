@@ -7,8 +7,8 @@
 """
 agent_general_repository.py
 
-Example for the trellix_epo package: load a McAfee Agent "General"
-policy and a McAfee Agent "Repository" policy, read and adjust a few common
+Example for the trellix_epo package: load a Trellix Agent "General"
+policy and a Trellix Agent "Repository" policy, read and adjust a few common
 settings, and save the result.
 
 Usage:
@@ -20,24 +20,17 @@ not a raw multi-policy export.
 """
 
 import sys
-import xml.etree.ElementTree as et
 
-from trellix_epo import (
-    TAPolicyGeneral,
-    TAPolicyRepository,
-    RepositoryList,
-)
+from trellix_epo import TAPolicyGeneral, TAPolicyRepository, RepositoryList
 
 
 def load_policy(policy_class, file_path):
     """
-    TAPolicyGeneral/Repository take their policy element directly
-    at construction time (no optional default, unlike the ENS classes), so
-    parse the file and pass the root explicitly instead of calling
-    load_from_file() on an empty instance.
+    Returns the policy of a single-policy file, loaded in its class.
     """
-    root = et.parse(file_path).getroot()
-    return policy_class(root)
+    policy = policy_class()
+    policy.load_from_file(file_path)
+    return policy
 
 
 def main():
@@ -61,9 +54,10 @@ def main():
 
     repository = load_policy(TAPolicyRepository, sys.argv[2])
     print()
-    print('Repository policy "{}"'.format(repository.get_name()))
+    print(repository)       # e.g. <TAPolicyRepository 'My Default': 2 repositories>
     repo_list = RepositoryList(repository.get_site_list())
-    print(repo_list)
+    for order, (name, state) in enumerate(repo_list.get_repo_list()):
+        print('  {}. {} ({})'.format(order, name, state))
 
     # Make sure the first repository is enabled and move it to the top, as an example edit.
     sites = repo_list.get_repo_list()

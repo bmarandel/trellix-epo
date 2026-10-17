@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "trellix-epo"
-version = "2.0.0"
+version = "2.1.0"
 description = "Trellix ePolicy Orchestrator policies and Web API Python library"
 readme = "README.md"
 license = "Apache-2.0"

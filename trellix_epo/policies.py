@@ -116,6 +116,33 @@ class Policies(XmlObject):
         if xml_policies is not None:
             self.set_xml_content(xml_policies)
 
+    def __repr__(self):
+        """
+        Shows the class and the number of policies, e.g. <ESTPPolicies: 12
+        policies>.
+
+        >>> Policies()
+        <Policies: empty>
+        """
+        if self.root is None:
+            return '<{}: empty>'.format(type(self).__name__)
+        number = len(self.root.findall('EPOPolicyObject'))
+        return '<{}: {} polic{}>'.format(type(self).__name__, number, 'y' if number == 1 else 'ies')
+
+    def get_info(self):
+        """
+        Returns what the export holds: the ePO server, the number of policies
+        and the number of policies of each type, e.g. {'server': 'EPO01',
+        'policies': 12, 'types': {'EAM_General_Policies': 3, ...}}.
+        """
+        if self.root is None:
+            return {'server': '', 'policies': 0, 'types': {}}
+        types = {}
+        for row in self.list():
+            types[row['typeid']] = types.get(row['typeid'], 0) + 1
+        server = next((obj.get('serverid') for obj in self.root.findall('EPOPolicyObject')), '')
+        return {'server': server or '', 'policies': sum(types.values()), 'types': types}
+
     def contain(self, type_id, name):
         """
         Returns True if the current Policies contains a policy (name) for a specific
@@ -229,6 +256,53 @@ class Policy(XmlObject):
     def __init__(self, policy_from_policies):
         super(Policy, self).__init__()
         self.root = policy_from_policies
+
+    def __repr__(self):
+        """
+        Shows the class, the policy name and what the policy holds (the
+        counts of get_info()), e.g. <ESFWPolicyRules 'Demo': 10 groups, 56
+        rules>; the representation of every policy class.
+
+        >>> Policy(None)
+        <Policy (no policy loaded)>
+        """
+        if self.root is None or self.root.find('EPOPolicyObject') is None:
+            return '<{} (no policy loaded)>'.format(type(self).__name__)
+        counts = ', '.join('{} {}'.format(value, key.replace('_', ' '))
+                           for key, value in self._info_counts().items())
+        return '<{} {!r}{}>'.format(type(self).__name__, self.get_name(),
+                                    ': ' + counts if counts else '')
+
+    def get_info(self):
+        """
+        Returns what the policy holds, to check it after a load: its name,
+        product and category (console labels), typeid, featureid and ePO
+        server, plus the counts of the policy type (e.g. 'groups' and
+        'rules' of an ENS Firewall Rules policy).
+
+        Example: ESFWPolicyRules(...).get_info() gives {'name': 'Demo',
+        'product': 'Endpoint Security Firewall', 'category': 'Rules',
+        'type': 'FireCore_FW_Rules', 'feature': 'ENDP_FW_META_FW', 'server':
+        'EPO01', 'groups': 10, 'rules': 56}.
+        """
+        policy_obj = self.root.find('EPOPolicyObject') if self.root is not None else None
+        if policy_obj is None:
+            return {}
+        info = {'name': policy_obj.get('name', ''), 'product': self.MD_PRODUCT,
+                'category': self.MD_CATEGORY, 'type': policy_obj.get('typeid', ''),
+                'feature': policy_obj.get('featureid', ''), 'server': policy_obj.get('serverid', '')}
+        info.update(self._info_counts())
+        return info
+
+    def _info_counts(self):
+        """
+        Returns the counts of what the policy type holds ({} here; set by the
+        policy classes with lists, e.g. {'groups': 10, 'rules': 56}).
+
+        >>> Policy(None)._info_counts()
+        {}
+        """
+        return {}
 
     def get_name(self):
         """

@@ -16,15 +16,10 @@ class TAPolicyCustomProps(Policy):
     policy: Custom Properties.
     """
 
-    def __init__(self, policy_from_mcafeeagentpolicies):
-        super(TAPolicyCustomProps, self).__init__(policy_from_mcafeeagentpolicies)
-        if self.get_type() != 'CustomProps':
-            raise ValueError('Wrong McAfee Agent policy. Policy type must be "CustomProps".')
-
-    def __repr__(self):
-        name = self.get_name()
-        epo = self.get_epo_server()
-        return '<TAPolicyCustomProps for policy {} from server {}.>'.format(name, epo)
+    def __init__(self, policy_from_tapolicies=None):
+        super(TAPolicyCustomProps, self).__init__(policy_from_tapolicies)
+        if policy_from_tapolicies is not None and self.get_type() != 'CustomProps':
+            raise ValueError('Wrong Trellix Agent policy. Policy type must be "CustomProps".')
 
     # ------------------------------ Custom Properties ------------------------------
     # The Custom Properties table lists Property 1 through Property 8, each with

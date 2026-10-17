@@ -19,15 +19,10 @@ class TAPolicyTroubleshooting(Policy):
     exposed here - it is internal to the ePO server and not a user setting.
     """
 
-    def __init__(self, policy_from_mcafeeagentpolicies):
-        super(TAPolicyTroubleshooting, self).__init__(policy_from_mcafeeagentpolicies)
-        if self.get_type() != 'Troubleshooting':
-            raise ValueError('Wrong McAfee Agent policy. Policy type must be "Troubleshooting".')
-
-    def __repr__(self):
-        name = self.get_name()
-        epo = self.get_epo_server()
-        return '<TAPolicyTroubleshooting for policy {} from server {}.>'.format(name, epo)
+    def __init__(self, policy_from_tapolicies=None):
+        super(TAPolicyTroubleshooting, self).__init__(policy_from_tapolicies)
+        if policy_from_tapolicies is not None and self.get_type() != 'Troubleshooting':
+            raise ValueError('Wrong Trellix Agent policy. Policy type must be "Troubleshooting".')
 
     # ------------------------------ GENERAL TAB ------------------------------
     # Language Options:

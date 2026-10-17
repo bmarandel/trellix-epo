@@ -28,12 +28,10 @@ def main():
 
     policy = ESFWPolicyRules()
     policy.load_from_file(sys.argv[1])
-    policy.load_policy()
-    policy.print_info()
+    print(policy)           # e.g. <ESFWPolicyRules 'Demo': 10 groups, 56 rules>
 
     output_path = sys.argv[2] if len(sys.argv) == 3 else 'firewall_rules.md'
-    with open(output_path, 'w') as report_file:
-        report_file.write(policy.get_content())
+    policy.save_markdown(output_path)
     print('Report written to {}'.format(output_path))
     return 0
 

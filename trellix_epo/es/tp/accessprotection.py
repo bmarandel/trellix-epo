@@ -697,8 +697,11 @@ class ESTPPolicyAccessProtection(Policy):
             if self.get_type() != 'EAM_BehaviorBlock_Policies':
                 raise ValueError('Wrong policy! Policy type must be "EAM_BehaviorBlock_Policies".')
 
-    def __repr__(self):
-        return 'ESTPPolicyAccessProtection()'
+    def _info_counts(self):
+        """
+        The counts of get_info() and of the representation: the rules and exclusions.
+        """
+        return {'rules': len(self.get_rules()), 'exclusions': len(self.get_exclusions())}
 
     def __rule_sections(self):
         for settings_obj in self.root.findall('EPOPolicySettings'):

@@ -54,9 +54,6 @@ class ESSPPolicy(Policy):
         if policy_from_esssppolicies is not None and self.get_type() != self.TYPE:
             raise ValueError('Wrong policy! Policy type must be "{}".'.format(self.TYPE))
 
-    def __repr__(self):
-        return '{}()'.format(type(self).__name__)
-
     def _get(self, section, setting):
         return self.get_setting_value(self.PREFIX + section, setting)
 

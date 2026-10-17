@@ -7,7 +7,6 @@
 This module defines the class ESTPPolicyOnAccessScan.
 """
 
-import xml.etree.ElementTree as et
 from ...policies import Policy
 from ...validators import check_int, check_length, is_ens_process_name
 from .exclusions import ExclusionList, check_file_type_list, check_exclusion_rows
@@ -24,11 +23,14 @@ class ESTPPolicyOnAccessScan(Policy):
             if self.get_type() != 'EAM_General_Policies':
                 raise ValueError('Wrong policy! Policy type must be "EAM_General_Policies".')
 
+    def _info_counts(self):
+        """
+        The counts of get_info() and of the representation: the processes of the Process Settings.
+        """
+        return {'processes': len(self.get_process_list())}
+
     MD_PRODUCT = 'Endpoint Security Threat Prevention'
     MD_CATEGORY = 'On-Access Scan'
-
-    def __repr__(self):
-        return 'ESTPPolicyOnAccessScan()'
 
     # ------------------------------ On-Access Policy ------------------------------
     # On-Access Scan:
@@ -1481,13 +1483,6 @@ class OASProcessList:
     def __repr__(self):
         return '<OASProcessList which contains {} process(s)>'.format(len(self.proc_list))
 
-    def __str__(self):
-        txt = '| {0:40}| {1:13}|\n'.format('Process Name', 'Process Type')
-        txt += '|:----------------------------------------|:-------------|'
-        for row in self.proc_list:
-            txt += '\n| {0:40}| {1:13}|'.format(row[0], row[1])
-        return txt
-
     def add(self, process_name, process_type):
         """
         Add a process name of process type within the process list.
@@ -1567,13 +1562,6 @@ class OASURLList:
 
     def __repr__(self):
         return '<OASURLList which contains {} exclusion(s)>'.format(len(self.url_list))
-
-    def __str__(self):
-        txt = '| {0:40}|\n'.format('Excluded URL')
-        txt += '|:----------------------------------------|'
-        for row in self.url_list:
-            txt += '\n| {0:40}|'.format(row)
-        return txt
 
     def add(self, url):
         """

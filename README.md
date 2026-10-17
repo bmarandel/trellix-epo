@@ -107,11 +107,14 @@ with open('EPOAGENTMETA_policies.xml', 'rb') as f:
     policies = TAPolicies(f.read())
 
 # List the policies contained in the export
+print(policies)                 # <TAPolicies: 5 policies>
 print(policies.list())
 
 # Extract one policy and wrap it for editing
 policy_xml = policies.get_policy('General', 'My Custom Policy')
 policy = TAPolicyGeneral(policy_xml)
+print(policy)                   # <TAPolicyGeneral 'My Custom Policy'>
+policy.get_info()               # name, product, category, typeid, server (+ counts)
 
 # Read and change a setting through a property, instead of raw XML
 print(policy.asci)
@@ -120,6 +123,14 @@ policy.asci = 15
 # Save the edited policy, ready to re-import into ePO
 policy.save_to_file('My Custom Policy - edited.xml')
 ```
+
+Every policy object shows what it holds: its representation gives the name
+and, for the policies with lists, their counts (e.g. `<ESFWPolicyRules 'Demo':
+10 groups, 56 rules>`, `<ESTPPolicyExploitPrevention 'My Default': 653
+signatures, 186 application rules, 0 exclusions>`), and `get_info()` returns
+the same as a dictionary (name, product and category as the console shows
+them, typeid, featureid, ePO server and the counts), to check a policy right
+after a load. The full human view is the Markdown export (`to_markdown()`).
 
 The setters refuse what the ePO console refuses: number ranges and text
 lengths of the console fields (e.g. `policy.asci = 3000` raises `ValueError`,
@@ -992,6 +1003,39 @@ docstring describing which ePO UI setting it maps to.
 Python 3.8 or later.
 
 ## History
+
+### 2.1.0 - 2026-10-18
+
+**Added**
+- `get_info()` on every policy: name, product and category (console
+  labels), typeid, featureid, ePO server and the counts of the policy type
+  (Firewall groups and rules, Exploit Prevention signatures, application
+  rules and exclusions, Access Protection and DAC rules and exclusions,
+  On-Access Scan processes, On-Demand Scan locations, ENS Common
+  exclusions, Web Control sites, Solidcore rules and Rule Groups, Trellix
+  Agent repositories, SIR registry queries, files, folders and values), and
+  on the policy exports (`Policies`): server, number of policies by type.
+- One representation for every policy and every export, built from
+  `get_info()`: `<ESFWPolicyRules 'Demo': 10 groups, 56 rules>`,
+  `<ESTPPolicies: 12 policies>` (it replaces the three former styles).
+
+**Removed (breaking)**
+- The display code written before the Markdown export, which the Markdown
+  export now covers entirely: ENS Firewall Rules `print_info()`,
+  `print_sequences()`, `get_sequences()`, `get_toc()` and `get_content()`
+  (use `to_markdown()` / `save_markdown()`), ENS Exploit Prevention
+  `print_info()` (use the representation or `get_info()`), and the
+  text-table `__str__()` of `ExclusionList`, `OASProcessList`,
+  `OASURLList`, `ODSLocationList` and `RepositoryList` (`print()` shows
+  their representation; the lists are in the policy Markdown).
+
+**Changed**
+- Trellix Agent classes: the constructor parameter is
+  `policy_from_tapolicies` and is optional, as in the other classes (create
+  the object empty, then `load_from_file()`); the type error says "Trellix
+  Agent".
+- Examples `firewall_rules.py` and `agent_general_repository.py` use the
+  representation and the Markdown export.
 
 ### 2.0.0 - 2026-10-17
 

@@ -147,20 +147,6 @@ class ExclusionList:
             rights = rights+4
         return rights
 
-    def __str__(self):
-        txt = '| {0:70}| {1:12}| {2:13}| {3:30}|\n'.format(
-              'Item:', 'Subfolders:', 'When:', 'Notes:')
-        txt += '|:----------------------------------------------------------------------|'
-        txt += ':------------|:-------------|:------------------------------|'
-        for row in self.excl_list:
-            item = self.__define_item__(row[0], row[2])
-            rights = self.__define_rights__(int(row[1]), row[0])
-            subfolder = rights[0]
-            when = rights[1]
-            notes = row[3]
-            txt += '\n| {0:70}| {1:12}| {2:13}| {3:30}|'.format(item, subfolder, when, notes)
-        return txt
-
     def md_rows(self):
         """
         Returns the exclusions as rows for a Markdown table, with the console

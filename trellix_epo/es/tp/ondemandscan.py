@@ -7,7 +7,6 @@
 This module defines the class ESTPPolicyOnDemandScan.
 """
 
-import xml.etree.ElementTree as et
 from ...policies import Policy
 from ...validators import check_int, check_length
 from .exclusions import ExclusionList, check_file_type_list, check_exclusion_rows
@@ -56,11 +55,14 @@ class ESTPPolicyOnDemandScan(Policy):
             if self.get_type() != 'EAM_OnDemandScan_Policies':
                 raise ValueError('Wrong policy! Policy type must be "EAM_OnDemandScan_Policies".')
 
+    def _info_counts(self):
+        """
+        The counts of get_info() and of the representation: the Quick Scan locations.
+        """
+        return {'quick_scan_locations': len(self.get_qs_locations())}
+
     MD_PRODUCT = 'Endpoint Security Threat Prevention'
     MD_CATEGORY = 'On-Demand Scan'
-
-    def __repr__(self):
-        return 'ESTPPolicyOnDemandScan()'
 
     # ------------------------------ Markdown export ------------------------------
     # One section per scan type (console tabs), see Policy.to_markdown().
@@ -1779,33 +1781,6 @@ class ODSLocationList():
 
     def __repr__(self):
         return '<ODSLocationList which contains {} location(s)>'.format(len(self.loc_list))
-
-    def __str__(self):
-        names = {'SpecialScanForRootkits': 'Memory for rootkits',
-                 'SpecialMemory': 'Running processes',
-                 'SpecialCritical': 'Registered files',
-                 'My Computer': 'My computer',
-                 'LocalDrives': 'All local drives',
-                 'All fixed disks': 'All fixed drives',
-                 'All removable media': 'All removable drives',
-                 'All Network drives': 'All mapped drives',
-                 'HomeDir': 'Home folder',
-                 'ProfileDir': 'User profile folder',
-                 'WinDir': 'Windows folder',
-                 'ProgramFilesDir': 'Program files folder',
-                 'TempDir': 'Temp folder',
-                 'SpecialRecycleName': 'Recycle bin',
-                 'SpecialRegistry': 'Registry'}
-        builtin = [row for row in names.keys()]
-        txt = '| {0:40}|\n'.format('Scan Locations')
-        txt += '|:----------------------------------------|'
-        for row in self.loc_list:
-            if row in builtin:
-                row = names[row]
-            else:
-                row = 'File or folder = ' + row
-            txt += '\n| {0:40}|'.format(row)
-        return txt
 
     def __add(self, loc):
         """

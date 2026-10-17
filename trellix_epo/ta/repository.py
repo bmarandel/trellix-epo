@@ -7,7 +7,6 @@
 This module defines the class TAPolicyRepository and RepositoryList.
 """
 
-import xml.etree.ElementTree as et
 from ..policies import Policy
 from .markdown import MD_PRODUCT, labelled
 
@@ -16,15 +15,16 @@ class TAPolicyRepository(Policy):
     The TAPolicyRepository class can be used to edit the McAfee Agent policy: Repository.
     """
 
-    def __init__(self, policy_from_mcafeeagentpolicies):
-        super(TAPolicyRepository, self).__init__(policy_from_mcafeeagentpolicies)
-        if self.get_type() != 'Repository':
-            raise ValueError('Wrong McAfee Agent policy. Policy type must be "Repository".')
+    def __init__(self, policy_from_tapolicies=None):
+        super(TAPolicyRepository, self).__init__(policy_from_tapolicies)
+        if policy_from_tapolicies is not None and self.get_type() != 'Repository':
+            raise ValueError('Wrong Trellix Agent policy. Policy type must be "Repository".')
 
-    def __repr__(self):
-        name = self.get_name()
-        epo = self.get_epo_server()
-        return '<TAPolicyRepository for policy {} from server {}.>'.format(name, epo)
+    def _info_counts(self):
+        """
+        The counts of get_info() and of the representation: the repositories.
+        """
+        return {'repositories': len(self.get_site_list())}
 
     def get_site_list(self):
         """
@@ -144,13 +144,6 @@ class RepositoryList():
 
     def __repr__(self):
         return '<RepositoryList which contains {} site(s)>'.format(len(self.repo_list))
-
-    def __str__(self):
-        txt = '| {0:5} | {1:25}| {2:9}|\n'.format('Order', 'Name', 'State')
-        txt += '|------:|:-------------------------|:---------|'
-        for index, row in enumerate(self.repo_list):
-            txt += '\n| {0:5} | {1:25}| {2:9}|'.format(index, row[0], row[1])
-        return txt
 
     def __update_index__(self):
         self.repo_index = [r[0] for r in self.repo_list]

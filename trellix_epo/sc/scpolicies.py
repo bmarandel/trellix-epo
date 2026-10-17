@@ -111,10 +111,11 @@ class SCPolicy(SCRules, Policy):
             raise ValueError('Wrong Solidcore policy. Policy type must be {}.'.format(
                 ' or '.join('"{}"'.format(t) for t in self.TYPE_IDS)))
 
-    def __repr__(self):
-        name = self.get_name()
-        epo = self.get_epo_server()
-        return '<{} for policy {} from server {}.>'.format(type(self).__name__, name, epo)
+    def _info_counts(self):
+        """
+        The counts of get_info() and of the representation: the rules and the Rule Groups used.
+        """
+        return {'rules': len(self.get_rules()), 'rule_groups': len(self.get_rule_group_names())}
 
     # ------------------------------ Markdown export ------------------------------
     # Product name of the ePO Policy Catalog ("Solidcore 8.4.5", without its
