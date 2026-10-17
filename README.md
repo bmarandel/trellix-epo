@@ -476,6 +476,39 @@ print(sets.to_markdown())                                  # roles by product
   (addresses or CIDR subnets). `remove_permission_sets()` refuses a set the
   user doesn't have (the server answers true).
 
+### Audit Log, events and purges
+
+The rows of a query on the Audit Log, the threat events, the client events
+or the Compliance History are read as objects (`AuditEntry`,
+`ThreatEvent`, `ClientEvent`, `ComplianceRecord`) with the console labels
+of their values (Threat Severity, Action Taken, Event Category, event
+description...): run the queries Trellix provides (or a `squid.Query`),
+the library doesn't rebuild them. `epo.events` purges these logs and the
+Server Task Log, with a dry run first.
+
+```python
+from trellix_epo import EPOClient, threat_events_to_markdown
+
+epo = EPOClient.from_environment()
+
+events = epo.events.read('Threat Events in the Last 2 Weeks')     # [ThreatEvent...]
+print(threat_events_to_markdown(events))       # time, system, product, event, severity...
+
+epo.events.purge_audit_log(6, 'months', dry_run=True)    # 40116: rows it would delete
+epo.events.purge_audit_log(6, 'months')                  # rows deleted
+epo.events.purge_threat_events(query='My old detections')  # a saved table query
+```
+
+- Every purge takes an explicit age (1 or more) and unit: the Web API
+  purges the whole Audit Log or Server Task Log without one.
+- `dry_run=True` counts the rows older than the age (the server measures
+  the age to the second as the library does: the counts were exact on the
+  lab); a purge returns the rows deleted.
+- The age is a number of days, weeks, months or years: a purge can't
+  target "the 500 oldest" rows when one day holds more.
+- `examples/purge_logs.py` applies the retention of the Trellix best
+  practices (dry run unless `--apply`).
+
 ### Queries
 
 `squid.Query` builds the SQUID queries of `core.executeQuery` step by step
@@ -1012,7 +1045,8 @@ EDR with Forensics (best practices and example exclusions applied to copies of
 the policies) and client tasks (ENS deployment from the repository, product
 update, Solidcore activation and a Solidcore maintenance window) and the
 System Tree (groups and systems from a CSV list, Markdown report), the
-policy assignments (Markdown report) and the server tasks (run and wait).
+policy assignments (Markdown report), the server tasks (run and wait) and
+the purge of the logs.
 
 ## Documentation
 
@@ -1049,6 +1083,11 @@ Python 3.8 or later.
   included). Example `solidcore_rule_groups_report.py`.
 - `md_document()` (`trellix_epo.policies`): the document layout shared by
   the policy and Rule Group documents.
+- Audit Log, threat events, client events and Compliance History read as
+  objects from any query (`events_from_rows()`, `epo.events.read()`), with
+  the console labels of the values and the event descriptions; purges of
+  these logs and of the Server Task Log (`epo.events.purge_*()`) with a
+  mandatory age and a dry run. Example `purge_logs.py`.
 
 **Removed (breaking)**
 - The display code written before the Markdown export, which the Markdown

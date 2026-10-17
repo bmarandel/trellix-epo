@@ -16,7 +16,7 @@ __all__ = ["constants", "policies", "validators", "ta", "es", "sc", "sir", "edrf
            "tagcatalog", "epotags", "assignmentrules", "clienttasks", "epoclienttasks",
            "repository", "eporepository", "systemtree", "eposystemtree", "policycatalog", "epopolicies", "servertasks",
            "eposervertasks", "squid", "epoqueries", "users",
-           "epousers"]
+           "epousers", "events", "epoevents"]
 
 from .constants import State, Priority, Gti, OASState, Severity, Language, SCException, SCReputation
 from .policies import Policies, Policy
@@ -73,3 +73,5 @@ from .servertasks import (ServerTask, TaskLogEntry, TaskMessage, RunningTask,
                           server_tasks_to_markdown, task_log_to_markdown)
 from .squid import Query, SavedQuery, rows_to_markdown, saved_queries_to_markdown
 from .users import User, Role, PermissionSet, PermissionSetList, users_to_markdown
+from .events import (AuditEntry, ThreatEvent, ClientEvent, ComplianceRecord, events_from_rows,
+                     audit_to_markdown, threat_events_to_markdown, client_events_to_markdown)

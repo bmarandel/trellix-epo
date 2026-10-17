@@ -143,6 +143,9 @@ update what the previous run created.
   assignments (groups and systems that don't inherit a category) and of the
   policies applied to the systems, with the systems not up to date first
   (read only).
+- **`purge_logs.py`** - purges the Audit Log, Server Task Log, threat and
+  client events and Compliance History older than a retention period
+  (defaults from the Trellix best practices); dry run unless `--apply`.
 - **`server_task_run.py`** - runs a server task and waits for its end
   (status, subtasks, messages; exit code 0 completed, 1 failed or
   cancelled, 2 still running), or `--log N` for its latest runs.

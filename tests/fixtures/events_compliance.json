@@ -1,0 +1,52 @@
+[
+ {
+  "EpoComplianceHistory.ChartName": "Trellix Agent Compliance Summary",
+  "EpoComplianceHistory.TaskName": "Generate Records for Trellix Agent Compliance History Reporting",
+  "EpoComplianceHistory.CountComputers": 1,
+  "EpoComplianceHistory.CountNonCompliant": 0,
+  "EpoComplianceHistory.PercentNonCompliant": 0.0,
+  "EpoComplianceHistory.PercentCompliant": 100.0,
+  "EpoComplianceHistory.TheTimestamp": "2026-10-11T01:00:08+02:00",
+  "EpoComplianceHistory.CountCompliant": 1
+ },
+ {
+  "EpoComplianceHistory.ChartName": "Trellix Agent Compliance Summary",
+  "EpoComplianceHistory.TaskName": "Generate Records for Trellix Agent Compliance History Reporting",
+  "EpoComplianceHistory.CountComputers": 1,
+  "EpoComplianceHistory.CountNonCompliant": 0,
+  "EpoComplianceHistory.PercentNonCompliant": 0.0,
+  "EpoComplianceHistory.PercentCompliant": 100.0,
+  "EpoComplianceHistory.TheTimestamp": "2026-10-04T01:00:19+02:00",
+  "EpoComplianceHistory.CountCompliant": 1
+ },
+ {
+  "EpoComplianceHistory.ChartName": "Trellix Agent Compliance Summary",
+  "EpoComplianceHistory.TaskName": "Generate Records for Trellix Agent Compliance History Reporting",
+  "EpoComplianceHistory.CountComputers": 0,
+  "EpoComplianceHistory.CountNonCompliant": 0,
+  "EpoComplianceHistory.PercentNonCompliant": 0.0,
+  "EpoComplianceHistory.PercentCompliant": 100.0,
+  "EpoComplianceHistory.TheTimestamp": "2026-09-29T15:59:06+02:00",
+  "EpoComplianceHistory.CountCompliant": 0
+ },
+ {
+  "EpoComplianceHistory.ChartName": "Trellix Agent Compliance Summary",
+  "EpoComplianceHistory.TaskName": "Generate Records for Trellix Agent Compliance History Reporting",
+  "EpoComplianceHistory.CountComputers": 0,
+  "EpoComplianceHistory.CountNonCompliant": 0,
+  "EpoComplianceHistory.PercentNonCompliant": 0.0,
+  "EpoComplianceHistory.PercentCompliant": 100.0,
+  "EpoComplianceHistory.TheTimestamp": "2026-09-22T11:25:38+02:00",
+  "EpoComplianceHistory.CountCompliant": 0
+ },
+ {
+  "EpoComplianceHistory.ChartName": "Trellix Agent Compliance Summary",
+  "EpoComplianceHistory.TaskName": "Generate Records for Trellix Agent Compliance History Reporting",
+  "EpoComplianceHistory.CountComputers": 1,
+  "EpoComplianceHistory.CountNonCompliant": 0,
+  "EpoComplianceHistory.PercentNonCompliant": 0.0,
+  "EpoComplianceHistory.PercentCompliant": 100.0,
+  "EpoComplianceHistory.TheTimestamp": "2026-09-14T13:36:40+02:00",
+  "EpoComplianceHistory.CountCompliant": 1
+ }
+]

@@ -32,6 +32,8 @@ classes and imported back without another package.
   (EPOQueries, see the epoqueries module) the saved queries.
 - Users and permission sets: epo.users (EPOUsers) and epo.permission_sets
   (EPOPermissionSets), see the epousers module.
+- Audit Log, events and purges: epo.events (EPOEvents, see the epoevents
+  module).
 
 The password is kept in memory only: the library never writes it.
 EPOClient.from_environment() reads EPO_URL, EPO_USER and EPO_PASSWORD.
@@ -158,6 +160,7 @@ class EPOClient():
         self._queries = None
         self._users = None
         self._permission_sets = None
+        self._events = None
         # Only the HTTP Basic header is kept, sent with every command (the Web
         # API has no session).
         self.__authorization = 'Basic ' + base64.b64encode(
@@ -296,6 +299,18 @@ class EPOClient():
             from .epousers import EPOPermissionSets
             self._permission_sets = EPOPermissionSets(self)
         return self._permission_sets
+
+    @property
+    def events(self):
+        """
+        The event operations (EPOEvents): epo.events.read() of a query on the
+        Audit Log or events, the purges... see the epoevents module.
+        """
+        if self._events is None:
+            # Imported here: epoevents imports this module.
+            from .epoevents import EPOEvents
+            self._events = EPOEvents(self)
+        return self._events
 
     def __repr__(self):
         """
