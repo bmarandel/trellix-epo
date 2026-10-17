@@ -36,6 +36,7 @@ import re
 import xml.etree.ElementTree as et
 
 from . import tagcatalog as cat
+from .squid import SquidString, squid_parse, squid_quote  # noqa: F401  (re-exported)
 
 # Root tag group of ePO ("My Tags") and the group of the deployment tags,
 # which the tag import can't use.
@@ -64,64 +65,8 @@ _NO_VALUE_OPS = ('isBlank', 'not_isBlank', 'beforeNow')
 _VERSION = re.compile(r'\d{1,10}(\.\d{1,10}){0,3}')
 
 
-# ------------------------------ SQUID text ------------------------------
-def squid_quote(text):
-    """
-    Returns a SQUID string: in double quotes, the double quotes and the
-    backslashes escaped with a backslash.
-
-    >>> print(squid_quote('a"b\\'c'))
-    "a\\"b'c"
-    """
-    return '"{}"'.format(text.replace('\\', '\\\\').replace('"', '\\"'))
-
-
-def squid_parse(text):
-    """
-    Returns a SQUID expression as nested lists: an item in parentheses
-    becomes a list, a quoted string a str subclass (SquidString), a word a
-    str.
-
-    >>> squid_parse('( where ( eq EPOComputerProperties.Vdi 1 ) )')
-    ['where', ['eq', 'EPOComputerProperties.Vdi', '1']]
-    >>> squid_parse('( eq P "a\\\\"b" )')[2]
-    SquidString('a"b')
-    >>> squid_parse('( eq P "x" ')
-    Traceback (most recent call last):
-    ValueError: Unbalanced parentheses in the SQUID expression.
-    """
-    tokens = re.findall(r'\(|\)|"(?:\\.|[^"\\])*"|[^\s()"]+', text)
-    stack = [[]]
-    for token in tokens:
-        if token == '(':
-            stack.append([])
-        elif token == ')':
-            if len(stack) < 2:
-                raise ValueError('Unbalanced parentheses in the SQUID expression.')
-            item = stack.pop()
-            stack[-1].append(item)
-        elif token.startswith('"'):
-            stack[-1].append(SquidString(re.sub(r'\\(.)', r'\1', token[1:-1])))
-        else:
-            stack[-1].append(token)
-    if len(stack) != 1 or len(stack[0]) != 1:
-        raise ValueError('Unbalanced parentheses in the SQUID expression.')
-    return stack[0][0]
-
-
-class SquidString(str):
-    """
-    A quoted string of a SQUID expression (to tell "1" from 1).
-
-    >>> SquidString('Server')
-    SquidString('Server')
-    """
-
-    def __repr__(self):
-        """
-        Shows the class, to tell a quoted string from a word.
-        """
-        return 'SquidString({})'.format(str.__repr__(self))
+# The SQUID text (squid_quote, squid_parse, SquidString) is in the squid
+# module, the reference of the SQUID queries (imported above).
 
 
 # ------------------------------ Properties ------------------------------

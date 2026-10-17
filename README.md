@@ -428,6 +428,41 @@ print(applied_to_markdown(epo.policies.applied('PC01')))     # policies the syst
 - The policy categories (`policycatalog.CATEGORIES`, `MULTI_SLOT`) are the
   reference shared with the Policy Assignment Rules.
 
+### Queries
+
+`squid.Query` builds the SQUID queries of `core.executeQuery` step by step
+(a column without a table name is a column of the target), and
+`epo.queries` runs them, runs the saved queries of Queries & Reports by name
+or id, and reads the console labels of the columns.
+
+```python
+from trellix_epo import EPOClient, Query, rows_to_markdown
+from trellix_epo.squid import eq, older_than, contains
+
+epo = EPOClient.from_environment()
+
+query = (Query('EPOLeafNode').select('NodeName', 'EPOComputerProperties.OSType', 'LastUpdate')
+         .where(eq('ManagedState', 1), older_than('LastUpdate', days=30)).order('NodeName'))
+rows = epo.queries.run(query)                          # or epo.query(query)
+print(rows_to_markdown(rows, epo.queries.labels(query), 'Inactive systems'))
+
+by_os = Query('EPOLeafNode').select('EPOComputerProperties.OSType') \
+    .group('EPOComputerProperties.OSType').count()     # [{..., 'count': 2}, ...]
+epo.queries.list(group='Agent Management')             # [SavedQuery...]
+epo.queries.run('Inactive Agents')                     # a saved query, its own columns
+```
+
+- The Web API runs a saved query but doesn't give its SQUID (only the
+  condition as the console writes it), and can't export, import or delete
+  saved queries.
+- The queries of another database (TIE Server) fail while that server is
+  down ("The connection attempt failed.").
+- The syntax, the operators of each column type and the traps are in the
+  ePO Web API guide; only the common
+  operators have a helper (`eq`, `ne`, `contains`, `starts_with`,
+  `is_blank`, `newer_than`, `older_than`, `and_`, `or_`, `not_`), the others
+  are written with `Condition(operator, column, *values)`.
+
 ### Server tasks
 
 `epo.server_tasks` lists the server tasks (`ServerTask`: name, schedule

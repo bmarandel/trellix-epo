@@ -45,7 +45,7 @@ def export():
 
 
 def test_docstring_examples():
-    for module, count in [(tags_module, 39), (epotags_module, 5)]:
+    for module, count in [(tags_module, 34), (epotags_module, 5)]:
         result = doctest.testmod(module)
         assert result.attempted >= count and result.failed == 0
 

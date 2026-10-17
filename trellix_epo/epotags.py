@@ -33,6 +33,7 @@ Server behaviours handled here (checked on ePO 5.10 Update 7):
 """
 
 from .epo import EPOError
+from .squid import Condition, Query, eq
 from .tags import TagList, ROOT_GROUP
 
 # Console rules of a tag group name (ComputerMgmt.createTagGroup): forbidden
@@ -179,8 +180,8 @@ class EPOTagGroups():
         if not delete_tags:
             subgroups = [g['path'] for g in self.list()
                          if g['path'].lower().startswith(group['path'].lower() + '/')]
-            tags = self.epo.query('EPOTag', '(select EPOTag.Name)',
-                                  '(eq EPOTagGroup.TagGroupId {})'.format(group['id']))
+            tags = self.epo.query(Query('EPOTag').select('Name').where(
+                eq('EPOTagGroup.TagGroupId', group['id'])))
             if subgroups or tags:
                 raise ValueError('Tag group "{}" has {} tag(s) and {} subgroup(s): use '
                                  'delete_tags=True to delete them too.'
@@ -221,10 +222,9 @@ class EPOTags():
         type ('manual' or 'mixed'), number of systems and usage count.
         """
         tags = TagList(self.epo.call('system.exportTag', output='terse').strip())
-        rows = self.epo.query('EPOTag', '(select EPOTag.Name EPOTagGroup.TagGroupId '
-                                        'EPOTagType.TagType EPOTagUsage.AssignedSystems '
-                                        'EPOTagUsage.UsageCount EPOTag.CreatedBy '
-                                        'EPOTag.ModifiedOn)')
+        rows = self.epo.query(Query('EPOTag').select(
+            'Name', 'EPOTagGroup.TagGroupId', 'EPOTagType.TagType', 'EPOTagUsage.AssignedSystems',
+            'EPOTagUsage.UsageCount', 'CreatedBy', 'ModifiedOn'))
         info = {row['EPOTag.Name'].lower(): row for row in rows}
         # The export gives the group name only (the first group found when
         # several have it): the query gives the group id, hence the path.
@@ -358,8 +358,8 @@ class EPOTags():
         tag_id = self.__require(name)
         result = {}
         for key, operator in (('tagged', 'hasTag'), ('excluded', 'hasTagExcluded')):
-            rows = self.epo.query('EPOLeafNode', '(select EPOLeafNode.NodeName)',
-                                  '({} EPOLeafNode.AppliedTags {})'.format(operator, tag_id))
+            rows = self.epo.query(Query('EPOLeafNode').select('NodeName').where(
+                Condition(operator, 'AppliedTags', tag_id)))
             result[key] = sorted(row['EPOLeafNode.NodeName'] for row in rows)
         return result
 

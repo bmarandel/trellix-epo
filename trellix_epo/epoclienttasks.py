@@ -33,6 +33,7 @@ import re
 
 from .clienttasks import ClientTask, ClientTaskList
 from .epo import EPOError
+from .squid import Query, eq
 
 
 def _names(systems):
@@ -207,14 +208,11 @@ class EPOClientTasks():
         :param: system: A system name to read this system only.
         :param: name: A task name to read this task only.
         """
-        where = []
+        query = Query('EPOTaskAppliedTasks').select(*self.APPLIED_COLUMNS)
         if system:
-            where.append('(eq EPOLeafNode.NodeName "{}")'.format(system.replace('"', '\\"')))
+            query.where(eq('EPOLeafNode.NodeName', system))
         if name:
-            where.append('(eq EPOTaskAppliedTasks.Name "{}")'.format(name.replace('"', '\\"')))
-        rows = self.epo.query(
-            'EPOTaskAppliedTasks', '(select {})'.format(' '.join(self.APPLIED_COLUMNS)),
-            ('(and {})'.format(' '.join(where)) if len(where) > 1 else
-             where[0] if where else None))
+            query.where(eq('Name', name))
+        rows = self.epo.query(query)
         return [{key: row.get(column) for column, key in self.APPLIED_COLUMNS.items()}
                 for row in rows]

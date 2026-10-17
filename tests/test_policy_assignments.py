@@ -87,7 +87,7 @@ def test_docstring_examples():
     result = doctest.testmod(module)
     assert result.attempted >= 18 and result.failed == 0
     result = doctest.testmod(operations)
-    assert result.attempted >= 3 and result.failed == 0
+    assert result.attempted >= 2 and result.failed == 0
 
 
 def test_every_category_of_the_library_is_found_in_policy_find():

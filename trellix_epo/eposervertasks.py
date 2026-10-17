@@ -41,34 +41,12 @@ Shared Policies"):
 import time
 
 from .epo import EPOError
+from .squid import Query, eq, newer_than
 from .servertasks import RunningTask, ServerTask, TaskLogEntry, TaskMessage, STATUSES
 
 # Columns of the OrionTaskLogTask table read for the log.
 LOG_COLUMNS = ('Id', 'Name', 'StartDate', 'EndDate', 'UserName', 'Status', 'TaskSource',
                'Duration')
-
-
-def _quote(text):
-    """
-    Returns a text value of a SQUID condition, between quotes (a quote in
-    the text is removed: the names of the log have none).
-
-    >>> _quote('TIE Server "Monitoring"')
-    '"TIE Server Monitoring"'
-    """
-    return '"{}"'.format(str(text).replace('"', ''))
-
-
-def _where(conditions):
-    """
-    Returns the where clause of SQUID conditions (None when there are none).
-
-    >>> _where([]), _where(['(eq A.B 1)']), _where(['(eq A.B 1)', '(eq A.C 2)'])
-    (None, '(eq A.B 1)', '(and (eq A.B 1) (eq A.C 2))')
-    """
-    if not conditions:
-        return None
-    return conditions[0] if len(conditions) == 1 else '(and {})'.format(' '.join(conditions))
 
 
 class EPOServerTasks():
@@ -246,26 +224,21 @@ class EPOServerTasks():
         :param: days: Keep the entries started in the last days.
         :param: limit: The maximum number of entries.
         """
-        conditions = []
+        query = Query('OrionTaskLogTask').select(*LOG_COLUMNS).order('StartDate', desc=True)
         if task is not None:
-            conditions.append('(eq OrionTaskLogTask.Name {})'.format(
-                _quote(task.name if isinstance(task, ServerTask) else task)))
+            query.where(eq('Name', task.name if isinstance(task, ServerTask) else task))
         if source is not None:
-            conditions.append('(eq OrionTaskLogTask.TaskSource {})'.format(_quote(source)))
+            query.where(eq('TaskSource', source))
         if status is not None:
             code = status if isinstance(status, int) else next(
                 (key for key, label in STATUSES.items() if label.lower() == status.lower()), None)
             if code is None:
                 raise ValueError('Unknown status {!r}: one of {}.'.format(
                     status, ', '.join(STATUSES.values())))
-            conditions.append('(eq OrionTaskLogTask.Status {})'.format(code))
+            query.where(eq('Status', code))
         if days is not None:
-            conditions.append('(newerThan OrionTaskLogTask.StartDate {})'.format(
-                int(days * 86400000)))
-        rows = self.epo.query('OrionTaskLogTask', '(select (top {}) {})'.format(
-            int(limit), ' '.join('OrionTaskLogTask.' + column for column in LOG_COLUMNS)),
-            _where(conditions), '(order (desc OrionTaskLogTask.StartDate))')
-        return [TaskLogEntry.from_row(row) for row in rows]
+            query.where(newer_than('StartDate', days=days))
+        return [TaskLogEntry.from_row(row) for row in self.epo.query(query.top(limit))]
 
     def entry(self, log_id, details=True):
         """
@@ -274,9 +247,8 @@ class EPOServerTasks():
 
         Example: epo.server_tasks.entry(36355).messages.
         """
-        rows = self.epo.query('OrionTaskLogTask', '(select {})'.format(
-            ' '.join('OrionTaskLogTask.' + column for column in LOG_COLUMNS)),
-            '(eq OrionTaskLogTask.Id {})'.format(int(log_id)))
+        rows = self.epo.query(Query('OrionTaskLogTask').select(*LOG_COLUMNS).where(
+            eq('Id', int(log_id))))
         if not rows:
             return None
         entry = TaskLogEntry.from_row(rows[0])

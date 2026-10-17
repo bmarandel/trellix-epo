@@ -1,0 +1,11 @@
+System Name: ubuntud01
+IP address: 0:0:0:0:0:FFFF:C0A8:64EC
+User Name: demo
+Last Communication: 12/19/25 12:34:39 AM CET
+
+System Name: W2022CORE
+IP address: 0:0:0:0:0:FFFF:C0A8:641E
+User Name: Demo
+Last Communication: 4/30/25 2:15:48 PM CEST
+
+

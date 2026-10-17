@@ -53,6 +53,7 @@ systems, never managed):
 import json
 
 from .epo import EPOError
+from .squid import Query
 from .systemtree import (GLOBAL_ROOT, CUSTOM_FIELDS, Group, System,
                          check_destination, check_name, import_file, normalize_path)
 
@@ -385,8 +386,7 @@ class EPOGroups():
 
         Example: [group.path for group in epo.groups.list()].
         """
-        rows = self.epo.query('EPOBranchNode', '(select {})'.format(
-            ' '.join('EPOBranchNode.' + column for column in GROUP_COLUMNS)))
+        rows = self.epo.query(Query('EPOBranchNode').select(*GROUP_COLUMNS))
         groups = [Group.from_json(row) for row in rows
                   if row.get('EPOBranchNode.Type') != GLOBAL_ROOT]
         return sorted(groups, key=lambda item: [part.lower() for part in item.path.split('\\')])

@@ -28,6 +28,8 @@ classes and imported back without another package.
   here as shortcuts.
 - Server tasks and Server Task Log: epo.server_tasks (EPOServerTasks, see
   the eposervertasks module).
+- Queries: query() runs a SQUID query (text or squid.Query), epo.queries
+  (EPOQueries, see the epoqueries module) the saved queries.
 
 The password is kept in memory only: the library never writes it.
 EPOClient.from_environment() reads EPO_URL, EPO_USER and EPO_PASSWORD.
@@ -52,7 +54,7 @@ import urllib.parse
 import urllib.request
 import uuid
 
-from .policies import Policies
+from .squid import Query
 from .ta.tapolicies import TAPolicies
 from .es.tp.estppolicies import ESTPPolicies
 from .es.fw.esfwpolicies import ESFWPolicies
@@ -151,6 +153,7 @@ class EPOClient():
         self._groups = None
         self._policies = None
         self._server_tasks = None
+        self._queries = None
         # Only the HTTP Basic header is kept, sent with every command (the Web
         # API has no session).
         self.__authorization = 'Basic ' + base64.b64encode(
@@ -251,6 +254,19 @@ class EPOClient():
             from .eposervertasks import EPOServerTasks
             self._server_tasks = EPOServerTasks(self)
         return self._server_tasks
+
+    @property
+    def queries(self):
+        """
+        The query operations (EPOQueries): epo.queries.run() of a squid.Query
+        or of a saved query, epo.queries.list(), epo.queries.labels()... see
+        the epoqueries module.
+        """
+        if self._queries is None:
+            # Imported here: epoqueries imports this module.
+            from .epoqueries import EPOQueries
+            self._queries = EPOQueries(self)
+        return self._queries
 
     def __repr__(self):
         """
@@ -460,10 +476,15 @@ class EPOClient():
         Runs a SQUID query (core.executeQuery) and returns the rows (list of
         dictionaries keyed by "Table.Column"), e.g.
         query('EPOLeafNode', '(select EPOLeafNode.NodeName)', '(eq EPOLeafNode.ManagedState 1)')
+        or query(Query('EPOLeafNode').select('NodeName').where(eq('ManagedState', 1)))
         returns [{'EPOLeafNode.NodeName': 'W10ENTB01'}, ...].
 
+        :param: target: The table, or a squid.Query (the other parameters
+                        are then left out).
         :param: joins: The joinTables parameter (tables to join).
         """
+        if isinstance(target, Query):
+            return self.call('core.executeQuery', **target.params())
         return self.call('core.executeQuery', target=target, select=select, where=where,
                          order=order, group=group, joinTables=joins)
 

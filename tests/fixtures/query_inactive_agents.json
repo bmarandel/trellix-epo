@@ -1,0 +1,14 @@
+[
+ {
+  "EPOLeafNode.NodeName": "ubuntud01",
+  "EPOComputerProperties.IPV6": "0:0:0:0:0:FFFF:C0A8:64EC",
+  "EPOComputerProperties.UserName": "demo",
+  "EPOLeafNode.LastUpdate": "2025-12-19T00:34:39+01:00"
+ },
+ {
+  "EPOLeafNode.NodeName": "W2022CORE",
+  "EPOComputerProperties.IPV6": "0:0:0:0:0:FFFF:C0A8:641E",
+  "EPOComputerProperties.UserName": "Demo",
+  "EPOLeafNode.LastUpdate": "2025-04-30T14:15:48+02:00"
+ }
+]

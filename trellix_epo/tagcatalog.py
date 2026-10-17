@@ -26,7 +26,7 @@ this module imports them.
 # system properties (systemtree), the reference of the Computer Properties.
 from .systemtree import (ENUM, TEXT, INTEGER, LOOKUP, STRING_ENUM, MEGABYTES, BYTES,
                          IPV4, IPV6, TIMESTAMP, VERSION2, VERSION, ENUM_VALUES,
-                         MANAGEMENT_TYPES, LANGUAGES, PROPERTIES as SYSTEM_PROPERTIES)
+                         MANAGEMENT_TYPES, LANGUAGES, PROPERTIES as SYSTEM_PROPERTIES)  # noqa: F401
 
 _BLANK = ('isBlank', 'not_isBlank')
 _TEXT_OPS = ('eq', 'ne', 'contains', 'notContains', 'startsWith', 'endsWith', 'like') + _BLANK

@@ -83,8 +83,7 @@ class FakeServer(EPOClient):
 def test_docstring_examples():
     result = doctest.testmod(module)
     assert result.attempted >= 20 and result.failed == 0
-    result = doctest.testmod(operations)
-    assert result.attempted >= 2 and result.failed == 0
+    assert doctest.testmod(operations).failed == 0
 
 
 def test_list_and_get():

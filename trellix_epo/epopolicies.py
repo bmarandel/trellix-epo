@@ -47,22 +47,13 @@ from .epo import EPOError
 from .policies import Policies
 from .policycatalog import (AppliedPolicy, Assignment, PolicyRef, label_key)
 from .eposystemtree import _done, _statuses
+from .squid import Query, eq, or_
 
 # Columns of the tables read for the assignments and the applied policies.
 ASSIGNMENT_COLUMNS = ('nodetype2', 'nodetextpath', 'policyobjectid', 'editflags',
                       'ForceInheritance', 'PolicyDesc', 'FeatureTextID')
 APPLIED_COLUMNS = ('NodeName', 'UserName', 'PolicyObjectID', 'upToDate', 'PolicyDesc',
                    'FeatureTextID', 'ServerID', 'EditFlags', 'Origin')
-
-
-def _select(table, columns):
-    """
-    Returns the select clause of a SQUID query on columns of a table.
-
-    >>> _select('EPOAssignedPolicy', ('NodeName', 'Origin'))
-    '(select EPOAssignedPolicy.NodeName EPOAssignedPolicy.Origin)'
-    """
-    return '(select {})'.format(' '.join('{}.{}'.format(table, column) for column in columns))
 
 
 def _matches(policy, product_id=None, category=None):
@@ -202,8 +193,7 @@ class EPOPolicies():
         :param: group: Keep the assignments of a group (path, id or Group).
         :param: system: Keep the assignments of a system (name).
         """
-        rows = self.epo.query('EPOBrokenInherintanceView',
-                              _select('EPOBrokenInherintanceView', ASSIGNMENT_COLUMNS))
+        rows = self.epo.query(Query('EPOBrokenInherintanceView').select(*ASSIGNMENT_COLUMNS))
         policies = {policy.id: policy for policy in self.find()}
         found = [Assignment.from_json(row, policies) for row in rows]
         if group is not None:
@@ -225,12 +215,10 @@ class EPOPolicies():
         :param: systems: A system name, a list of names, or None for all.
         """
         names = [systems] if isinstance(systems, str) else list(systems or [])
-        conditions = ['(eq EPOAssignedPolicy.NodeName "{}")'.format(name.replace('"', ''))
-                      for name in names]
-        where = (None if not conditions else conditions[0] if len(conditions) == 1 else
-                 '(or {})'.format(' '.join(conditions)))
-        rows = self.epo.query('EPOAssignedPolicy', _select('EPOAssignedPolicy', APPLIED_COLUMNS),
-                              where)
+        query = Query('EPOAssignedPolicy').select(*APPLIED_COLUMNS)
+        if names:
+            query.where(or_(*[eq('NodeName', name) for name in names]))
+        rows = self.epo.query(query)
         policies = {policy.id: policy for policy in self.find()}
         return [AppliedPolicy.from_json(row, policies) for row in rows]
 
