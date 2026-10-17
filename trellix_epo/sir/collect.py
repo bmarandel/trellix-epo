@@ -258,7 +258,8 @@ class SIRPolicyCollectData(Policy):
     # ------------------------------ Find File ------------------------------
     def __check_paths(self, paths, kind):
         """
-        The checks of the Find File tab (console 1.0.x on the lab): trailing
+        The checks of the Find File tab (console 1.0.x on the lab, checked
+        again on 1.0.7.70 on 2026-10-17: same rules in generalPolicy.js): trailing
         blanks removed; a file starts with a FILE_PREFIXES item and does not
         end with \\, a folder starts with a drive {A}\\ to {Z}\\; 240
         characters, no " nor ;, no duplicate (case ignored).
