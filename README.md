@@ -8,9 +8,10 @@
 
 ## Overview
 
-This package was published as `mcafee-epo-policies` up to version 1.2.0; it
-continues as `trellix-epo` (`pip install trellix-epo`, `import trellix_epo`)
-from version 2.0.0, see the History.
+This library was created on 2020-10-26 and published on PyPI as
+`mcafee-epo-policies` (18 releases, 0.0.1 to 1.2.0, 2020-10-26 to
+2026-10-05); it continues as `trellix-epo` (`pip install trellix-epo`,
+`import trellix_epo`) from version 2.0.0, with the whole History below.
 
 This package provides a set of Python classes to read, inspect, and modify policy
 documents exported from the Policy Catalog of Trellix (formerly McAfee)
@@ -991,6 +992,71 @@ docstring describing which ePO UI setting it maps to.
 Python 3.8 or later.
 
 ## History
+
+### 2.0.0 - 2026-10-17
+
+**Moved** from `mcafee-epo-policies` (created 2020-10-26, last release 1.2.0)
+to `trellix-epo`: PyPI project `trellix-epo`, import name `trellix_epo`,
+GitHub repository `bmarandel/trellix-epo` (the old URLs redirect).
+`mcafee-epo-policies` gets no new feature.
+
+**Changed (breaking)**
+- Package `mcafee_epo_policies` renamed `trellix_epo`.
+- Trellix Agent: module `ma` renamed `ta` and its classes `McAfeeAgent*`
+  renamed `TA*` (`TAPolicies`, `TAPolicyGeneral`, `TAPolicyRepository`,
+  `TAPolicyTroubleshooting`, `TAPolicyCustomProps`, `TAPolicyTelemetry`),
+  without aliases.
+- ENS Common module `es/common` renamed `es/cm`.
+- The `examples` extra (`mcafee-epo` package) is removed: the library has
+  its own Web API client.
+
+**Added**
+- Trellix EDR with Forensics policies (`edrf`: General, Streaming,
+  Detection, Investigation, Remediation; extension 50.3) with the Markdown
+  export and `examples/edrf_best_practices.py`.
+- Console field limits in every module: the length, number range and
+  allowed characters of each console field are checked (the library refuses
+  what the console refuses), with shared checks in `validators`.
+- `EPOClient`, a client of the ePO Web API written with the standard
+  library only (`call()`, `query()`, policy export and import, Solidcore
+  Rule Groups), and on top of it one object per domain:
+  - `epo.tags` and `epo.tags.groups`: tags with criteria written as in the
+    console builder (`Tag`, `TagCriteria`);
+  - `epo.client_tasks`: typed client tasks (Trellix Agent Product
+    Deployment and Product Update, SIR, the 11 Solidcore tasks) with the
+    console rules, run now, applied tasks;
+  - `epo.repository`: packages of the Main Repository (check in, branch
+    change, delete, pull, replicate) and repositories;
+  - `epo.systems` and `epo.groups`: the System Tree (`System` with the
+    properties of `system.find` and their console labels, `Group`; add,
+    move, sort, delete, custom fields, group creation);
+  - `epo.policies`: Policy Catalog, assignments to groups and systems,
+    inheritance reset, applied policies (`PolicyRef`, `Assignment`,
+    `AppliedPolicy`);
+  - `epo.server_tasks`: server tasks (run and wait, enable, disable,
+    cancel) and the Server Task Log, latest first;
+  - `epo.queries`: SQUID queries built with `squid.Query`, saved queries
+    of Queries & Reports, console labels of the columns;
+  - `epo.users` and `epo.permission_sets`: users (password, Windows,
+    certificate), permission sets exported and imported with their roles.
+- Policy Assignment Rules (`assignmentrules`): the file of the console
+  import and export (no Web API command), with `check_server()`.
+- Trellix Agent 5.8.7: the agent-to-server TLS cipher lists (read only).
+- Markdown tables for the new objects (systems, groups, assignments, tasks,
+  task log, queries, users, permission sets).
+- New examples: Web API connection, tags, assignment rule, client tasks
+  (ENS deployment, product update, Solidcore enable and maintenance
+  window), System Tree import, policy assignments report, server task run.
+- Every server behaviour the library handles (silent "true" answers,
+  hidden traps of the commands) was checked on an ePO 5.10 Update 7 lab and
+  is written in the module docstrings.
+
+**Fixed**
+- Policies written with non-ASCII characters: written as XML character
+  references (the Web API import reads UTF-8 as ISO-8859-1).
+- Solidcore: the General_<n> sections (trusted directories saved by the
+  8.4 console) are read as rules. SIR: odd-length REG_BINARY values are
+  padded as the console does.
 
 ### 1.2.0 - 2026-10-05
 
