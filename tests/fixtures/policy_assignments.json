@@ -1,0 +1,218 @@
+[
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\Workstations\\",
+  "EPOBrokenInherintanceView.policyobjectid": 150,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "ENDP_GS_1000"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\ePO Server\\",
+  "EPOBrokenInherintanceView.policyobjectid": 101,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "ENDP_AM_1000"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\Linux Servers\\",
+  "EPOBrokenInherintanceView.policyobjectid": 163,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "ENDP_AM_1000"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\Workstations\\",
+  "EPOBrokenInherintanceView.policyobjectid": 201,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "ENDP_AM_1000"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\Linux Servers\\",
+  "EPOBrokenInherintanceView.policyobjectid": 200,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "ENDP_AM_1000"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\Workstations\\",
+  "EPOBrokenInherintanceView.policyobjectid": 57,
+  "EPOBrokenInherintanceView.editflags": 1,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "ENDP_AM_1000"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\Workstations\\",
+  "EPOBrokenInherintanceView.policyobjectid": 151,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "ENDP_AM_1000"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\Linux Servers\\",
+  "EPOBrokenInherintanceView.policyobjectid": 198,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "ENDP_AM_1000"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\ePO Server\\",
+  "EPOBrokenInherintanceView.policyobjectid": 122,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "TIEClientMETA"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\Workstations\\",
+  "EPOBrokenInherintanceView.policyobjectid": 122,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "TIEClientMETA"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\ePO Server\\",
+  "EPOBrokenInherintanceView.policyobjectid": 123,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "TIEClientMETA"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\Workstations\\",
+  "EPOBrokenInherintanceView.policyobjectid": 123,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "TIEClientMETA"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\Workstations\\",
+  "EPOBrokenInherintanceView.policyobjectid": 133,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "SIR_____1000_COLLECT_DATA"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 1,
+  "EPOBrokenInherintanceView.nodetextpath": "\\Workstations\\W10ENTB01",
+  "EPOBrokenInherintanceView.policyobjectid": 134,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "SIR_____1000_SET_REGISTRY"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\Workstations\\",
+  "EPOBrokenInherintanceView.policyobjectid": 161,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "XCLIENT_META"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\Workstations\\",
+  "EPOBrokenInherintanceView.policyobjectid": 149,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "XCLIENT_META"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\ePO Server\\",
+  "EPOBrokenInherintanceView.policyobjectid": 159,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "TIEMGMT_META"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\OT Systems\\",
+  "EPOBrokenInherintanceView.policyobjectid": 221,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "SCOR_FIM"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\OT Systems\\",
+  "EPOBrokenInherintanceView.policyobjectid": 172,
+  "EPOBrokenInherintanceView.editflags": 1,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "SCOR_FIM"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\OT Systems\\",
+  "EPOBrokenInherintanceView.policyobjectid": 172,
+  "EPOBrokenInherintanceView.editflags": 1,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "SCOR_FIM"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\OT Systems\\",
+  "EPOBrokenInherintanceView.policyobjectid": 172,
+  "EPOBrokenInherintanceView.editflags": 1,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "SCOR_FIM"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\OT Systems\\",
+  "EPOBrokenInherintanceView.policyobjectid": 226,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "SCOR_AWL"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\OT Systems\\",
+  "EPOBrokenInherintanceView.policyobjectid": 222,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "SCOR_CC"
+ },
+ {
+  "EPOBrokenInherintanceView.nodetype2": 3,
+  "EPOBrokenInherintanceView.nodetextpath": "\\OT Systems\\",
+  "EPOBrokenInherintanceView.policyobjectid": 225,
+  "EPOBrokenInherintanceView.editflags": 0,
+  "EPOBrokenInherintanceView.ForceInheritance": 0,
+  "EPOBrokenInherintanceView.PolicyDesc": "",
+  "EPOBrokenInherintanceView.FeatureTextID": "SCOR_GEN"
+ }
+]

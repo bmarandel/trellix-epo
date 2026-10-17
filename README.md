@@ -391,6 +391,96 @@ epo.repository.repositories(kind='mirror')        # source sites (Repository obj
   `create_http_repository()` / `create_unc_repository()` create a
   distributed repository with its download and replication accounts.
 
+### Policy assignments
+
+`epo.policies` finds the policies of the Policy Catalog (`PolicyRef`: id,
+name, product, category, the typeid of the export), exports and imports
+them (`epo.export_policies()` / `epo.import_policies()` are shortcuts),
+assigns them to System Tree groups and systems and reads the assignments,
+as the Assigned Policies page of the System Tree.
+
+```python
+from trellix_epo import EPOClient, assignments_to_markdown, applied_to_markdown
+
+epo = EPOClient.from_environment()
+
+epo.policies.find(product_id='ENDP_AM_1000', category='Exploit Prevention')   # [PolicyRef...]
+policy = epo.policies.get('Demo (Ransomware)')          # by name; give the category
+                                                        # for "My Default"
+epo.policies.assign(policy, group='My Organization\\Workstations')
+epo.policies.assign(policy, systems=['PC01', 'PC02'])
+epo.policies.reset('On-Access Scan', 'ENDP_AM_1000', group='Workstations')   # inherit again
+print(assignments_to_markdown(epo.policies.assignments()))   # groups and systems that
+                                                             # don't inherit a category
+print(applied_to_markdown(epo.policies.applied('PC01')))     # policies the system has
+```
+
+- Assigning a policy breaks the inheritance of its category; in a
+  multi-slot category (Exploit Prevention, Solidcore rules...) it adds a
+  policy to the ones already assigned. `reset()` inherits the whole
+  category again (every policy of a multi-slot one), and refuses a
+  category the group or system already inherits (the server would answer
+  "Invalid product ID").
+- The Web API can't lock the inheritance, remove one policy of a
+  multi-slot category, or read the policies of My Organization: use the
+  console for these.
+- `applied()` is empty for a system that never connected to the server.
+- The policy categories (`policycatalog.CATEGORIES`, `MULTI_SLOT`) are the
+  reference shared with the Policy Assignment Rules.
+
+### System Tree
+
+`epo.systems` and `epo.groups` work on the System Tree (`system.*`,
+`epogroup.findSystems` commands). A `System` has the 56 properties of
+`system.find` under readable names (`name`, `description`, `custom1` to
+`custom8`, `ip_address`, `os_type`, `tags`, `last_communication`,
+`agent_version`, `group_id`...), each with its console label; a `Group` has
+its id, path from My Organization, parent, type and notes.
+`systemtree.PROPERTIES` is the reference for the system properties (SQUID
+key, console label, kind, drop-down values): the Computer Properties of the
+tag criteria are built from it, and `criteria_property('custom1')` gives the
+`TagProperty` to tag the systems on that field.
+
+```python
+from trellix_epo import EPOClient, systems_to_markdown, groups_to_markdown
+
+epo = EPOClient.from_environment()
+
+epo.systems.find('W2022')                         # [System...], name, IP, MAC, user, tag...
+system = epo.systems.get('PC01')                  # by name or id, or None
+system.tags, system.managed, system.last_communication
+print(systems_to_markdown(epo.systems.find()))    # the columns of the Systems page
+for system in epo.systems.all():                  # every system, by batches (fewer fields)
+    print(system.name, system.os_type)
+
+servers = epo.groups.create('My Organization\\Servers\\Paris')     # Group, parents too
+epo.systems.add(['SRV01', 'SRV02'], servers)      # unmanaged until an agent connects
+epo.systems.set_properties('SRV01', description='SQL Server', custom1='PROD')
+epo.systems.move('SRV02', 'My Organization\\Servers')
+epo.systems.delete('SRV02')
+
+epo.groups.systems('Workstations', subgroups=True)                 # [System...]
+print(groups_to_markdown(epo.groups.list()))
+```
+
+- Nothing is added to or moved into Lost and Found (or its subgroups):
+  the server fills it with the systems deployed outside the console at
+  their first connection; `add()`, `move()` and `groups.create()` refuse it.
+- The Web API has no command to create, rename or delete a group:
+  `groups.create()` imports a text file as New Systems > Import systems and
+  System Tree structure does (a line ending with a backslash creates the
+  group without a system); rename and delete groups in the console.
+- `add()` refuses a name already in the System Tree (the server would
+  ignore it without a message) and checks the systems are in the group
+  after the import; it doesn't deploy the agent.
+- `set_properties()` sets the Description and Custom 1 to 4: the Web API
+  can't clear a field (the server ignores an empty value).
+- A system id and a group id are two separate numbers: system 13 and group
+  13 can both exist.
+- `resort()` sends a system whose sorting is enabled (`move(...,
+  auto_sort=True)`) and that matches no sorting criteria to Lost and Found:
+  sort only the systems the criteria of the groups cover.
+
 ### Policy documentation (Markdown)
 
 Most companies must keep a documentation of the security policies they
@@ -786,7 +876,9 @@ Solidcore (Application Control, Integrity Monitor and Change Control policies,
 Rule Groups - some of them working directly against an ePO server), Trellix
 EDR with Forensics (best practices and example exclusions applied to copies of
 the policies) and client tasks (ENS deployment from the repository, product
-update, Solidcore activation and a Solidcore maintenance window).
+update, Solidcore activation and a Solidcore maintenance window) and the
+System Tree (groups and systems from a CSV list, Markdown report) and the
+policy assignments (Markdown report).
 
 ## Documentation
 

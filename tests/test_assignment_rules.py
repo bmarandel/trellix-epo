@@ -32,7 +32,7 @@ NONE_GROUP = 'Lost and Found\\(none)'
 
 def test_docstring_examples():
     result = doctest.testmod(module)
-    assert result.attempted >= 45 and result.failed == 0
+    assert result.attempted >= 42 and result.failed == 0
 
 
 def test_read_lab_export():

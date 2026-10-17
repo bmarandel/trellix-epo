@@ -1,0 +1,90 @@
+[
+ {
+  "EPOBranchNode.AutoID": 1,
+  "EPOBranchNode.NodeName": "GlobalRoot",
+  "EPOBranchNode.ParentID": 0,
+  "EPOBranchNode.Type": 7,
+  "EPOBranchNode.Notes": null,
+  "EPOBranchNode.NodeTextPath2": "\\"
+ },
+ {
+  "EPOBranchNode.AutoID": 2,
+  "EPOBranchNode.NodeName": "Directory",
+  "EPOBranchNode.ParentID": 1,
+  "EPOBranchNode.Type": 4,
+  "EPOBranchNode.Notes": null,
+  "EPOBranchNode.NodeTextPath2": "\\"
+ },
+ {
+  "EPOBranchNode.AutoID": 3,
+  "EPOBranchNode.NodeName": "Lost&Found",
+  "EPOBranchNode.ParentID": 2,
+  "EPOBranchNode.Type": 5,
+  "EPOBranchNode.Notes": null,
+  "EPOBranchNode.NodeTextPath2": "\\Lost&Found\\"
+ },
+ {
+  "EPOBranchNode.AutoID": 4,
+  "EPOBranchNode.NodeName": "ePO Server",
+  "EPOBranchNode.ParentID": 2,
+  "EPOBranchNode.Type": 3,
+  "EPOBranchNode.Notes": "",
+  "EPOBranchNode.NodeTextPath2": "\\ePO Server\\"
+ },
+ {
+  "EPOBranchNode.AutoID": 6,
+  "EPOBranchNode.NodeName": "Workstations",
+  "EPOBranchNode.ParentID": 2,
+  "EPOBranchNode.Type": 3,
+  "EPOBranchNode.Notes": "",
+  "EPOBranchNode.NodeTextPath2": "\\Workstations\\"
+ },
+ {
+  "EPOBranchNode.AutoID": 11,
+  "EPOBranchNode.NodeName": "OT Systems",
+  "EPOBranchNode.ParentID": 2,
+  "EPOBranchNode.Type": 3,
+  "EPOBranchNode.Notes": "",
+  "EPOBranchNode.NodeTextPath2": "\\OT Systems\\"
+ },
+ {
+  "EPOBranchNode.AutoID": 9,
+  "EPOBranchNode.NodeName": "Linux Servers",
+  "EPOBranchNode.ParentID": 2,
+  "EPOBranchNode.Type": 3,
+  "EPOBranchNode.Notes": "",
+  "EPOBranchNode.NodeTextPath2": "\\Linux Servers\\"
+ },
+ {
+  "EPOBranchNode.AutoID": 12,
+  "EPOBranchNode.NodeName": "Test Group",
+  "EPOBranchNode.ParentID": 2,
+  "EPOBranchNode.Type": 3,
+  "EPOBranchNode.Notes": "",
+  "EPOBranchNode.NodeTextPath2": "\\Test Group\\"
+ },
+ {
+  "EPOBranchNode.AutoID": 10,
+  "EPOBranchNode.NodeName": "(none)",
+  "EPOBranchNode.ParentID": 3,
+  "EPOBranchNode.Type": 3,
+  "EPOBranchNode.Notes": null,
+  "EPOBranchNode.NodeTextPath2": "\\Lost&Found\\(none)\\"
+ },
+ {
+  "EPOBranchNode.AutoID": 13,
+  "EPOBranchNode.NodeName": "Test Sub",
+  "EPOBranchNode.ParentID": 12,
+  "EPOBranchNode.Type": 3,
+  "EPOBranchNode.Notes": "",
+  "EPOBranchNode.NodeTextPath2": "\\Test Group\\Test Sub\\"
+ },
+ {
+  "EPOBranchNode.AutoID": 14,
+  "EPOBranchNode.NodeName": "Test Empty",
+  "EPOBranchNode.ParentID": 12,
+  "EPOBranchNode.Type": 3,
+  "EPOBranchNode.Notes": "",
+  "EPOBranchNode.NodeTextPath2": "\\Test Group\\Test Empty\\"
+ }
+]

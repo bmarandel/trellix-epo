@@ -1,0 +1,42 @@
+[
+ {
+  "groupId": 2,
+  "groupPath": "My Organization"
+ },
+ {
+  "groupId": 3,
+  "groupPath": "My Organization\\Lost and Found"
+ },
+ {
+  "groupId": 4,
+  "groupPath": "My Organization\\ePO Server"
+ },
+ {
+  "groupId": 6,
+  "groupPath": "My Organization\\Workstations"
+ },
+ {
+  "groupId": 9,
+  "groupPath": "My Organization\\Linux Servers"
+ },
+ {
+  "groupId": 10,
+  "groupPath": "My Organization\\Lost and Found\\(none)"
+ },
+ {
+  "groupId": 11,
+  "groupPath": "My Organization\\OT Systems"
+ },
+ {
+  "groupId": 12,
+  "groupPath": "My Organization\\Test Group"
+ },
+ {
+  "groupId": 13,
+  "groupPath": "My Organization\\Test Group\\Test Sub"
+ },
+ {
+  "groupId": 14,
+  "groupPath": "My Organization\\Test Group\\Test Empty"
+ }
+]

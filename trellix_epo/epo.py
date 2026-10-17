@@ -21,6 +21,11 @@ classes and imported back without another package.
   module).
 - Main Repository and repositories: epo.repository (EPORepository, see the
   eporepository module).
+- System Tree: epo.systems (EPOSystems) and epo.groups (EPOGroups), see
+  the eposystemtree module.
+- Policy Catalog and assignments: epo.policies (EPOPolicies, see the
+  epopolicies module); export_policies() and import_policies() are kept
+  here as shortcuts.
 
 The password is kept in memory only: the library never writes it.
 EPOClient.from_environment() reads EPO_URL, EPO_USER and EPO_PASSWORD.
@@ -140,6 +145,9 @@ class EPOClient():
         self._tags = None
         self._client_tasks = None
         self._repository = None
+        self._systems = None
+        self._groups = None
+        self._policies = None
         # Only the HTTP Basic header is kept, sent with every command (the Web
         # API has no session).
         self.__authorization = 'Basic ' + base64.b64encode(
@@ -188,6 +196,45 @@ class EPOClient():
             from .eporepository import EPORepository
             self._repository = EPORepository(self)
         return self._repository
+
+    @property
+    def systems(self):
+        """
+        The system operations (EPOSystems): epo.systems.find(),
+        epo.systems.add(), epo.systems.move(), epo.systems.set_properties()...
+        see the eposystemtree module.
+        """
+        if self._systems is None:
+            # Imported here: eposystemtree imports this module.
+            from .eposystemtree import EPOSystems
+            self._systems = EPOSystems(self)
+        return self._systems
+
+    @property
+    def groups(self):
+        """
+        The System Tree group operations (EPOGroups): epo.groups.list(),
+        epo.groups.systems(), epo.groups.create()... see the eposystemtree
+        module.
+        """
+        if self._groups is None:
+            # Imported here: eposystemtree imports this module.
+            from .eposystemtree import EPOGroups
+            self._groups = EPOGroups(self)
+        return self._groups
+
+    @property
+    def policies(self):
+        """
+        The Policy Catalog operations (EPOPolicies): epo.policies.find(),
+        epo.policies.assign(), epo.policies.reset(), epo.policies.assignments()...
+        see the epopolicies module.
+        """
+        if self._policies is None:
+            # Imported here: epopolicies imports this module.
+            from .epopolicies import EPOPolicies
+            self._policies = EPOPolicies(self)
+        return self._policies
 
     def __repr__(self):
         """
@@ -416,33 +463,21 @@ class EPOClient():
 
     def export_policies(self, product_id):
         """
-        Returns all the policies of a product (policy.export), as the policy
-        class of the product (PRODUCTS, e.g. ESTPPolicies for 'ENDP_AM_1000'),
-        or as Policies for a product the library doesn't support.
+        Returns all the policies of a product: epo.policies.export(), see
+        there.
 
-        :raise: EPOError: Unknown product, e.g. "Invalid ProductID 'NOPE'".
+        Example: epo.export_policies('ENDP_AM_1000') gives ESTPPolicies.
         """
-        text = self._text('policy.export', productId=product_id)
-        return self.PRODUCTS.get(product_id, Policies)(text.strip().encode('utf-8'))
+        return self.policies.export(product_id)
 
     def import_policies(self, policies, force=False, file_name='policies.xml'):
         """
-        Imports policies into ePO (policy.importPolicy) and returns the server
-        message, e.g. "Number of imported policies: 1 Number of matching
-        policies that were not overwritten: 1" (the second count is wrong:
-        the server gives it for a new policy too, checked on the lab).
+        Imports policies into ePO: epo.policies.import_policies(), see
+        there.
 
-        :param: policies: A Policies object (or any object with
-                          get_xml_content(), which writes the non-ASCII
-                          characters as XML references: the Web API import
-                          reads the file as ISO-8859-1), or the XML as bytes.
-        :param: force: Replace the existing policies with the same name;
-                       without it they are kept.
-        :param: file_name: The file name sent with the upload.
+        Example: epo.import_policies(policies, force=True).
         """
-        content = policies if isinstance(policies, bytes) else policies.get_xml_content()
-        return self._text('policy.importPolicy', force=force, files={'file': (file_name, content)},
-                          output='terse').strip()
+        return self.policies.import_policies(policies, force, file_name)
 
     # ------------------------------ Solidcore Rule Groups ------------------------------
     def _rule_group_args(self, platform, group_type):

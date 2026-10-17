@@ -24,6 +24,9 @@ __pycache__/
 # Private project tracking, not for the public repo.
 /TODO.md
 
+# Private Claude Code instructions (lab details, local paths).
+/CLAUDE.md
+
 # Scratch/trial scripts and real ePO exports used while developing new
 # features, archived locally before a finished version graduates to examples/.
 /scripts/

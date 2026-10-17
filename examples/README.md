@@ -133,6 +133,16 @@ update what the previous run created.
   against the server and imported into the Client Task Catalog; `--begin` /
   `--end` run them now on systems. `--markdown` writes the client tasks of
   the server as a Markdown document instead.
+- **`policy_assignments_report.py`** - Markdown report of the policy
+  assignments (groups and systems that don't inherit a category) and of the
+  policies applied to the systems, with the systems not up to date first
+  (read only).
+- **`system_tree_import.py`** - System Tree from a CSV list of systems
+  (name, group, description, custom1-4): creates the missing groups, adds
+  the systems (without agent) and sets their fields; `--move` moves the
+  systems already in the System Tree to their group, `--dry-run` shows the
+  plan; Lost and Found is refused. `--markdown` writes the groups and
+  systems of the server instead.
 
 Run any script with `-h`-style usage by calling it without arguments, e.g.:
 

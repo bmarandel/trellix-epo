@@ -32,6 +32,8 @@ import re
 import xml.etree.ElementTree as et
 from xml.sax.saxutils import escape
 
+from .policycatalog import CATEGORIES, MULTI_SLOT, label_key as _label_key
+from .systemtree import ROOT_GROUP, LOST_AND_FOUND, LOST_AND_FOUND_INTERNAL, normalize_path
 from .tags import squid_quote, squid_parse
 
 # Namespace of the root element (the tag export uses the same one).
@@ -47,97 +49,16 @@ MAX_RULE_NAME = 128
 MAX_NOTES = 1024
 
 # Root group of the System Tree, and the "Lost and Found" group directly
-# under it, which the rule expressions write with its internal name.
-ROOT_GROUP = 'My Organization'
-LOST_AND_FOUND = 'Lost and Found'
-LOST_AND_FOUND_INTERNAL = 'Lost&Found'
+# under it, which the rule expressions write with its internal name: see the
+# systemtree module (imported above).
 
 # Tag family written before the tag name ("EPO/<tag name>"); the tag group
 # is not written.
 TAG_FAMILY = 'EPO'
 
-# Policy categories of the products the library supports: (featureid,
-# typeid) of the policy export -> (product, category) as the rule wizard
-# shows them.
-CATEGORIES = {
-    ('EPOAGENTMETA', 'General'): ('Trellix Agent', 'General'),
-    ('EPOAGENTMETA', 'Repository'): ('Trellix Agent', 'Repository'),
-    ('EPOAGENTMETA', 'Troubleshooting'): ('Trellix Agent', 'Troubleshooting'),
-    ('EPOAGENTMETA', 'CustomProps'): ('Trellix Agent', 'Custom Properties'),
-    ('EPOAGENTMETA', 'Telemetry'): ('Trellix Agent', 'Product Improvement Program'),
-    ('ENDP_AM_1000', 'EAM_General_Policies'): ('Endpoint Security Threat Prevention',
-                                               'On-Access Scan'),
-    ('ENDP_AM_1000', 'EAM_OnDemandScan_Policies'): ('Endpoint Security Threat Prevention',
-                                                    'On-Demand Scan'),
-    ('ENDP_AM_1000', 'EAM_CommonScan_Policies'): ('Endpoint Security Threat Prevention', 'Options'),
-    ('ENDP_AM_1000', 'EAM_BehaviorBlock_Policies'): ('Endpoint Security Threat Prevention',
-                                                     'Access Protection'),
-    ('ENDP_AM_1000', 'EAM_BufferOverflow_Policies'): ('Endpoint Security Threat Prevention',
-                                                      'Exploit Prevention'),
-    ('ENDP_FW_META_FW', 'FW_StatusMode'): ('Endpoint Security Firewall', 'Options'),
-    ('ENDP_FW_META_FW', 'FireCore_FW_Rules'): ('Endpoint Security Firewall', 'Rules'),
-    ('ENDP_GS_1000', 'EGS_Product_Configuration_Policies'): ('Endpoint Security Common',
-                                                             'Options'),
-    ('TIEClientMETA', 'General'): ('Endpoint Security Adaptive Threat Protection', 'Options'),
-    ('TIEClientMETA', 'TIE_DynamicApplicationContainment_Policies'): (
-        'Endpoint Security Adaptive Threat Protection', 'Dynamic Application Containment'),
-    ('ENDP_WP_1000', 'EWC_General'): ('Endpoint Security Web Control', 'Options'),
-    ('ENDP_WP_1000', 'EWC_EnforcementMessaging'): ('Endpoint Security Web Control',
-                                                   'Enforcement Messaging'),
-    ('ENDP_WP_1000', 'EWC_BlockAndAllowList'): ('Endpoint Security Web Control',
-                                                'Block and Allow List'),
-    ('ENDP_WP_1000', 'EWC_ContentFiltering'): ('Endpoint Security Web Control', 'Content Actions'),
-    ('ENDP_WP_1000', 'EWC_BrowserControl'): ('Endpoint Security Web Control', 'Browser Control'),
-    ('VSESTOMD1300', 'VSES1000_Icap_Policies'): ('Endpoint Security Storage Protection',
-                                                 'ICAP Policies'),
-    ('VSESTOMD1300', 'VSES1000_Netapp_Policies'): ('Endpoint Security Storage Protection',
-                                                   'NetApp Policies'),
-    ('SCOR_AWL', 'AWL Rules (Windows)'): ('Solidcore:Application Control',
-                                          'Application Control Rules (Windows)'),
-    ('SCOR_AWL', 'AWL Rules (Unix)'): ('Solidcore:Application Control',
-                                       'Application Control Rules (Unix)'),
-    ('SCOR_AWL', 'AWL Options (Windows)'): ('Solidcore:Application Control',
-                                            'Application Control Options (Windows)'),
-    ('SCOR_AWL', 'AWL Options (Unix)'): ('Solidcore:Application Control',
-                                         'Application Control Options (Unix)'),
-    ('SCOR_CC', 'CC Rules (Windows)'): ('Solidcore:Change Control',
-                                        'Change Control Rules (Windows)'),
-    ('SCOR_CC', 'CC Rules (Unix)'): ('Solidcore:Change Control', 'Change Control Rules (Unix)'),
-    ('SCOR_FIM', 'Mon Rules (Windows)'): ('Solidcore:Integrity Monitor',
-                                          'Integrity Monitoring Rules (Windows)'),
-    ('SCOR_FIM', 'Mon Rules (Unix)'): ('Solidcore:Integrity Monitor',
-                                       'Integrity Monitoring Rules (Unix)'),
-    ('SCOR_GEN', 'Lockdown Rules'): ('Solidcore:General', 'Configuration (Client)'),
-    ('SCOR_GEN', 'Attr Rules (Windows)'): ('Solidcore:General', 'Exception Rules (Windows)'),
-    ('SCOR_GEN', 'Attr Rules (Unix)'): ('Solidcore:General', 'Exception Rules (Unix)'),
-    ('SIR_____1000_COLLECT_DATA', 'General'): ('System Information Reporter:Collect Data',
-                                               'General'),
-    ('SIR_____1000_SET_REGISTRY', 'General'): ('System Information Reporter:Set Registry',
-                                               'Registry General'),
-    ('XCLIENT_META', 'General'): ('Trellix EDR with Forensics', 'General'),
-    ('XCLIENT_META', 'Streaming'): ('Trellix EDR with Forensics', 'Streaming'),
-    ('XCLIENT_META', 'Detection'): ('Trellix EDR with Forensics', 'Detection'),
-    ('XCLIENT_META', 'Investigation'): ('Trellix EDR with Forensics', 'Investigation'),
-    ('XCLIENT_META', 'Remediation'): ('Trellix EDR with Forensics', 'Remediation'),
-}
-
-# Policy categories (featureid, typeid) marked "(Multi-slot)" in the rule
-# wizard: a rule can assign several policies of these categories. The other
-# categories take one policy per rule.
-MULTI_SLOT = frozenset([
-    ('ENDP_AM_1000', 'EAM_BufferOverflow_Policies'),
-    ('ENDP_WP_1000', 'EWC_BlockAndAllowList'),
-    ('ENDP_WP_1000', 'EWC_ContentFiltering'),
-    ('SCOR_AWL', 'AWL Rules (Windows)'),
-    ('SCOR_AWL', 'AWL Rules (Unix)'),
-    ('SCOR_CC', 'CC Rules (Windows)'),
-    ('SCOR_CC', 'CC Rules (Unix)'),
-    ('SCOR_FIM', 'Mon Rules (Windows)'),
-    ('SCOR_FIM', 'Mon Rules (Unix)'),
-    ('SCOR_GEN', 'Lockdown Rules'),
-    ('SCOR_GEN', 'Attr Rules (Windows)'),
-    ('SCOR_GEN', 'Attr Rules (Unix)'),
-])
+# Policy categories (CATEGORIES: (featureid, typeid) -> labels of the rule
+# wizard) and the multi-slot ones (MULTI_SLOT): see the policycatalog module
+# (imported above), the reference of the policy categories.
 
 # Line end of the console export.
 _EOL = '\r\n'
@@ -168,20 +89,6 @@ def _keep_line_ends(text):
     """
     return re.sub(r'="([^"]*)"', lambda match: '="{}"'.format(
         match.group(1).replace('\r', '&#13;').replace('\n', '&#10;')), text)
-
-
-def _label_key(label):
-    """
-    Returns a console label to compare: lower case, without the product
-    versions and the blanks around ":".
-
-    >>> _label_key('System Information Reporter :Collect Data')
-    'system information reporter:collect data'
-    >>> _label_key('Solidcore 8.4.5:General')
-    'solidcore:general'
-    """
-    label = re.sub(r'\s+\d+(\.\d+)+', '', label.strip().lower())
-    return re.sub(r'\s*:\s*', ':', label)
 
 
 # ------------------------------ System Tree groups ------------------------------
@@ -248,12 +155,7 @@ class SystemGroups():
         >>> SystemGroups.normalize('Lost&Found\\\\(none)')
         'My Organization\\\\Lost and Found\\\\(none)'
         """
-        parts = [part.strip() for part in path.split('\\') if part.strip()]
-        if parts and parts[0].lower() == ROOT_GROUP.lower():
-            parts = parts[1:]
-        if parts and parts[0] == LOST_AND_FOUND_INTERNAL:
-            parts[0] = LOST_AND_FOUND
-        return '\\'.join([ROOT_GROUP] + parts)
+        return normalize_path(path)
 
     @staticmethod
     def squid_path(path):

@@ -1,0 +1,62 @@
+[
+ {
+  "LeafNodeId": 3,
+  "ComputerName": "W2022EPO510",
+  "DomainName": "WORKGROUP",
+  "NetAddress": "000C298190CD",
+  "OSType": "Windows Server 2022 Standard",
+  "UserName": "Administrator",
+  "LastUpdate": "2026-10-17 12:03:54.06",
+  "ManagedState": 1,
+  "InstalledProducts": "[Trellix DXL Client | 2024-09-17 11:47:41], [Endpoint Security Adaptive Threat Protection | 2024-09-17 11:47:41], [Endpoint Security Threat Prevention | 2024-09-17 11:47:42], [Endpoint Security Firewall | 2024-09-17 11:47:42], [Endpoint Security Platform | 2024-09-17 11:47:42], [Endpoint Security Web Control | 2024-09-17 11:47:43], [Agent | 2024-09-17 11:47:43], [Trellix DXL Broker | 2024-09-20 17:22:05]",
+  "DomainController": "NA"
+ },
+ {
+  "LeafNodeId": 4,
+  "ComputerName": "W10ENTB01",
+  "DomainName": "WORKGROUP",
+  "NetAddress": "000C29739115",
+  "OSType": "Windows 10",
+  "UserName": "Demo",
+  "LastUpdate": "2026-10-14 14:35:02.377",
+  "ManagedState": 1,
+  "InstalledProducts": "[Trellix DXL Client | 2024-09-17 12:53:54], [Endpoint Security Adaptive Threat Protection | 2024-09-17 12:53:54], [Endpoint Security Threat Prevention | 2024-09-17 12:53:54], [Endpoint Security Firewall | 2024-09-17 12:53:54], [Endpoint Security Platform | 2024-09-17 12:53:54], [Endpoint Security Web Control | 2024-09-17 12:53:54], [Agent | 2024-09-17 12:53:54], [SIR | 2024-11-18 21:49:37], [Trellix EDR with Forensics | 2026-03-12 21:57:16]",
+  "DomainController": "0"
+ },
+ {
+  "LeafNodeId": 5,
+  "ComputerName": "W2022CORE",
+  "DomainName": "WORKGROUP",
+  "NetAddress": "000C29A2DC39",
+  "OSType": "Windows Server 2022 Standard",
+  "UserName": "Demo",
+  "LastUpdate": "2025-04-30 12:15:48.483",
+  "ManagedState": 1,
+  "InstalledProducts": "[Agent | 2024-09-19 20:00:44], [Trellix DXL Client | 2024-09-19 20:02:22], [Endpoint Security Threat Prevention | 2024-09-19 20:10:48], [Endpoint Security Platform | 2024-09-19 20:10:48], [Endpoint Security Firewall | 2024-09-19 20:10:48], [Endpoint Security Web Control | 2024-09-19 20:10:48], [Endpoint Security Adaptive Threat Protection | 2024-09-19 20:10:49], [Trellix EDR with Forensics | 2024-09-19 20:21:33], [SIR | 2024-11-18 21:49:34]",
+  "DomainController": "NA"
+ },
+ {
+  "LeafNodeId": 7,
+  "ComputerName": "ubuntud01",
+  "DomainName": "(none)",
+  "NetAddress": "000C29F3380B",
+  "OSType": "Linux",
+  "UserName": "demo",
+  "LastUpdate": "2025-12-18 23:34:39.59",
+  "ManagedState": 1,
+  "InstalledProducts": "[Trellix DXL Client | 2025-04-01 13:56:34], [Agent | 2025-04-01 13:56:35], [Endpoint Security Platform | 2025-04-01 14:02:21], [Endpoint Security Threat Prevention | 2025-04-01 14:02:22]",
+  "DomainController": "NA"
+ },
+ {
+  "LeafNodeId": 12,
+  "ComputerName": "rhel96srv",
+  "DomainName": "(none)",
+  "NetAddress": "000C2912BE9E",
+  "OSType": "Linux",
+  "UserName": "admin",
+  "LastUpdate": "2026-10-12 21:16:09.11",
+  "ManagedState": 1,
+  "InstalledProducts": "[Trellix DXL Client | 2026-09-15 12:39:36], [Agent | 2026-09-15 12:39:36], [Solidcore | 2026-09-15 12:50:29]",
+  "DomainController": ""
+ }
+]
