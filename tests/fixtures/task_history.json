@@ -1,0 +1,32 @@
+[
+ {
+  "id": "36354",
+  "name": "TIE Server Monitoring",
+  "startDate": "2026-10-17T16:23:22+02:00",
+  "endDate": "2026-10-17T16:23:22+02:00",
+  "userName": "admin",
+  "status": "Completed",
+  "taskSource": "scheduler",
+  "duration": "Less than a minute"
+ },
+ {
+  "id": "36355",
+  "name": "Download Software Product List",
+  "startDate": "2026-10-17T16:23:24+02:00",
+  "endDate": "2026-10-17T16:24:02+02:00",
+  "userName": "admin",
+  "status": "Ended",
+  "taskSource": "scheduler",
+  "duration": "Less than a minute"
+ },
+ {
+  "id": "36357",
+  "name": "Synchronize Shared Policies",
+  "startDate": "2026-10-17T16:24:04+02:00",
+  "endDate": "2026-10-17T16:24:05+02:00",
+  "userName": "admin",
+  "status": "Completed",
+  "taskSource": "scheduler",
+  "duration": "Less than a minute"
+ }
+]

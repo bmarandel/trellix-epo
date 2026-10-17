@@ -1,0 +1,66 @@
+[
+ {
+  "name": "runNowTaskSource",
+  "displayName": "Run Client Task"
+ },
+ {
+  "name": "scor.reconcileAll",
+  "displayName": "Command"
+ },
+ {
+  "name": "softwareTaskSource",
+  "displayName": "Software Catalog"
+ },
+ {
+  "name": "CloudBridge",
+  "displayName": "CloudBridge"
+ },
+ {
+  "name": "scor.internaltask",
+  "displayName": "Internal Task"
+ },
+ {
+  "name": "dr",
+  "displayName": "DR Task"
+ },
+ {
+  "name": "scheduler",
+  "displayName": "Server Task"
+ },
+ {
+  "name": "Internal Task",
+  "displayName": "Internal Task"
+ },
+ {
+  "name": "EPOPendingEventsTaskSource",
+  "displayName": "EPO Pending OrionEvents"
+ },
+ {
+  "name": "Retrieve File Task",
+  "displayName": "Retrieve File Task"
+ },
+ {
+  "name": "response",
+  "displayName": "Response"
+ },
+ {
+  "name": "Software Catalog",
+  "displayName": "Software Catalog"
+ },
+ {
+  "name": "scor.command",
+  "displayName": "Application Control Command"
+ },
+ {
+  "name": "Remote Client",
+  "displayName": "Remote Client"
+ },
+ {
+  "name": "AutoUpdateTaskSource",
+  "displayName": "Automatic Deployment"
+ },
+ {
+  "name": "policyTaskSource",
+  "displayName": "Policy Catalog"
+ }
+]

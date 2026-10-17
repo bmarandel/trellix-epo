@@ -14,7 +14,8 @@ except PackageNotFoundError:
 
 __all__ = ["constants", "policies", "validators", "ta", "es", "sc", "sir", "edrf", "epo", "tags",
            "tagcatalog", "epotags", "assignmentrules", "clienttasks", "epoclienttasks",
-           "repository", "eporepository", "systemtree", "eposystemtree", "policycatalog", "epopolicies"]
+           "repository", "eporepository", "systemtree", "eposystemtree", "policycatalog", "epopolicies", "servertasks",
+           "eposervertasks"]
 
 from .constants import State, Priority, Gti, OASState, Severity, Language, SCException, SCReputation
 from .policies import Policies, Policy
@@ -67,3 +68,5 @@ from .repository import Package, Repository, packages_to_markdown
 from .systemtree import System, Group, systems_to_markdown, groups_to_markdown
 from .policycatalog import (PolicyRef, Assignment, AppliedPolicy, policies_to_markdown,
                             assignments_to_markdown, applied_to_markdown)
+from .servertasks import (ServerTask, TaskLogEntry, TaskMessage, RunningTask,
+                          server_tasks_to_markdown, task_log_to_markdown)

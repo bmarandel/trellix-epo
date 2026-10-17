@@ -1,0 +1,10 @@
+{
+ "id": 27,
+ "name": "Update Main Repository",
+ "description": "This default task updates the Main Repository from the Trellix update site (TrellixHttp).",
+ "enabled": "true",
+ "valid": true,
+ "startDate": "2024-09-11T00:00:01+02:00",
+ "endDate": "None",
+ "nextRunTime": "2026-10-17T19:10:00+02:00"
+}

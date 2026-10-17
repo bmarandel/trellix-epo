@@ -26,6 +26,8 @@ classes and imported back without another package.
 - Policy Catalog and assignments: epo.policies (EPOPolicies, see the
   epopolicies module); export_policies() and import_policies() are kept
   here as shortcuts.
+- Server tasks and Server Task Log: epo.server_tasks (EPOServerTasks, see
+  the eposervertasks module).
 
 The password is kept in memory only: the library never writes it.
 EPOClient.from_environment() reads EPO_URL, EPO_USER and EPO_PASSWORD.
@@ -148,6 +150,7 @@ class EPOClient():
         self._systems = None
         self._groups = None
         self._policies = None
+        self._server_tasks = None
         # Only the HTTP Basic header is kept, sent with every command (the Web
         # API has no session).
         self.__authorization = 'Basic ' + base64.b64encode(
@@ -235,6 +238,19 @@ class EPOClient():
             from .epopolicies import EPOPolicies
             self._policies = EPOPolicies(self)
         return self._policies
+
+    @property
+    def server_tasks(self):
+        """
+        The server task operations (EPOServerTasks): epo.server_tasks.list(),
+        epo.server_tasks.run(), epo.server_tasks.log()... see the
+        eposervertasks module.
+        """
+        if self._server_tasks is None:
+            # Imported here: eposervertasks imports this module.
+            from .eposervertasks import EPOServerTasks
+            self._server_tasks = EPOServerTasks(self)
+        return self._server_tasks
 
     def __repr__(self):
         """

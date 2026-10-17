@@ -428,6 +428,36 @@ print(applied_to_markdown(epo.policies.applied('PC01')))     # policies the syst
 - The policy categories (`policycatalog.CATEGORIES`, `MULTI_SLOT`) are the
   reference shared with the Policy Assignment Rules.
 
+### Server tasks
+
+`epo.server_tasks` lists the server tasks (`ServerTask`: name, schedule
+status, next run), runs one and waits for its end, enables or disables its
+schedule, cancels a run and reads the Server Task Log (`TaskLogEntry` with
+its subtasks and messages), the latest entries first.
+
+```python
+from trellix_epo import EPOClient, server_tasks_to_markdown, task_log_to_markdown
+
+epo = EPOClient.from_environment()
+
+print(server_tasks_to_markdown(epo.server_tasks.list()))
+entry = epo.server_tasks.run('Update Main Repository', wait=True, timeout=1800)
+entry.succeeded, entry.status_label, [message.text for message in entry.messages]
+epo.server_tasks.disable('Inactive Agent Cleanup Task')       # the task read back
+epo.server_tasks.cancel(entry.id)                             # a running task
+print(task_log_to_markdown(epo.server_tasks.log(status='Failed', days=7)))
+```
+
+- The Web API can't create, change, import or delete a server task: the
+  schedule and the actions are set in the console. A disabled task can
+  still be run.
+- `log()` reads the latest entries (`tasklog.listTaskHistory` gives the
+  50 oldest of the period). A cancelled task ends with the status "Ended",
+  after "Pending Termination" (from a few seconds to about half a minute on
+  the lab, depending on what the task is doing).
+- The library doesn't purge the Server Task Log (`tasklog.purge` without
+  an age purges all of it).
+
 ### System Tree
 
 `epo.systems` and `epo.groups` work on the System Tree (`system.*`,
@@ -877,8 +907,8 @@ Rule Groups - some of them working directly against an ePO server), Trellix
 EDR with Forensics (best practices and example exclusions applied to copies of
 the policies) and client tasks (ENS deployment from the repository, product
 update, Solidcore activation and a Solidcore maintenance window) and the
-System Tree (groups and systems from a CSV list, Markdown report) and the
-policy assignments (Markdown report).
+System Tree (groups and systems from a CSV list, Markdown report), the
+policy assignments (Markdown report) and the server tasks (run and wait).
 
 ## Documentation
 

@@ -1,0 +1,11 @@
+[
+ {
+  "name": "Update Product Compatibility List",
+  "startDate": "2026-10-17T16:23:24+02:00",
+  "endDate": "2026-10-17T16:23:26+02:00",
+  "userName": "admin",
+  "status": "Completed",
+  "taskSource": "scheduler",
+  "duration": "Less than a minute"
+ }
+]

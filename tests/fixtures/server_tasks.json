@@ -1,0 +1,302 @@
+[
+ {
+  "id": 27,
+  "name": "Update Main Repository",
+  "description": "This default task updates the Main Repository from the Trellix update site (TrellixHttp).",
+  "startDate": "2024-09-11T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-17T19:10:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 55,
+  "name": "Translate Trellix EDR policies into Trellix EDR with Forensics",
+  "description": "This task translates the Trellix EDR policies into Trellix EDR with Forensics.This task is initiated by the \"Upgrade EDR Policy\" menu",
+  "startDate": "2026-10-11T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "None",
+  "enabled": false,
+  "valid": true
+ },
+ {
+  "id": 46,
+  "name": "TIE Server Telemetry",
+  "description": "TIE Server telemetry process to collect and transmit data from remote points.",
+  "startDate": "2025-04-29T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-18T00:15:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 44,
+  "name": "TIE Server Synchronize Topology",
+  "description": "It manages the synchronization of the TIE Server Topology in a multi-ePO environment.",
+  "startDate": "2025-04-29T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-18T00:15:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 43,
+  "name": "TIE Server Synchronize CA",
+  "description": "It manages the synchronization of the TIE Server CAs in a multi-ePO environment.",
+  "startDate": "2025-04-29T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-18T00:15:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 50,
+  "name": "TIE Server Poll Malicious Verdicts from IVX Server",
+  "description": "This will schedule the job to poll malicious verdicts from the IVX Server",
+  "startDate": "2025-04-29T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "None",
+  "enabled": false,
+  "valid": true
+ },
+ {
+  "id": 47,
+  "name": "TIE Server Notifications",
+  "description": "Server task to trigger queries over TIE Server data and produce notifications for recommended actions.",
+  "startDate": "2025-04-29T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-19T05:00:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 45,
+  "name": "TIE Server Monitoring",
+  "description": "TIE Server monitoring mechanism to save events.",
+  "startDate": "2025-04-29T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-17T17:15:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 49,
+  "name": "TIE Server Database Maintenance",
+  "description": "TIE Server Database Maintenance trigger.",
+  "startDate": "2025-04-29T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-18T02:00:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 48,
+  "name": "TIE Server Data Management",
+  "description": "TIE Server Data Management cleanup trigger.",
+  "startDate": "2025-04-29T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-18T00:30:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 16,
+  "name": "Synchronize Shared Tasks",
+  "description": "Synchronize client tasks among designated registered servers.",
+  "startDate": "2024-09-11T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "None",
+  "enabled": false,
+  "valid": true
+ },
+ {
+  "id": 15,
+  "name": "Synchronize Shared Policies",
+  "description": "Synchronize policies among designated registered servers.",
+  "startDate": "2024-09-11T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "None",
+  "enabled": false,
+  "valid": true
+ },
+ {
+  "id": 56,
+  "name": "Solidcore: Migration task",
+  "description": "This task will run immediately after upgrade.Time consuming SQL queries will be executed by this task.",
+  "startDate": "2200-01-01T00:00:01+01:00",
+  "endDate": "None",
+  "nextRunTime": "None",
+  "enabled": false,
+  "valid": true
+ },
+ {
+  "id": 54,
+  "name": "Solidcore: Auto Purge Policy Discovery Requests",
+  "description": "Solidcore: Auto Purge Policy Discovery Requests older that 3 months.",
+  "startDate": "2012-01-01T00:00:01+01:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-18T01:00:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 32,
+  "name": "Send DXL State Event",
+  "description": "Send the current DXL State event to the DXL Fabric",
+  "startDate": "2024-09-12T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "None",
+  "enabled": false,
+  "valid": true
+ },
+ {
+  "id": 33,
+  "name": "Send DXL Certificate Revocations",
+  "description": "Sends the full list of certificates revoked by the administrator. This task should be run after every new broker deployment.",
+  "startDate": "2024-09-12T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-18T00:00:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 25,
+  "name": "Roll up Data (Local Trellix ePO server)",
+  "description": "This default task creates roll up data for this Trellix ePO server for inclusion in multi-server reporting.",
+  "startDate": "2024-09-11T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "None",
+  "enabled": false,
+  "valid": true
+ },
+ {
+  "id": 21,
+  "name": "Purge Threat and Client Events Older than 90 Days",
+  "description": "Delete Threat and Client event records older than 90 days.",
+  "startDate": "2024-09-11T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "None",
+  "enabled": false,
+  "valid": true
+ },
+ {
+  "id": 31,
+  "name": "Manage DXL Brokers",
+  "description": "Evaluate each system against the DXLBROKER tag criteria and update DXL Broker Policies",
+  "startDate": "2024-09-12T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-18T00:00:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 3,
+  "name": "LdapSync: Sync across users from LDAP",
+  "description": "Syncs users from an LDAP server to the database",
+  "startDate": "2024-09-11T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-18T00:00:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 28,
+  "name": "Inactive Agent Cleanup Task",
+  "description": "",
+  "startDate": "2024-09-11T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "None",
+  "enabled": false,
+  "valid": true
+ },
+ {
+  "id": 26,
+  "name": "Generate Records for Trellix Agent Compliance History Reporting",
+  "description": "This default task stores the results of the 'Trellix Agent Compliance Summary' query for use in reporting on compliance history.",
+  "startDate": "2024-09-11T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-18T01:00:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 37,
+  "name": "ePO Health Check Scheduler Task",
+  "description": "This task runs ePO default health checklist periodically.",
+  "startDate": "2024-09-13T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "None",
+  "enabled": false,
+  "valid": true
+ },
+ {
+  "id": 10,
+  "name": "ePO Database Index Maintenance",
+  "description": "ePO Database Index Maintenance and statistics update",
+  "startDate": "2024-09-11T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-18T04:00:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 34,
+  "name": "Endpoint Security Firewall Property Translator",
+  "description": "Process properties received from client and convert them into rules.",
+  "startDate": "2026-10-01T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "None",
+  "enabled": false,
+  "valid": true
+ },
+ {
+  "id": 13,
+  "name": "Duplicate Agent GUID - remove systems with potentially duplicated GUIDs",
+  "description": "Delete systems whose sequence error count has exceeded the threshold and add Agent GUID to duplicate list.",
+  "startDate": "2024-09-11T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "None",
+  "enabled": false,
+  "valid": true
+ },
+ {
+  "id": 14,
+  "name": "Duplicate Agent GUID - clear error count",
+  "description": "Clear Sequence Error Count for systems who have not recently reported duplicate activities.",
+  "startDate": "2024-09-11T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "None",
+  "enabled": false,
+  "valid": true
+ },
+ {
+  "id": 19,
+  "name": "Download Software Product List",
+  "description": "Downloads the list of software your license key has access to.",
+  "startDate": "2024-09-11T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-18T01:44:00+02:00",
+  "enabled": true,
+  "valid": true
+ },
+ {
+  "id": 2,
+  "name": "Disaster Recovery Snapshot Server",
+  "description": "Built-in Disaster Recovery Snapshot Server Task (disabled by default for Microsoft SQL Server Express)",
+  "startDate": "2024-09-11T00:00:01+02:00",
+  "endDate": "None",
+  "nextRunTime": "None",
+  "enabled": false,
+  "valid": true
+ },
+ {
+  "id": 42,
+  "name": "Apply TIESERVER Tags to TIE Servers",
+  "description": "Evaluate each system against the TIESERVER tag criteria and tag the appropriate systems.",
+  "startDate": "2025-02-17T00:00:01+01:00",
+  "endDate": "None",
+  "nextRunTime": "2026-10-18T00:15:00+02:00",
+  "enabled": true,
+  "valid": true
+ }
+]
