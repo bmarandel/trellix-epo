@@ -288,6 +288,109 @@ print(rules.to_markdown())
   only) are read and written back unchanged, not created: they need an LDAP
   server registered in ePO, not available on the test server.
 
+### Client tasks
+
+`epo.client_tasks` finds, exports, imports and runs the tasks of the Client
+Task Catalog (`clienttask.*` commands). Each supported task type is an
+object with the options of its console page and the console checks:
+
+```python
+from trellix_epo import (EPOClient, ClientTaskList, DeploymentItem, TADeploymentTask,
+                         TAUpdateTask, SCBeginUpdateTask, SCRunCommandsTask)
+
+epo = EPOClient.from_environment()
+
+# Install the current System Information Reporter package of the repository
+sir = epo.repository.get('SIR_____1000')         # Package of the Current branch
+deploy = TADeploymentTask('Install SIR', [DeploymentItem.from_package(sir)],
+                          platforms=['Windows'], allow_postpone=True, max_postpones=3)
+update = TAUpdateTask('Update DAT', ['VSCANDAT1000', 'AMCORDAT2000'])     # None: all packages
+window = SCBeginUpdateTask('SC: Begin Update Mode CHG0012345', workflow_id='CHG0012345')
+status = SCRunCommandsTask('SC: Status', ['status'], requires_response=True)
+
+tasks = ClientTaskList()
+for task in (deploy, update, window, status):
+    tasks.add(task)                       # checked as in the console
+print(tasks.check_server(epo))            # [] or the problems found (read only)
+epo.client_tasks.import_tasks(tasks)      # 4: a task of the same name is replaced
+epo.client_tasks.run(window, ['W10ENTB01', 'W2022CORE'])     # "Run Client Task Now"
+
+epo.client_tasks.applied('W10ENTB01')     # tasks applied to a system (up to date or not)
+print(epo.client_tasks.export('SOLIDCORE_META').to_markdown())
+```
+
+- **Task types**: Trellix Agent Product Deployment (`TADeploymentTask`:
+  target platforms, Install/Remove lines with language, branch and command
+  line, automatic update, postpone) and Product Update (`TAUpdateTask`: all
+  or selected packages, "Update in Progress" dialog, postpone), System
+  Information Reporter File Assembly (`SIRFileRetrievalTask`), and the 11
+  Solidcore tasks (`SCEnableTask` with the Windows, NT/2000 and Unix pages,
+  `SCDisableTask`, `SCBeginUpdateTask` / `SCEndUpdateTask`,
+  `SCBeginInventoryTask` / `SCEndInventoryTask`, `SCObserveModeTask`,
+  `SCPullInventoryTask`, `SCCLIAccessTask`, `SCDebugInfoTask`,
+  `SCRunCommandsTask`). Another task type is read and written back
+  unchanged (`ClientTask`, sections and settings).
+- **Checks** as in the console: task name of 149 characters, description of
+  250, command line of 254, 1 to 999 postpones and seconds, postpone text of
+  2047, the Engine with the DAT only, automatic update without Remove line
+  and on the Current branch only, Workflow ID and comments of 100 characters
+  (no comment without Workflow ID), Solidcore commands of 3000 characters,
+  and the options of the Solidcore Enable page that need Application
+  Control (scan priority, MP/SAU, limited activation, Inventory and Observe
+  Mode, Pull Inventory).
+- **Server behaviours handled** (ePO 5.10 Update 7): the Web API has no
+  command to create, delete, assign or schedule a task: a task is created
+  or replaced by an import (it keeps its id and assignments), assigned and
+  scheduled in the console. The import skips without an error a task of an
+  unknown type and a task whose name differs by case only: `import_tasks()`
+  raises `EPOError` when fewer tasks were imported than sent, and
+  `check_server()` finds the names that differ by case and the deployment
+  packages missing from the repository or not made for the target
+  platforms. The export keeps the sections of the deleted deployment lines:
+  the library reads the counts and writes the lines again from scratch.
+  `export()` gives the file byte for byte (Markdown with `to_markdown()`).
+
+### Main Repository
+
+`epo.repository` works on the packages of Software > Main Repository and on
+the repositories (`repository.*` and `RepositoryMgmt.*` commands). The
+packages are `Package` objects with the columns of the page (name, type,
+version, minor version, check-in date, distribution type, branch), plus the
+product id, language, platforms and the package they depend on.
+
+```python
+from trellix_epo import EPOClient, packages_to_markdown
+
+epo = EPOClient.from_environment()
+
+epo.repository.packages(branch='Current', package_type='DAT')   # [Package...]
+platform = epo.repository.get('ENDP_GS_1070')     # Package of the Current branch, or None
+platform.build_version                            # '26.8.022584' (Product Deployment tasks)
+platform.dependency, platform.platform_labels     # None, ['Windows']
+print(packages_to_markdown(epo.repository.packages()))
+
+epo.repository.check_in('Stinger64-ePO.zip', branch='Evaluation')   # True
+stinger = epo.repository.get('STIN_W649001', branch='Evaluation')
+epo.repository.change_branch(stinger, 'Current', move=True)          # copy without move
+epo.repository.delete(epo.repository.get('STIN_W649001'))
+epo.repository.pull('Trellix HTTPS', ['AMCORDAT2000'])               # ['Current\\AMCORDAT2000\\...']
+epo.repository.repositories(kind='mirror')        # source sites (Repository objects)
+```
+
+- `packages()` leaves out the ExtraDAT and SuperDAT entries of the Web API
+  (no branch: they are not packages of the page); `get()` asks for the
+  language when a package has several in the branch.
+- `check_in()` uploads a ZIP (or takes a path on the server), replaces the
+  package of the branch unless `force=False` (then EPOError); `pull()` is
+  synchronous and returns the packages updated (`[]` for an unknown product
+  id); `replicate()` needs a distributed repository.
+- `repository.changeBranch` doesn't check the version it is given: the
+  package of the source branch is copied or moved.
+- `export_sites()` / `import_sites()` read and write the site list (a site
+  of the same name is skipped without `overwrite`);
+  `create_http_repository()` / `create_unc_repository()` create a
+  distributed repository with its download and replication accounts.
+
 ### Policy documentation (Markdown)
 
 Most companies must keep a documentation of the security policies they
@@ -680,9 +783,10 @@ The [`examples/`](examples/) directory has short, runnable scripts covering
 Trellix Agent (General/Repository), ENS Threat Prevention (On-Access Scan,
 On-Demand Scan, process exclusions), ENS Firewall (Rules reporting and editing), and
 Solidcore (Application Control, Integrity Monitor and Change Control policies,
-Rule Groups - some of them working directly against an ePO server) and Trellix
+Rule Groups - some of them working directly against an ePO server), Trellix
 EDR with Forensics (best practices and example exclusions applied to copies of
-the policies).
+the policies) and client tasks (ENS deployment from the repository, product
+update, Solidcore activation and a Solidcore maintenance window).
 
 ## Documentation
 

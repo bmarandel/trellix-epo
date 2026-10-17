@@ -13,7 +13,8 @@ except PackageNotFoundError:
     __version__ = "0.0.0"
 
 __all__ = ["constants", "policies", "validators", "ta", "es", "sc", "sir", "edrf", "epo", "tags",
-           "tagcatalog", "epotags", "assignmentrules"]
+           "tagcatalog", "epotags", "assignmentrules", "clienttasks", "epoclienttasks",
+           "repository", "eporepository"]
 
 from .constants import State, Priority, Gti, OASState, Severity, Language, SCException, SCReputation
 from .policies import Policies, Policy
@@ -57,3 +58,9 @@ from .epo import EPOClient, EPOError
 from .tags import Tag, TagCriteria, TagCondition, TagProperty, TagList
 from .assignmentrules import (AssignmentRule, AssignmentRuleList, PolicyAssignment,
                               RuleTagCriteria, SystemGroups)
+from .clienttasks import (ClientTask, ClientTaskList, DeploymentItem, TADeploymentTask,
+                          TAUpdateTask, SIRFileRetrievalTask, SCEnableTask, SCDisableTask,
+                          SCBeginUpdateTask, SCEndUpdateTask, SCBeginInventoryTask,
+                          SCEndInventoryTask, SCPullInventoryTask, SCDebugInfoTask,
+                          SCCLIAccessTask, SCObserveModeTask, SCRunCommandsTask)
+from .repository import Package, Repository, packages_to_markdown

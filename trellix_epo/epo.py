@@ -17,6 +17,10 @@ classes and imported back without another package.
 - Solidcore Rule Groups: find_rule_groups(), export_rule_group(),
   import_rule_groups(), rename_rule_group() (scor.rulegroup.* commands).
 - Tags and tag groups: epo.tags (EPOTags, see the epotags module).
+- Client tasks: epo.client_tasks (EPOClientTasks, see the epoclienttasks
+  module).
+- Main Repository and repositories: epo.repository (EPORepository, see the
+  eporepository module).
 
 The password is kept in memory only: the library never writes it.
 EPOClient.from_environment() reads EPO_URL, EPO_USER and EPO_PASSWORD.
@@ -134,6 +138,8 @@ class EPOClient():
         self.user = user
         self.timeout = timeout
         self._tags = None
+        self._client_tasks = None
+        self._repository = None
         # Only the HTTP Basic header is kept, sent with every command (the Web
         # API has no session).
         self.__authorization = 'Basic ' + base64.b64encode(
@@ -156,6 +162,32 @@ class EPOClient():
             from .epotags import EPOTags
             self._tags = EPOTags(self)
         return self._tags
+
+    @property
+    def client_tasks(self):
+        """
+        The client task operations (EPOClientTasks): epo.client_tasks.export(),
+        epo.client_tasks.import_tasks(), epo.client_tasks.run()... see the
+        epoclienttasks module.
+        """
+        if self._client_tasks is None:
+            # Imported here: epoclienttasks imports this module.
+            from .epoclienttasks import EPOClientTasks
+            self._client_tasks = EPOClientTasks(self)
+        return self._client_tasks
+
+    @property
+    def repository(self):
+        """
+        The repository operations (EPORepository): epo.repository.packages(),
+        epo.repository.check_in(), epo.repository.pull()... see the
+        eporepository module.
+        """
+        if self._repository is None:
+            # Imported here: eporepository imports this module.
+            from .eporepository import EPORepository
+            self._repository = EPORepository(self)
+        return self._repository
 
     def __repr__(self):
         """

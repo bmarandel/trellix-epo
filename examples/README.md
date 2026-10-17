@@ -68,7 +68,7 @@ policy out of a `Policies` collection, or from `Policy.load_from_file`).
   environment. Writes one file with the five policies, ready to import.
   Takes the export file, then optionally the policy name and the output file.
 
-### Working directly against ePO (Solidcore, tags)
+### Working directly against ePO (Solidcore, tags, client tasks)
 
 These scripts export and import policies, Rule Groups and tags with the ePO Web
 API client of the library (`EPOClient`, no other package needed) and the
@@ -113,6 +113,26 @@ update what the previous run created.
   policies (`--ep`, repeatable). `--check` checks the tag, group and policy
   names on the server first (an unknown tag would be dropped by the import,
   and the rule would apply to every system).
+- **`client_tasks_ens_deployment.py`** - Trellix Agent "Product Deployment"
+  task that installs Endpoint Security on Windows (Platform, Threat
+  Prevention, Adaptive Threat Protection, Firewall, Web Control by default;
+  `--modules` to choose), built from the packages of a repository branch
+  with the modules they depend on. Run it again after a new ENS version is
+  checked in: the task is replaced in place and keeps its assignments.
+- **`client_tasks_product_update.py`** - Trellix Agent "Product Update" task:
+  "Update All" by default, or `--packages` for selected packages (e.g. the
+  content of the day), with the "Update in Progress" dialog box and postpone
+  options; `--list-packages` shows what a task can select.
+- **`client_tasks_solidcore_enable.py`** - Solidcore "SC: Enable" task for
+  one kind of client (`--platform windows|windows-nt|linux|aix-hpux`):
+  Change Control and/or Application Control, restart or limited activation,
+  Inventory / Observe Mode, checked as in the console.
+- **`client_tasks_solidcore_maintenance.py`** - Client tasks of a Solidcore
+  maintenance window: "SC: Begin Update Mode <change>" (the change number as
+  Workflow ID), "SC: End Update Mode" and "SC: Pull Inventory", checked
+  against the server and imported into the Client Task Catalog; `--begin` /
+  `--end` run them now on systems. `--markdown` writes the client tasks of
+  the server as a Markdown document instead.
 
 Run any script with `-h`-style usage by calling it without arguments, e.g.:
 
