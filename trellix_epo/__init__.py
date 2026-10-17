@@ -15,7 +15,8 @@ except PackageNotFoundError:
 __all__ = ["constants", "policies", "validators", "ta", "es", "sc", "sir", "edrf", "epo", "tags",
            "tagcatalog", "epotags", "assignmentrules", "clienttasks", "epoclienttasks",
            "repository", "eporepository", "systemtree", "eposystemtree", "policycatalog", "epopolicies", "servertasks",
-           "eposervertasks", "squid", "epoqueries"]
+           "eposervertasks", "squid", "epoqueries", "users",
+           "epousers"]
 
 from .constants import State, Priority, Gti, OASState, Severity, Language, SCException, SCReputation
 from .policies import Policies, Policy
@@ -71,3 +72,4 @@ from .policycatalog import (PolicyRef, Assignment, AppliedPolicy, policies_to_ma
 from .servertasks import (ServerTask, TaskLogEntry, TaskMessage, RunningTask,
                           server_tasks_to_markdown, task_log_to_markdown)
 from .squid import Query, SavedQuery, rows_to_markdown, saved_queries_to_markdown
+from .users import User, Role, PermissionSet, PermissionSetList, users_to_markdown

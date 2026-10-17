@@ -1,0 +1,54 @@
+[
+ {
+  "id": 1,
+  "name": "admin",
+  "fullName": "",
+  "email": "",
+  "phoneNumber": "",
+  "disabled": false,
+  "admin": true,
+  "authType": "pwd",
+  "authDetails": "",
+  "notes": "",
+  "allowedIPs": ""
+ },
+ {
+  "id": 15,
+  "name": "sso.user@example.com",
+  "fullName": "SSO User",
+  "email": "",
+  "phoneNumber": "",
+  "disabled": false,
+  "admin": true,
+  "authType": "mcafeemvisionsso",
+  "authDetails": "",
+  "notes": "",
+  "allowedIPs": ""
+ },
+ {
+  "id": 8,
+  "name": "defaultDxlUser",
+  "fullName": "",
+  "email": "",
+  "phoneNumber": "",
+  "disabled": true,
+  "admin": true,
+  "authType": "pwd",
+  "authDetails": "",
+  "notes": "",
+  "allowedIPs": ""
+ },
+ {
+  "id": 2,
+  "name": "system",
+  "fullName": "",
+  "email": "",
+  "phoneNumber": "",
+  "disabled": true,
+  "admin": true,
+  "authType": "pwd",
+  "authDetails": "",
+  "notes": "",
+  "allowedIPs": ""
+ }
+]

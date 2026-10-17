@@ -30,6 +30,8 @@ classes and imported back without another package.
   the eposervertasks module).
 - Queries: query() runs a SQUID query (text or squid.Query), epo.queries
   (EPOQueries, see the epoqueries module) the saved queries.
+- Users and permission sets: epo.users (EPOUsers) and epo.permission_sets
+  (EPOPermissionSets), see the epousers module.
 
 The password is kept in memory only: the library never writes it.
 EPOClient.from_environment() reads EPO_URL, EPO_USER and EPO_PASSWORD.
@@ -154,6 +156,8 @@ class EPOClient():
         self._policies = None
         self._server_tasks = None
         self._queries = None
+        self._users = None
+        self._permission_sets = None
         # Only the HTTP Basic header is kept, sent with every command (the Web
         # API has no session).
         self.__authorization = 'Basic ' + base64.b64encode(
@@ -267,6 +271,31 @@ class EPOClient():
             from .epoqueries import EPOQueries
             self._queries = EPOQueries(self)
         return self._queries
+
+    @property
+    def users(self):
+        """
+        The user operations (EPOUsers): epo.users.list(), epo.users.add(),
+        epo.users.add_permission_sets()... see the epousers module.
+        """
+        if self._users is None:
+            # Imported here: epousers imports this module.
+            from .epousers import EPOUsers
+            self._users = EPOUsers(self)
+        return self._users
+
+    @property
+    def permission_sets(self):
+        """
+        The permission set operations (EPOPermissionSets):
+        epo.permission_sets.export(), epo.permission_sets.import_sets()...
+        see the epousers module.
+        """
+        if self._permission_sets is None:
+            # Imported here: epousers imports this module.
+            from .epousers import EPOPermissionSets
+            self._permission_sets = EPOPermissionSets(self)
+        return self._permission_sets
 
     def __repr__(self):
         """

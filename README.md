@@ -428,6 +428,42 @@ print(applied_to_markdown(epo.policies.applied('PC01')))     # policies the syst
 - The policy categories (`policycatalog.CATEGORIES`, `MULTI_SLOT`) are the
   reference shared with the Policy Assignment Rules.
 
+### Users and permission sets
+
+`epo.users` lists, adds, changes and removes the ePO users (`User`: ePO
+password, Windows account or certificate, administrator, disabled, allowed
+IPs) and gives or takes their permission sets; `epo.permission_sets`
+exports the permission sets with their roles (`PermissionSetList`, written
+back as the server writes it) and imports new or changed sets.
+
+```python
+from trellix_epo import EPOClient, users_to_markdown
+
+epo = EPOClient.from_environment()
+
+epo.users.add('helpdesk', windows=('LAB', 'helpdesk'), full_name='Helpdesk',
+              allowed_ips=['192.168.100.0/24'])
+epo.users.add_permission_sets('helpdesk', ['Global Reviewer'])
+epo.users.update('helpdesk', disabled=True, email='')      # '' clears a field
+print(users_to_markdown(epo.users.list(with_permission_sets=True)))
+
+sets = epo.permission_sets.export()
+helpdesk = sets.get('Global Reviewer').copy('Helpdesk')
+helpdesk.remove_role('role:softman.viewOnly')
+epo.permission_sets.import_sets([helpdesk])                # checked in a new export
+print(sets.to_markdown())                                  # roles by product
+```
+
+- A role is kept as its URI (`role:<product>.<category>.<right>`; the System
+  Tree access `role:epo.dir.access` with its groups): the Web API doesn't
+  give the console labels of the rights.
+- The Web API can't delete a permission set (console only).
+  `import_sets()` refuses a set whose name exists unless `overwrite=True`
+  (the server would import it as "<name> (imported)").
+- The server saves any text as allowed IPs: the library checks them
+  (addresses or CIDR subnets). `remove_permission_sets()` refuses a set the
+  user doesn't have (the server answers true).
+
 ### Queries
 
 `squid.Query` builds the SQUID queries of `core.executeQuery` step by step

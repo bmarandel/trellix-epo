@@ -1,0 +1,42 @@
+[
+ {
+  "id": 9,
+  "name": "Claude - PermSet"
+ },
+ {
+  "id": 10,
+  "name": "Claude - PermSet (imported)"
+ },
+ {
+  "id": 4,
+  "name": "Executive Reviewer"
+ },
+ {
+  "id": 1,
+  "name": "Global Reviewer"
+ },
+ {
+  "id": 2,
+  "name": "Group Admin"
+ },
+ {
+  "id": 3,
+  "name": "Group Reviewer"
+ },
+ {
+  "id": 5,
+  "name": "Group Trellix EDR FW"
+ },
+ {
+  "id": 6,
+  "name": "Insights User"
+ },
+ {
+  "id": 7,
+  "name": "Solidcore Admin"
+ },
+ {
+  "id": 8,
+  "name": "Solidcore Reviewer"
+ }
+]
