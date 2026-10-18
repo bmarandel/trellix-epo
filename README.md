@@ -85,9 +85,8 @@ all 13 Solidcore policy types of the ePO Policy Catalog are implemented, in the
 `sc` subpackage (`sc.gen`, `sc.awl`, `sc.cc`, `sc.fim`, named after the ePO
 feature IDs SCOR_GEN, SCOR_AWL, SCOR_CC and SCOR_FIM).
 
-Trellix EDR with Forensics (ePO product XCLIENT_META, extension 50.3; the
-policies of the extension 2.1.2 are read too) is supported in the `edrf`
-subpackage: all policy types except Protection.
+Trellix EDR with Forensics (ePO product XCLIENT_META, extension 50.3) is
+supported in the `edrf` subpackage: all policy types.
 
 ## Installation
 
@@ -1009,8 +1008,8 @@ as Python lists (`get_list()`, `set_list()`, `add_to_list()`,
 (`get_table()`, `set_table()`, `add_to_table()`, `remove_from_table()`). The
 classes encode the text values as the console does (semicolon separated lists,
 doubled backslashes and escaped double quotes where the console stores them
-so), checked against the ePO 5.10 lab with the extensions XCLIENT_META 2.1.2
-and 50.3. Notes:
+so), checked against the ePO 5.10 lab with the extension XCLIENT_META 50.3.
+Notes:
 
 - **Field lengths**: the classes refuse what the console fields refuse
   (maxlength read on the console pages: 100 characters for most text fields,
@@ -1054,7 +1053,6 @@ and 50.3. Notes:
 - The console saves the hidden setting `mxa/EventStreamer/dxl/compression` as
   `dxl/compressioned` (a bug of the extension 50.3): the library leaves both
   untouched.
-- The Protection policy is not supported (the extension 50.3 removed it).
 - Policies are saved with the characters out of ASCII as XML character
   references (`&#233;`): the policy import of the ePO Web API
   (`policy.importPolicy`) reads a UTF-8 file as ISO-8859-1 whatever the
