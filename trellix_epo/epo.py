@@ -34,6 +34,9 @@ classes and imported back without another package.
   (EPOPermissionSets), see the epousers module.
 - Audit Log, events and purges: epo.events (EPOEvents, see the epoevents
   module).
+- Server settings (Agent Handlers, Virtual MAC Vendors, registered servers,
+  custom agent install package): epo.server (EPOServer, see the eposerver
+  module).
 
 The password is kept in memory only: the library never writes it.
 EPOClient.from_environment() reads EPO_URL, EPO_USER and EPO_PASSWORD.
@@ -161,6 +164,7 @@ class EPOClient():
         self._users = None
         self._permission_sets = None
         self._events = None
+        self._server = None
         # Only the HTTP Basic header is kept, sent with every command (the Web
         # API has no session).
         self.__authorization = 'Basic ' + base64.b64encode(
@@ -209,6 +213,19 @@ class EPOClient():
             from .eporepository import EPORepository
             self._repository = EPORepository(self)
         return self._repository
+
+    @property
+    def server(self):
+        """
+        The server settings operations (EPOServer): epo.server.agent_handlers(),
+        epo.server.mac_vendors(), epo.server.custom_install_package()... see
+        the eposerver module.
+        """
+        if self._server is None:
+            # Imported here: eposerver imports this module.
+            from .eposerver import EPOServer
+            self._server = EPOServer(self)
+        return self._server
 
     @property
     def systems(self):

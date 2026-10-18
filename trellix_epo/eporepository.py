@@ -44,7 +44,7 @@ import os
 import re
 
 from .epo import EPOError
-from .repository import Package, Repository, check_branch
+from .repository import AGENT_PACKAGES, Package, Repository, check_branch
 
 # Options of repository.checkInPackage for the DAT packages of a SuperDAT
 # or ExtraDAT file.
@@ -148,6 +148,47 @@ class EPORepository():
                            'languages ({}): give the language.'.format(
                                product_id, branch, ', '.join(p.language for p in found)))
         return found[0] if found else None
+
+    def agent_package(self, package='Windows', branch='Current'):
+        """
+        Returns an Install package of the Trellix Agent, as the "Agent
+        version" lists of the console offer them (agent deployment,
+        deployment URL, custom install package): the package of a platform
+        in a branch, or the package of a repository path.
+
+        Example: epo.repository.agent_package('Linux').deployment_path gives
+        'Current/EPOAGENT3700LYNX/Install/0409'.
+
+        :param: package: Windows, Linux or Mac, a repository path
+                         ("Current/EPOAGENT3000/Install/0409", / or \\), or
+                         a Package (checked).
+        :param: branch: Current, Previous or Evaluation (for a platform).
+        :raise: ValueError: Unknown platform or path, not an agent Install
+                            package, or no agent package of the platform in
+                            the branch.
+        """
+        if isinstance(package, Package):
+            if package.agent_platform is None:
+                raise ValueError('Not an Install package of the Trellix Agent: {!r}.'.format(
+                    package))
+            return package
+        text = str(package)
+        if '/' in text or '\\' in text:
+            path = text.replace('\\', '/').strip('/').lower()
+            found = [item for item in self.packages(package_type='Install')
+                     if item.agent_platform and item.deployment_path.lower() == path]
+            if not found:
+                raise ValueError('No Trellix Agent package at {} in the repository.'.format(text))
+            return found[0]
+        products = {label.lower(): product for product, label in AGENT_PACKAGES.items()}
+        if text.lower() not in products:
+            raise ValueError('The agent platform must be one of {}: {!r}.'.format(
+                ', '.join(AGENT_PACKAGES.values()), package))
+        found = self.get(products[text.lower()], branch)
+        if found is None:
+            raise ValueError('No Trellix Agent package for {} in the {} branch.'.format(
+                package, branch))
+        return found
 
     def check_in(self, file_path, branch='Current', option=None, force=True, server_path=False):
         """

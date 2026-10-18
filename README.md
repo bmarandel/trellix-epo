@@ -625,6 +625,50 @@ print(groups_to_markdown(epo.groups.list()))
   auto_sort=True)`) and that matches no sorting criteria to Lost and Found:
   sort only the systems the criteria of the groups cover.
 
+### Agents and server settings
+
+The agent operations are on the systems and groups they apply to
+(`epo.systems`, `epo.groups`); the server settings they use are on
+`epo.server` (Agent Handlers, Virtual MAC Vendors, registered servers,
+custom install package).
+
+```python
+epo.systems.wakeup('PC01', full_props=True, force_full_policy_update=True)
+epo.groups.wakeup('Workstations', subgroups=True, random_minutes=10)
+epo.systems.deploy_agent(['PC01', '10.0.0.12'], 'admin', password, domain='CORP')
+epo.groups.deploy_agent('Linux Servers', 'root', password, package='Linux', ssh=True)
+epo.systems.transfer('PC01', 'EPO-PARIS')         # a registered ePO server
+
+url = epo.groups.deployment_url('Workstations', 'Workstations agent')
+epo.server.custom_install_package('Windows')      # path of the ZIP on the server
+
+epo.server.agent_handlers()                       # [AgentHandler...]
+epo.server.add_mac_vendor('00059A', 'Cisco VPN')  # MacVendor, read back
+epo.server.edit_mac_vendor('00059A', note='Cisco AnyConnect')
+epo.server.remove_mac_vendor('00059A')
+epo.repository.agent_package('Linux').deployment_path   # 'Current/EPOAGENT3700LYNX/Install/0409'
+```
+
+- The agent package is given by platform (`'Windows'`, `'Linux'`,
+  `'Mac'`: the agent Install package of the Current branch), by repository
+  path or as a `Package`: the commands take the path of the package in the
+  repository (`deploymentPath` of `repository.findPackages`, the "Agent
+  version" lists of the console), not a System Tree path.
+- `deployment_url()` returns the URL to give the IT administrators: a
+  system installed from it lands in the group by itself, not in Lost and
+  Found. Anyone with the URL can download the agent: share it with care.
+  The Web API can't list, change or delete these URLs: use the Agent
+  Deployment tab of the group.
+- `custom_install_package()` isn't tied to a group (as in the console);
+  the Web API can't delete it.
+- `wakeup()` waits for the agents and returns the counts of the server
+  (`{'completed': 1, 'failed': 0, 'expired': 0}`, about 20 seconds for an
+  agent that answers): give the client a timeout longer than
+  `abort_after` (20 minutes by default), or a short `abort_after`, when
+  some agents may be off.
+- `deploy_agent()` sends the password to the ePO server only; the library
+  doesn't keep it.
+
 ### Policy documentation (Markdown)
 
 Most companies must keep a documentation of the security policies they
@@ -1086,6 +1130,14 @@ Python 3.8 or later.
   the console labels of the values and the event descriptions; purges of
   these logs and of the Server Task Log (`epo.events.purge_*()`) with a
   mandatory age and a dry run. Example `purge_logs.py`.
+- Agents: wake-up, deployment and transfer of the agents of systems
+  (`epo.systems.wakeup()`, `deploy_agent()`, `transfer()`) and of a group
+  (`epo.groups.wakeup()`, `deploy_agent()`), agent deployment URL of a
+  group (`epo.groups.deployment_url()`).
+- Server settings: `epo.server` (Agent Handlers, Virtual MAC Vendors,
+  registered servers, custom agent install package), objects
+  `AgentHandler` and `MacVendor`; `epo.repository.agent_package()` and the
+  `deployment_path`, `hotfix` and `agent_platform` of a `Package`.
 
 **Removed (breaking)**
 - The display code written before the Markdown export, which the Markdown

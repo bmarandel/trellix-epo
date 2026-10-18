@@ -46,6 +46,13 @@ PLATFORMS = {
     'HP-UX': 'HPUX|HPIA',
 }
 
+# Install packages of the Trellix Agent: product id -> platform of the
+# "Agent version" lists of the console (New Systems, Create Agent Deployment
+# URL; checked on ePO 5.10 Update 7, agent 5.8.7.752: the Windows package is
+# named "Trellix Agent for OT").
+AGENT_PACKAGES = {'EPOAGENT3000': 'Windows', 'EPOAGENT3700LYNX': 'Linux',
+                  'EPOAGENT3700MACX': 'Mac'}
+
 # Languages of the Product Deployment page (LangMap of deployment_task.jsp):
 # code of the Language setting -> label. A package lists the codes it has.
 LANGUAGES = {
@@ -259,6 +266,43 @@ class Package():
         True
         """
         return self.branch is None and self.checkin_date is None
+
+    @property
+    def deployment_path(self):
+        """
+        The path of the package in the repository, as the agent deployment
+        commands take it (deployPath, agentPackage): the deploymentPath of
+        repository.findPackages, else branch/product/type/language.
+
+        >>> Package('EPOAGENT3000', language='0409').deployment_path
+        'Current/EPOAGENT3000/Install/0409'
+        """
+        return self.raw.get('deploymentPath') or '/'.join(
+            (self.branch or '', self.product_id, self.package_type, self.language))
+
+    @property
+    def hotfix(self):
+        """
+        The hotfix number of the package (hotFixVersion, the build for the
+        agent: 752 for 5.8.7.752), else the minor version.
+
+        >>> Package('EPOAGENT3000', minor_version='752').hotfix
+        '752'
+        """
+        return str(self.raw.get('hotFixVersion') or self.minor_version or '')
+
+    @property
+    def agent_platform(self):
+        """
+        Windows, Linux or Mac for an Install package of the Trellix Agent,
+        else None.
+
+        >>> Package('EPOAGENT3700LYNX').agent_platform, Package('ENDP_GS_1070').agent_platform
+        ('Linux', None)
+        """
+        if self.package_type != 'Install':
+            return None
+        return AGENT_PACKAGES.get(self.product_id)
 
     @property
     def type_label(self):

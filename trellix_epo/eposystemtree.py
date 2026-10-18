@@ -8,7 +8,9 @@ This module defines EPOSystems and EPOGroups, the System Tree operations of
 EPOClient (epo.systems and epo.groups): find, add, move, sort and delete
 systems, set their description and custom fields (system.* commands), list
 the groups, their systems, and create groups (epogroup.findSystems, the
-EPOBranchNode table, system.importSystem).
+EPOBranchNode table, system.importSystem); wake up, deploy and transfer
+the agents of systems or of a group, create the agent deployment URL of a
+group.
 
     epo.systems.find('PC')                                   # [System...]
     epo.systems.add(['PC01', 'PC02'], 'My Organization\\Workstations')
@@ -16,6 +18,8 @@ EPOBranchNode table, system.importSystem).
     epo.systems.move('PC01', 'My Organization\\Servers')
     epo.groups.create('My Organization\\Servers\\Paris')     # Group
     epo.groups.systems('My Organization\\Workstations', subgroups=True)
+    epo.systems.wakeup('PC01', force_full_policy_update=True)
+    epo.groups.deployment_url('My Organization\\Workstations', 'Workstations agent')
 
 The Web API has no command to rename or delete a group: do it in the
 console (System Tree > System Tree Actions). Groups are created as the
@@ -23,8 +27,9 @@ console imports a text file (New Systems > Import systems and System Tree
 structure): a line ending with a backslash creates a group without system.
 Nothing is created in or moved to Lost and Found (see
 systemtree.check_destination()). Agents are not deployed by add(): the
-push needs an account of the systems (see the agent deployment of the
-console).
+push needs an account of the systems (deploy_agent()). The server settings
+these operations use (Agent Handlers, agent package of the repository)
+are on epo.server and epo.repository.
 
 Server behaviours handled here (checked on ePO 5.10 Update 7 with dummy
 systems, never managed):
@@ -120,6 +125,73 @@ def _done(answer):
     (True, True, False)
     """
     return answer is True or (isinstance(answer, str) and answer.strip().lower() == 'true')
+
+
+def _agent_options(random_minutes=None, retry_interval=60, attempts=0, abort_after=20):
+    """
+    Checks and returns the retry options of an agent wake-up or deployment
+    (whole numbers of 0 or more; the console defaults: retry every 60
+    seconds, no retry, abort after 20 minutes).
+
+    Valid / invalid:
+
+    >>> _agent_options(5, 30, 2, 10)
+    {'randomMinutes': 5, 'retryIntervalSeconds': 30, 'attempts': 2, 'abortAfterMinutes': 10}
+    >>> _agent_options(attempts=-1)
+    Traceback (most recent call last):
+    ...
+    ValueError: attempts must be a whole number of 0 or more: -1.
+    """
+    values = {'random_minutes': random_minutes, 'retry_interval': retry_interval,
+              'attempts': attempts, 'abort_after': abort_after}
+    for name, value in values.items():
+        if value is not None and (isinstance(value, bool) or not isinstance(value, int) or
+                                  value < 0):
+            raise ValueError('{} must be a whole number of 0 or more: {!r}.'.format(name, value))
+    return {key: value for key, value in (
+        ('randomMinutes', random_minutes), ('retryIntervalSeconds', retry_interval),
+        ('attempts', attempts), ('abortAfterMinutes', abort_after)) if value is not None}
+
+
+def _wakeup_counts(answer):
+    """
+    Returns the counts of the answer of system.wakeupAgent ("completed: 1
+    failed: 0 expired: 0", one per line) as a dictionary of integers; the
+    answer as it is when it has no counts.
+
+    >>> _wakeup_counts('completed: 1\\nfailed: 0\\nexpired: 0')
+    {'completed': 1, 'failed': 0, 'expired': 0}
+    """
+    counts = {}
+    for line in str(answer).splitlines():
+        key, _, value = line.partition(':')
+        if value.strip().isdigit():
+            counts[key.strip()] = int(value)
+    return counts or answer
+
+
+def _deploy_params(epo, username, password, domain, package, skip_if_installed, suppress_ui,
+                   force_install, install_path, use_all_agent_handlers, agent_handler, ssh,
+                   options):
+    """
+    Returns the parameters of system.deployAgent but the systems: the agent
+    package read in the repository, the Agent Handler id, the options
+    checked.
+    """
+    if not username or not str(username).strip():
+        raise ValueError('The user name of the systems is required (an administrator of the '
+                         'systems; root for ssh).')
+    if agent_handler is not None and use_all_agent_handlers:
+        raise ValueError('Give an Agent Handler or use_all_agent_handlers, not both.')
+    params = {'username': username, 'password': password, 'domain': domain,
+              'agentPackage': epo.repository.agent_package(package).deployment_path,
+              'skipIfInstalled': skip_if_installed, 'suppressUI': suppress_ui,
+              'forceInstall': force_install, 'installPath': install_path,
+              'useAllHandlers': use_all_agent_handlers,
+              'primaryAgentHandler': epo.server.agent_handler_id(agent_handler),
+              'useSsh': ssh, 'inputSource': 1}
+    params.update(options)
+    return params
 
 
 class EPOSystems():
@@ -361,6 +433,116 @@ class EPOSystems():
             'system.delete', ids=self._ids_parameter(ids), uninstall=uninstall,
             uninstallSoftware=uninstall_software), ids)
 
+    # ------------------------------ Agents ------------------------------
+    def wakeup(self, systems, full_props=False, force_full_policy_update=False,
+               super_agent=False, random_minutes=0, use_all_agent_handlers=False,
+               retry_interval=60, attempts=0, abort_after=20):
+        """
+        Wakes up the agent of systems (system.wakeupAgent, Wake Up Agents of
+        the console): the agent connects to its Agent Handler now, sends its
+        properties and gets its policies and tasks.
+
+        Example: epo.systems.wakeup('PC01', full_props=True, force_full_policy_update=True).
+
+        :param: systems: The systems (names, ids or System, or one of them).
+        :param: full_props: Send all the properties, not only the changes.
+        :param: force_full_policy_update: Get all the policies again.
+        :param: super_agent: Wake up the SuperAgents (their broadcast
+                             wakes up the agents of their subnet).
+        :param: random_minutes: Minutes over which the wake-ups are spread
+                                (0: now).
+        :param: use_all_agent_handlers: Any Agent Handler can send the
+                                        wake-up (default: the last one the
+                                        system used).
+        :param: retry_interval: Seconds between the attempts.
+        :param: attempts: Times the server tries again (0: once).
+        :param: abort_after: Minutes before cancelling all the attempts.
+        :return: The counts of the server: {'completed': 1, 'failed': 0,
+                 'expired': 0}. The call waits for the agents (about 20
+                 seconds for an agent that answers, checked on the lab),
+                 and up to abort_after minutes for an agent that doesn't:
+                 give the EPOClient a timeout longer than abort_after, or a
+                 short abort_after.
+        """
+        options = _agent_options(random_minutes, retry_interval, attempts, abort_after)
+        return _wakeup_counts(self.epo.call(
+            'system.wakeupAgent', ids=self._ids_parameter(self._ids(systems)),
+            fullProps=full_props, forceFullPolicyUpdate=force_full_policy_update,
+            superAgent=super_agent, useAllHandlers=use_all_agent_handlers, **options))
+
+    def deploy_agent(self, systems, username, password=None, domain=None, package='Windows',
+                     skip_if_installed=True, suppress_ui=True, force_install=False,
+                     install_path=None, use_all_agent_handlers=False, agent_handler=None,
+                     retry_interval=60, attempts=0, abort_after=20, ssh=False):
+        """
+        Pushes the agent to systems (system.deployAgent, Deploy Agents of
+        the console): the server connects to each system with the account
+        given (Windows: administrative share; Linux and Mac: ssh) and
+        installs the agent. The password is sent to the server only (the
+        library doesn't keep it).
+
+        Example: epo.systems.deploy_agent(['PC01', '10.0.0.12'], 'admin', password,
+        domain='CORP').
+
+        :param: systems: Names or IP addresses (systems of the System Tree or
+                         not yet), or ids and System objects of the System
+                         Tree (not mixed with names).
+        :param: username: An administrator of the systems (root for ssh).
+        :param: password: Its password (blank by default).
+        :param: domain: The Windows domain of the account.
+        :param: package: Windows, Linux or Mac (the agent package of the
+                         Current branch), a repository path or a Package.
+        :param: skip_if_installed: Don't install over an existing agent.
+        :param: suppress_ui: Hide the installer on the systems.
+        :param: force_install: Install even when the same version is there.
+        :param: install_path: The installation folder (the standard agent
+                              folder by default).
+        :param: use_all_agent_handlers: Any Agent Handler can deploy.
+        :param: agent_handler: The Agent Handler to use (name or id).
+        :param: ssh: Use ssh (Linux and Mac) instead of the Windows domain.
+        :return: The answer of the server.
+        :raise: ValueError: No user name, unknown package or Agent Handler,
+                            names mixed with ids.
+        """
+        params = _deploy_params(self.epo, username, password, domain, package, skip_if_installed,
+                                suppress_ui, force_install, install_path, use_all_agent_handlers,
+                                agent_handler, ssh,
+                                _agent_options(None, retry_interval, attempts, abort_after))
+        items = _items(systems)
+        if not items:
+            raise ValueError('At least one system is required.')
+        if all(isinstance(item, str) for item in items):
+            for item in items:
+                if not item.strip() or ',' in item:
+                    raise ValueError('Not a system name or IP address: {!r}.'.format(item))
+            return self.epo.call('system.deployAgent', names=','.join(items), **params)
+        if any(isinstance(item, str) for item in items):
+            raise ValueError('Give names and IP addresses, or ids and System objects, not both.')
+        return self.epo.call('system.deployAgent', ids=self._ids_parameter(self._ids(items)),
+                             **params)
+
+    def transfer(self, systems, server):
+        """
+        Transfers systems to another ePO server (system.transfer, Transfer
+        Systems of the console): their agent gets the keys of the other
+        server and connects to it at its next communication.
+
+        Example: epo.systems.transfer('PC01', 'EPO-PARIS').
+
+        :param: systems: The systems (names, ids or System, or one of them).
+        :param: server: The name of a registered ePO server
+                        (epo.server.registered_servers()).
+        :return: The answer of the server.
+        :raise: ValueError: Unknown system or registered server.
+        """
+        servers = self.epo.server.registered_servers()
+        name = next((item for item in servers if item.lower() == str(server).lower()), None)
+        if name is None:
+            raise ValueError('Unknown registered server: {} (registered: {}).'.format(
+                server, ', '.join(servers)))
+        return self.epo.call('system.transfer', ids=self._ids_parameter(self._ids(systems)),
+                             epoServer=name)
+
 
 class EPOGroups():
     """
@@ -480,3 +662,90 @@ class EPOGroups():
         if created is None:
             raise EPOError('system.importSystem', '{} was not created.'.format(path))
         return created
+
+    # ------------------------------ Agents ------------------------------
+    def wakeup(self, group, subgroups=False, full_props=False, force_full_policy_update=False,
+               super_agent=False, random_minutes=0, use_all_agent_handlers=False,
+               retry_interval=60, attempts=0, abort_after=20):
+        """
+        Wakes up the agents of the systems of a group (system.wakeupAgent
+        with groupId); the options are the ones of epo.systems.wakeup().
+
+        Example: epo.groups.wakeup('Workstations', subgroups=True, random_minutes=10).
+
+        :param: subgroups: Also the systems of the subgroups.
+        :return: The counts of the server: {'completed': 1, 'failed': 0,
+                 'expired': 0} (see epo.systems.wakeup() for the wait).
+        :raise: ValueError: Unknown group.
+        """
+        target = self.require(group)
+        options = _agent_options(random_minutes, retry_interval, attempts, abort_after)
+        return _wakeup_counts(self.epo.call(
+            'system.wakeupAgent', groupId=target.id, includeSubgroups=subgroups,
+            fullProps=full_props, forceFullPolicyUpdate=force_full_policy_update,
+            superAgent=super_agent, useAllHandlers=use_all_agent_handlers, **options))
+
+    def deploy_agent(self, group, username, password=None, domain=None, package='Windows',
+                     subgroups=False, skip_if_installed=True, suppress_ui=True,
+                     force_install=False, install_path=None, use_all_agent_handlers=False,
+                     agent_handler=None, retry_interval=60, attempts=0, abort_after=20,
+                     ssh=False):
+        """
+        Pushes the agent to the systems of a group (system.deployAgent with
+        groupId); the options are the ones of epo.systems.deploy_agent().
+
+        Example: epo.groups.deploy_agent('Workstations', 'admin', password, domain='CORP').
+
+        :param: subgroups: Also the systems of the subgroups.
+        :return: The answer of the server.
+        :raise: ValueError: Unknown group, no user name, unknown package or
+                            Agent Handler.
+        """
+        target = self.require(group)
+        params = _deploy_params(self.epo, username, password, domain, package, skip_if_installed,
+                                suppress_ui, force_install, install_path, use_all_agent_handlers,
+                                agent_handler, ssh,
+                                _agent_options(None, retry_interval, attempts, abort_after))
+        return self.epo.call('system.deployAgent', groupId=target.id, includeSubgroups=subgroups,
+                             **params)
+
+    def deployment_url(self, group, name, package='Windows', agent_handler=None,
+                       fallback_agent_handler=None, editable=True):
+        """
+        Creates an agent deployment URL for a group
+        (createAgentDeploymentUrlCmd, System Tree > group > Agent Deployment
+        > Create Agent Deployment URL): give the URL to the IT
+        administrators; a system installed from it lands in the group by
+        itself (not in Lost and Found). The Web API can't list, change or
+        delete these URLs: use the Agent Deployment tab of the group.
+
+        Example: epo.groups.deployment_url('Workstations', 'Workstations agent').
+
+        :param: name: The URL name (50 characters at most, as the console).
+        :param: package: Windows, Linux or Mac (the agent package of the
+                         Current branch), a repository path or a Package.
+        :param: agent_handler: The primary Agent Handler (name or id),
+                               None for all the Agent Handlers.
+        :param: fallback_agent_handler: The fallback Agent Handler.
+        :param: editable: The URL can be renamed and deleted in the console.
+        :return: The URL ("https://<server>:8443/ComputerMgmt/agentPackage.get?
+                 token=..."): anyone with it can download the agent of the
+                 group, share it with the IT administrators only. The
+                 server writes "Create agent deployment URL data object" in
+                 the Audit Log.
+        :raise: ValueError: Unknown group, Lost and Found, invalid name,
+                            unknown package or Agent Handler.
+        """
+        target = self.require(group)
+        check_destination(target.path)
+        name = ' '.join(str(name or '').split())
+        if not name or len(name) > 50:
+            raise ValueError('The URL name is required, 50 characters at most: {!r}.'.format(name))
+        found = self.epo.repository.agent_package(package)
+        return self.epo.call('ComputerMgmt.createAgentDeploymentUrlCmd',
+                             deployPath=found.deployment_path, groupId=target.id, urlName=name,
+                             agentVersionNumber=found.version, agentHotFix=found.hotfix,
+                             edit=editable,
+                             ahId=self.epo.server.agent_handler_id(agent_handler),
+                             fallBackAhId=self.epo.server.agent_handler_id(
+                                 fallback_agent_handler))
